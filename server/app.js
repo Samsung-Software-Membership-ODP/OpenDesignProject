@@ -95,7 +95,7 @@ app.post('/join', function(req, res){
 
 
 //login part
-app.post('/', function(request, response){
+app.post('/', function(request, response, next){
     var id = request.body.id;
     var pw = request.body.pw;
     
@@ -117,10 +117,14 @@ app.post('/', function(request, response){
         
         if(doc == null){
             console.log("해당 ID를 찾지 못했습니다.");
-            response.send(
-                '<script type="text/javascript">alert("??");</script>'
-                );
-            response.redirect('/');
+            
+//            response.send(500, 'showAlert' + routes);
+            response.render('index');
+//            response.write(
+//                '<script type="text/javascript">alert("??");</script>'
+//                );
+//            next();
+//            response.redirect('/');
         }
         else{
             console.log(doc);
