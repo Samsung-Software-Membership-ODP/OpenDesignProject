@@ -74,6 +74,11 @@ app.get('/users', function(req, res){
 });
 
 
+app.get('/project', function(req, res){
+    res.render('project');
+});
+
+
 // join part
 app.post('/join', function(req, res){
     var name = req.body.name;
@@ -120,14 +125,7 @@ app.post('/', function(request, response, next){
         
         if(doc == null){
             console.log("해당 ID를 찾지 못했습니다.");
-            
-//            response.send(500, 'showAlert' + routes);
             response.render('index');
-//            response.write(
-//                '<script type="text/javascript">alert("??");</script>'
-//                );
-//            next();
-//            response.redirect('/');
         }
         else{
             console.log(doc);
@@ -137,13 +135,13 @@ app.post('/', function(request, response, next){
             console.log(checkedID + " " + checkedPW + " " + checkedName + " 정보를 찾았습니다.");
 
 
-           if(id == checkedID && pw == checkedPW){
+           if(id === checkedID && pw === checkedPW){
                 console.log("Login Success!\n\n");
-                response.render('test', {user_id : checkedName});
+                response.render('project', {user_name : checkedName});
             }
             else{
                 console.log("Login Failed\n\n");
-                response.redirect('/');
+                response.render('index', {islogin : 'a'});
             }
         }
     });

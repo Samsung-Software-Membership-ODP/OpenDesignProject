@@ -1,37 +1,120 @@
 <!Doctype html>
 <html>
     <head>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        
+        <!--import jquery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" type="text/css" href="color.css">
+
+        <meta charset="utf-8">
+
         <title>Login page</title>
         <style>
             *{
                 margin: auto;
             }
+            
+            .center {
+                position:absolute; 
+                border-radius : 5px;
+                width:50%; 
+                top:25%;
+                left:25%;
+                
+            }
             #mainFrame{
                 height: 1000px;
-                background: #1D1F21;
+                background: #003C6C;
             }
             #loginBox{
+                padding : 50px;
                 background: #3C3F41;
                 text-align: center;
                 color: white;
             }
-
             #loginBox > h1{
                 color: white;
             }
+            #loginForm{
+                width:70%;
+                margin : 0 auto;
+            }
+            #loginForm > input{
+                display : block;
+                margin-top : 10px;
+            }
+            
+            
+            #loginForm > button{
+                width: 47%;
+                display : inline;
+                margin-top : 10px;
+            }
+            
+            #infoBox{
+                margin-top : -20px;
+                margin-bottom : 20px;
+            }
+            .left{
+                float : left;
+            }
+            .right{
+                float : right;
+            }
+            
         </style>
+        
+<!--
+        <script>
+            $(function(){
+                $( "#btn_join" ).click(function() {
+                    window.location.replace("/join");
+                });
+                
+            });
+            $(document).ready(function(){
+                var islogins = '<%= islogin %>';
+                alert(islogins);
+                if(islogins === 'a'){
+                    alert("Login Failed!");
+                }
+                if(islogins === 'b'){
+                    alert("Login Failed!");
+                }
+            });
+        </script>
+-->
+        
     </head>
     <body>
-        <div id = "mainFrame">
-            <div id = "loginBox">
+        <div id="mainFrame" class="maincolor">
+            <div id = "loginBox" class="center">
+                <div id="infoBox">
+                    <h1>Open Design Project</h1>
+                    <h3>Samsun Software Membership</h3>
+                    <p>서비스를 사용하기 위해서 로그인을 해주세요.</p>
+                </div>
                 
-                <h1>login page</h1>
-                <form name = "login_form" method="post">
-                    <input type="text" name="user_id" placeholder="ID">
-                    <input type="password" name="user_pass" placeholder="Password">
-                    <input type="submit" value="login">
+                <form id="loginForm" name="login_form" method="post">
+                    <input class="form-control" style="display:inline;" type="text" name="id" placeholder="ID">
+                    <input class="form-control" type="password" name="pw" placeholder="Password">
+                    <button type="submit" class="btn btn-primary left">login</button>
+                    <button type="button" id = "btn_join" class="btn btn-success right">Sign up</button>
                 </form>
+
             </div>
         </div>
+        
     </body>
+    
 </html>

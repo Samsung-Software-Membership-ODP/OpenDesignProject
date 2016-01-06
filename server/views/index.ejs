@@ -77,7 +77,18 @@
             $(function(){
                 $( "#btn_join" ).click(function() {
                     window.location.replace("/join");
-                });    
+                });
+                
+            });
+            $(document).ready(function(){
+                var islogins = '<%= islogin %>';
+                alert(islogins);
+                if(islogins === 'a'){
+                    alert("Login Failed!");
+                }
+                if(islogins === 'b'){
+                    alert("Login Failed!");
+                }
             });
         </script>
         
