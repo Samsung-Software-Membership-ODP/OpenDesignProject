@@ -17,29 +17,32 @@ var join = require('./routes/join')
 
 var app = express();
 
+var mongoId = 'admin';
+var mongoPw = 'opd1234'
+
 
 console.log("Server Start");
 
 
 
 // mongodb Connect
-// var db = mongoose.connect('mongodb://localhost/userDB', function(err){
-//     if(err) {
-//         console.err(err);
-//         throw err;
-//     }
-// });
-// console.log("MongoDB : Connected");
-// //console.log(db.userInfo.find());
-//
-// var Schema = mongoose.Schema;
-// var UserSchema = new Schema({
-//     id : String,
-//     pw : String,
-//     name : String
-// })
-//
-// var User = mongoose.model('users', UserSchema);
+var db = mongoose.connect('mongodb://'+mongoid+':'+mongopw+'@ds039155.mongolab.com:39155/opd_users', function(err){
+    if(err) {
+        console.err(err);
+        throw err;
+    }
+});
+console.log("MongoDB : Connected");
+
+
+var Schema = mongoose.Schema;
+var UserSchema = new Schema({
+    id : String,
+    pw : String,
+    name : String
+})
+
+var User = mongoose.model('users', UserSchema);
 
 
 // view engine setup
@@ -76,7 +79,7 @@ app.post('/join', function(req, res){
     var name = req.body.name;
     var id = req.body.id;
     var pw = req.body.pw;
-
+    
     var user = new User({id : id, pw : pw, name : name});
     user.save(function(err){
         if(err){
@@ -98,26 +101,26 @@ app.post('/join', function(req, res){
 app.post('/', function(request, response, next){
     var id = request.body.id;
     var pw = request.body.pw;
-
+    
     var checkedID;
     var checkedPW;
     var checkedName;
-
-
+    
+    
     console.log("Login request");
     console.log("ID : " +  id);
     console.log("PW : " + pw);
     console.log("위 정보로 부터 로그인 요청이 들어왔습니다.\n\n")
-
+    
     User.findOne({id : id}, function(err, doc){
         console.log("Find id")
-        if(err){
+        if(err){ 
             throw err;
         }
-
+        
         if(doc == null){
             console.log("해당 ID를 찾지 못했습니다.");
-
+            
 //            response.send(500, 'showAlert' + routes);
             response.render('index');
 //            response.write(
