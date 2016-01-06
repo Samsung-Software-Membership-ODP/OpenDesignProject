@@ -1,0 +1,143 @@
+<!Doctype html>
+<html>
+    <head>
+        <title>Login Page</title>
+<!--        <link rel="stylesheet" type="text/css" href="./color.css">-->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <style>
+            *{
+                margin: 0 auto;
+                font-family: 'Titillium Web', sans-serif;
+            }
+            #mainbg{
+                color: white;
+                background-image: url(/img/bg.jpg);
+                height: 1000px;
+            }
+            #loginFrameTop{
+                width: 40%;
+                border-radius: 3px 3px 0px 0px;
+                background: white;
+                padding: 20px;
+                color: gray;
+            }
+            #loginFrameTop > p{
+                font-weight: 200;
+            }
+            #loginFrameBottom{
+                text-align: center;
+                width: 40%;
+                border-radius: 0px 0px 3px 3px;
+                background: #EAEAEA;
+                padding: 20px;
+            }
+            form{
+                margin-bottom: 12px;
+            }
+            form > input{
+                width: 70%;
+                display: block;
+                font-weight: 200;
+                font-size: 13px;
+                margin-bottom: 10px;
+                padding: 10px;
+            }
+            #btn_signin{
+                width: 70%;
+                text-align: center;
+                background: #8C8C8C;
+                padding: 11px;
+            }
+            #btn_signin:hover{
+                background: #003C6C;
+                -o-transition:.5s;
+                -ms-transition:.5s;
+                -moz-transition:.5s;
+                -webkit-transition:.5s;
+            }
+            #btn_signup{
+                font-size: 14px;
+                color: #8C8C8C;
+                text-decoration: none;
+            }
+            #intro_box{
+                padding-top: 170px;
+                margin-bottom: 32px;
+            }
+            #logo{
+                text-align: center;
+                font-size: 42px;
+                
+            }
+            #intro_msg{
+                text-align: center;
+                font-weight: 200;
+            }
+            
+        </style>
+        <script>
+            function login(){
+                var name = $('#input_name').val();
+                var id = $('#input_id').val();
+                var pw = $('#input_pw').val();
+                var cpw = $('#input_cpw').val();
+                
+                if(name === ''){
+                    alert("이름을 입력하세요.");
+                }
+                else if(id === ''){
+                    alert("ID를 입력하세요.")
+                }
+                else if(pw === ''){
+                    alert("비밀번호를 입력하세요.")
+                }
+                else if(pw != cpw){
+                    alert("두 비밀번호가 일치하지 않습니다.");
+                }
+                else if(pw === cpw){
+                    $('#loginform').submit();
+                }
+            }
+            
+            $(function(){
+                $( "#btn_signin" ).click(function() {
+                    login();
+                });
+                
+                
+                $("#loginform").keydown(function(e){
+                   if(e.which == 13) {
+                       login();
+                   }
+                });
+                
+                
+            });
+            
+        </script>
+    </head>
+    <body>
+        <div id="mainbg">
+            <div id="intro_box">
+                <h1 id="logo">Open Design Project</h1>
+                <p id="intro_msg">Samsung Software Membership</p>
+            </div>
+            <div id="loginFrameTop">
+                    <h1>Sign up</h1>
+                    <p>&nbsp;&nbsp;&nbsp;Open Design Project 에 오신 것을 환영합니다.</p>
+            </div>
+            <div id="loginFrameBottom">
+                <form id="loginform" method="post">
+                    <input id="input_name" type="text" placeholder="User Name" name="name">
+                    <input id="input_id" type="text" placeholder="ID" name="id">
+                    <input id="input_pw" type="password" placeholder="Password" name="pw">
+                    <input id="input_cpw" type="password" placeholder="Confirm Password" name="confirm_pw">
+                    <div id="btn_signin">회원가입</div>
+                </form>
+            </div>
+            
+        </div>
+    </body>
+</html>

@@ -13,7 +13,7 @@ var MongoClient = require('mongodb').MongoClient;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var success = require('./routes/success');
-var join = require('./routes/join')
+var signup = require('./routes/signup')
 
 var app = express();
 
@@ -60,7 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
-app.use('/join', join);
+app.use('/signup', signup);
 //app.use('/users', users);
 app.use('/success', success);
 
@@ -80,7 +80,7 @@ app.get('/project', function(req, res){
 
 
 // join part
-app.post('/join', function(req, res){
+app.post('/signup', function(req, res){
     var name = req.body.name;
     var id = req.body.id;
     var pw = req.body.pw;
@@ -141,7 +141,7 @@ app.post('/', function(request, response, next){
             }
             else{
                 console.log("Login Failed\n\n");
-                response.render('index', {islogin : 'a'});
+                response.render('login', {islogin : 'a'});
             }
         }
     });
