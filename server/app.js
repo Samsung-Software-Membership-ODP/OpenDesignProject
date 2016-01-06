@@ -17,8 +17,8 @@ var join = require('./routes/join')
 
 var app = express();
 
-var mongoId = 'admin';
-var mongoPw = 'opd1234'
+var mongoid = 'admin';
+var mongopw = 'opd1234'
 
 
 console.log("Server Start");
