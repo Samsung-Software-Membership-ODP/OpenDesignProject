@@ -125,7 +125,7 @@ app.post('/', function(request, response, next){
         
         if(doc == null){
             console.log("해당 ID를 찾지 못했습니다.");
-            response.render('index');
+            response.render('login', {islogin : 'fail'});
         }
         else{
             console.log(doc);
@@ -141,7 +141,7 @@ app.post('/', function(request, response, next){
             }
             else{
                 console.log("Login Failed\n\n");
-                response.render('login', {islogin : 'a'});
+                response.render('login', {islogin : 'fail'});
             }
         }
     });

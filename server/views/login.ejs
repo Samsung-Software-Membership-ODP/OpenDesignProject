@@ -78,6 +78,12 @@
             
         </style>
         <script>
+            $(document).ready(function(){
+                var islogin = '<%= islogin %>';
+                if(islogin === 'fail'){
+//                    alert('로그인에 실패하였습니다.');
+                }
+            });
             $(function(){
                 $( "#btn_signin" ).click(function() {
                     $('#loginform').submit();
