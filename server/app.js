@@ -39,7 +39,11 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
     id : String,
     pw : String,
-    name : String
+    name : String,
+    projects : [{
+        title : String,
+        val : String
+    }]
 })
 
 var User = mongoose.model('users', UserSchema);
@@ -66,6 +70,12 @@ app.use('/success', success);
 
 
 
+var checkedID;
+var checkedPW;
+var checkedName;
+var projectCount;
+var projects;
+
 app.get('/users', function(req, res){
     User.find({}, function(err, docs){
        res.json(docs);
@@ -73,9 +83,28 @@ app.get('/users', function(req, res){
     });
 });
 
+// project 부분
 
 app.get('/project', function(req, res){
-    res.render('project');
+    res.render('project', {user_name : checkedName});
+});
+
+
+app.post('/project', function(req, res){
+    var project_name = req.body.input_project_name;
+    
+    console.log('Project Name : ' + project_name);
+    
+    User.findOne({id : checkedID}, function(err, doc){
+        console.log("Find id")
+        if(err){ 
+            throw err;
+        }
+        doc.projects.push({title : project_name, val : ''});
+        doc.save();
+        console.log(doc);
+        console.log("Create Project Success!");
+    });
 });
 
 
@@ -107,11 +136,6 @@ app.post('/', function(request, response, next){
     var id = request.body.id;
     var pw = request.body.pw;
     
-    var checkedID;
-    var checkedPW;
-    var checkedName;
-    
-    
     console.log("Login request");
     console.log("ID : " +  id);
     console.log("PW : " + pw);
@@ -137,7 +161,8 @@ app.post('/', function(request, response, next){
 
            if(id === checkedID && pw === checkedPW){
                 console.log("Login Success!\n\n");
-                response.render('project', {user_name : checkedName});
+                response.redirect('/project');
+//                response.render('project', {user_name : checkedName});
             }
             else{
                 console.log("Login Failed\n\n");
