@@ -89,6 +89,16 @@
                 line-height: 50px;
             }
         </style>
+<!--
+        <script type="text/javascript">
+            $(function(){
+                $("#btn_pop").click(function(){
+                    alert('hello!');
+                    $('#myModal').modal();
+                })
+            });
+        </script>
+-->
         <script>
             $(function(){
                 $('#add').click(function(){
@@ -106,7 +116,7 @@
                 </ul>  
         </div>
         <div id="sub_nav">
-            <p><i class="xi-angle-right">&nbsp;</i> <%= user_name %> 님 접속을 환영합니다.</p>
+            <p><i class="xi-angle-right">&nbsp;</i> 님 접속을 환영합니다.</p>
         </div>
         
         <div id="mainframe">
@@ -129,10 +139,10 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Project 추가</h4>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
               </div>
               <div class="modal-body">
-                <input type="text" class="form-control" placeholder="Prjoect Name">
+                ...
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
