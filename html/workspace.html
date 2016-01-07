@@ -54,9 +54,6 @@
                 width: 70%;
                 margin-top: 20px;
             }
-            .card:hover{
-                border : 1px solid #003C6C;
-            }
             .card > h2{
                 line-height: 50px;
             }
@@ -95,20 +92,15 @@
                 <li><a href="#"><i class="xi-plus xi-x">&nbsp;</i></br> </a></li>
                 <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
             </ul>
-            <h5 id="user_msg"><%= user_name %> 님 접속을 환영합니다.</h5>
+            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>
         </div>
         <div id="sub_nav">
-            <p><i class="xi-angle-right">&nbsp;</i> This page shows your projects</p>
+            <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
         </div>
         
         <div id="mainframe">
-            <div >
-                <div class="card">
-                    <h2>Project Name</h2>
-                </div>
-                <div class="card">
-                </div>
-            </div>
+            <iframe style="width:100%" src="index.html">
+            </iframe>
         </div>
         <div id="footer">
             <h3>Open Design Project</h3>
