@@ -13,12 +13,12 @@ var MongoClient = require('mongodb').MongoClient;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var success = require('./routes/success');
-var signup = require('./routes/signup');
+var signup = require('./routes/signup')
 
 var app = express();
 
 var mongoid = 'admin';
-var mongopw = 'opd1234';
+var mongopw = 'opd1234'
 
 
 console.log("Server Start");
@@ -40,7 +40,7 @@ var UserSchema = new Schema({
     id : String,
     pw : String,
     name : String
-});
+})
 
 var User = mongoose.model('users', UserSchema);
 
@@ -84,7 +84,7 @@ app.post('/signup', function(req, res){
     var name = req.body.name;
     var id = req.body.id;
     var pw = req.body.pw;
-
+    
     var user = new User({id : id, pw : pw, name : name});
     user.save(function(err){
         if(err){
@@ -106,24 +106,24 @@ app.post('/signup', function(req, res){
 app.post('/', function(request, response, next){
     var id = request.body.id;
     var pw = request.body.pw;
-
+    
     var checkedID;
     var checkedPW;
     var checkedName;
-
-
+    
+    
     console.log("Login request");
     console.log("ID : " +  id);
     console.log("PW : " + pw);
-    console.log("위 정보로 부터 로그인 요청이 들어왔습니다.\n\n");
-
+    console.log("위 정보로 부터 로그인 요청이 들어왔습니다.\n\n")
+    
     User.findOne({id : id}, function(err, doc){
-        console.log("Find id");
-        if(err){
+        console.log("Find id")
+        if(err){ 
             throw err;
         }
-
-        if(doc === null){
+        
+        if(doc == null){
             console.log("해당 ID를 찾지 못했습니다.");
             response.render('login', {islogin : 'fail'});
         }

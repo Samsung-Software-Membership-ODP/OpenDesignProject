@@ -1,0 +1,51 @@
+<!Doctype html>
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+        <style>
+            *{margin: auto;}
+        </style>
+        <script>
+           $(document).ready(function() {
+               var test = "<%= user_id %>";
+               $("#right").text(test);
+               alert("<%= user_id %>");
+            });
+        </script>
+    </head>
+    
+    
+    <body>
+        <div id="main_nav">
+            <ul style="float:left;">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Home</a></li>
+                
+            </ul>
+            <h5 id="user_msg"><%= user_id %> 님 접속을 환영합니다.</h5>
+            
+        </div>
+        <div id="mainframe">
+            <div id="left">
+                <div class="nav_title">
+                    <h2>Components</h2>
+                </div>
+                    <li>Buttons</li>
+                    <li>Buttons</li>
+                    <li>Buttons</li>
+                    <li>Buttons</li>
+                    <li>Buttons</li>
+                    <li><button id = "btntest">Buttons</button></li>
+                
+            </div>
+            <div id="right">
+                
+            </div>
+        </div>
+        
+    </body>
+</html>
