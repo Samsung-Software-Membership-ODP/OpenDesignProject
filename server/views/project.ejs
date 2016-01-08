@@ -90,10 +90,18 @@
             }
         </style>
         <script>
+            var projects = [ <%= projects %> ];
+            
+            
             $(function(){
                 $('#add').click(function(){
                     $('#myModal').modal();
                 });
+            });
+            
+            $(document).ready(function(){
+                alert('?');
+                    
             });
         </script>
     </head>

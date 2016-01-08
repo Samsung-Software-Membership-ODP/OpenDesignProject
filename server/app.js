@@ -86,7 +86,7 @@ app.get('/users', function(req, res){
 // project 부분
 
 app.get('/project', function(req, res){
-    res.render('project', {user_name : checkedName});
+    res.render('project', {user_name : checkedName, projects : projects});
 });
 
 
@@ -156,8 +156,9 @@ app.post('/', function(request, response, next){
             checkedID = doc.get('id', String);
             checkedPW = doc.get('pw', String);
             checkedName = doc.get('name', String);
+            projects = doc.get('projects');
             console.log(checkedID + " " + checkedPW + " " + checkedName + " 정보를 찾았습니다.");
-
+            console.log(projects);
 
            if(id === checkedID && pw === checkedPW){
                 console.log("Login Success!\n\n");
