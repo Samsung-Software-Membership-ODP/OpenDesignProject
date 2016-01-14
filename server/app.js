@@ -75,6 +75,7 @@ var checkedPW;
 var checkedName;
 var projectCount;
 var projects;
+var titles = new Array();
 
 app.get('/users', function(req, res){
     User.find({}, function(err, docs){
@@ -86,7 +87,8 @@ app.get('/users', function(req, res){
 // project 부분
 
 app.get('/project', function(req, res){
-    res.render('project', {user_name : checkedName, projects : projects});
+    console.log("reload!");
+    res.render('project', {user_name : checkedName, projects : projects, titles : titles});
 });
 
 
@@ -102,8 +104,16 @@ app.post('/project', function(req, res){
         }
         doc.projects.push({title : project_name, val : ''});
         doc.save();
+        
+        projects = doc.get('projects');
+         for(var i = 0; i < projects.length; i++){
+                titles[i] = projects[i]['title'];
+            }
+        console.log(titles);
+        
         console.log(doc);
         console.log("Create Project Success!");
+        res.redirect('/project');
     });
 });
 
@@ -157,9 +167,17 @@ app.post('/', function(request, response, next){
             checkedPW = doc.get('pw', String);
             checkedName = doc.get('name', String);
             projects = doc.get('projects');
+            
             console.log(checkedID + " " + checkedPW + " " + checkedName + " 정보를 찾았습니다.");
             console.log(projects);
-
+            console.log(projects.length + "개의 프로젝트를 찾았습니다.")
+            
+            
+            for(var i = 0; i < projects.length; i++){
+                titles[i] = projects[i]['title'];
+            }
+            console.log(titles);
+            
            if(id === checkedID && pw === checkedPW){
                 console.log("Login Success!\n\n");
                 response.redirect('/project');

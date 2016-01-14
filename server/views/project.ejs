@@ -90,8 +90,9 @@
             }
         </style>
         <script>
-            var projects = [ <%= projects %> ];
-            
+
+            var titles = "<%= titles %>".split(',');
+
             
             $(function(){
                 $('#add').click(function(){
@@ -100,8 +101,13 @@
             });
             
             $(document).ready(function(){
-                alert('?');
-                    
+                
+                for(var i = 0; i < titles.length; i++){
+                    $('#cardSection').append(
+                        '<div class="card"><h4>'+titles[i]+'</h4></div>'
+                    );
+                }
+                
             });
         </script>
     </head>
@@ -118,13 +124,8 @@
         </div>
         
         <div id="mainframe">
-            <div >
-                <div class="card">
-                    <h4>Project Name</h4>
-                    
-                </div>
-                <div class="card">
-                </div>
+            <div id="cardSection">
+                
             </div>
         </div>
         <div id="footer">
@@ -145,7 +146,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button id="btn_save" type="submit" class="btn btn-primary">Save changes</button>
                   </div>
                 </div>
               </div>
