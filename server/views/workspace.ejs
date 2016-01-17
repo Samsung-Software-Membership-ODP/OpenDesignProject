@@ -1,0 +1,110 @@
+<!Doctype html>
+<html>
+    <head>
+        <title>Project View</title>
+<!--        <link rel="stylesheet" type="text/css" href="main.css">-->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
+        <style>
+            *{
+                margin: 0 auto;
+                font-family: 'Titillium Web', sans-serif;
+            }
+            
+            #mainframe{
+                background: #EBEBEC;
+                height: 1000px;
+                padding: 50px;
+            }
+            #main_nav{
+                height: 120px;
+                background: #003C6C;
+            }
+            #main_nav > ul{
+                padding-top: 12px;
+                list-style: none;
+            }
+            #main_nav > ul > li{
+                float: left;
+                margin-right: 10px;
+            }
+            #main_nav > ul > li > a{
+                text-decoration: none;
+                color: dimgrey;
+            }
+            #main_nav > ul > li > a:hover{
+                text-decoration: none;
+                color: white;
+            }
+            #user_msg{
+                float: right;
+                margin-right: 20px;
+                color: white;
+                line-height: 42px;
+            }
+            .nav_title > h2{
+                color: white;
+                text-align: center;
+            }
+            .card{
+                background: #ffffff;
+                padding: 20px;
+                border-radius: 3px;
+                height: 50px;
+                width: 70%;
+                margin-top: 20px;
+            }
+            .card > h2{
+                line-height: 50px;
+            }
+            .logo{
+                color: white;
+                padding-top : 20px;
+                padding-left : 20px;
+                margin-bottom: 15px;
+            }
+            #sub_nav{
+                padding-left: 40px;
+                vertical-align: middle;
+                height: 40px;
+                background: white;
+                border-bottom: 2px solid #003C6C;
+            }
+            #sub_nav > p{
+                line-height: 40px;
+            }
+            
+            #footer{
+                background: #5D5D5D;
+                height: 50px;
+                padding-left: 100px;
+            }
+            #footer > h3{
+                color: #B7B7B7;
+                line-height: 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="main_nav">
+            <h2 class="logo">Open Design Project</h2>
+            <ul style="float:left;">
+                <li><a href="#"><i class="xi-plus xi-x">&nbsp;</i></br> </a></li>
+                <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
+            </ul>
+            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>
+        </div>
+        <div id="sub_nav">
+            <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
+        </div>
+        
+        <div id="mainframe">
+            <iframe style="width:100%; height:1000px; border: 0px;" src="http://hacs.kr">
+            </iframe>
+        </div>
+        <div id="footer">
+            <h3>Open Design Project</h3>
+        </div>
+    </body>
+</html>

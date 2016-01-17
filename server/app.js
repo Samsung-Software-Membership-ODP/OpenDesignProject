@@ -62,12 +62,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 app.use('/', routes);
 app.use('/signup', signup);
 //app.use('/users', users);
 app.use('/success', success);
-
 
 
 var checkedID;
@@ -87,7 +85,6 @@ app.get('/users', function(req, res){
 // project 부분
 
 app.get('/project', function(req, res){
-    console.log("reload!");
     res.render('project', {user_name : checkedName, projects : projects, titles : titles});
 });
 
@@ -192,6 +189,13 @@ app.post('/', function(request, response, next){
 });
 
 
+
+// workspace part
+app.get('/workspace', function(req, res){
+    res.render('workspace');
+    
+    console.log('파일을 생성합니다.');
+});
 
 
 // catch 404 and forward to error handler
