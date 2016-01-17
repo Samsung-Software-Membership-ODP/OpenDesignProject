@@ -3,6 +3,9 @@
     <head>
         <title>Project View</title>
 <!--        <link rel="stylesheet" type="text/css" href="main.css">-->
+        
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
         <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
         <style>
@@ -85,6 +88,11 @@
             }
 
         </style>
+        <script>
+            $(document).ready(function(){
+                $('#frame').contents().find('#test').text('test !!!!!!!');
+            });
+        </script>
     </head>
     <body>
         <div id="main_nav">
@@ -100,7 +108,7 @@
         </div>
         
         <div id="mainframe">
-            <iframe style="width:100%; height:1000px; border: 0px;" src="http://hacs.kr">
+            <iframe id="frame" style="width:100%; height:1000px; border: 0px;" src="./workspaces/index.html">
             </iframe>
         </div>
         <div id="footer">

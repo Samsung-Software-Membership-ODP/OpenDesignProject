@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
-
+var mkdir = require('mkdirp');
+var fs = require('fs');
 //var $ = require('jquery');
 //var bootstrap = require('bootstrap');
 
@@ -83,7 +84,6 @@ app.get('/users', function(req, res){
 });
 
 // project 부분
-
 app.get('/project', function(req, res){
     res.render('project', {user_name : checkedName, projects : projects, titles : titles});
 });
@@ -134,8 +134,6 @@ app.post('/signup', function(req, res){
         res.redirect('/');
     });
 });
-
-
 
 
 //login part
@@ -194,7 +192,47 @@ app.post('/', function(request, response, next){
 app.get('/workspace', function(req, res){
     res.render('workspace');
     
-    console.log('파일을 생성합니다.');
+    console.log('폴더를 생성합니다.');
+    mkdir('./public/workspaces', function(err){
+        console.log(err);
+    });
+    
+    var file = './public/workspaces/index.html';
+    var text = '\
+        <!Doctype html>\n\
+        <html>\n\
+        <head>\n\
+            <title></title>\n\
+            <style>\n\
+                body:hover{\n\
+                    background:blue\n\
+                }\n\
+                div{\n\
+                    height:100px\n\
+                }\n\
+                div:hover{\n\
+                    height:100px;background:green;\n\
+                }\n\
+                h1:hover{\n\
+                    color:red;\n\
+                }\n\
+            </style>\n\
+        </head>\n\
+        <body>\n\
+                <h1>hello world!</h1>\n\
+                <div id="test"></div>\n\
+        </body>\n\
+        </html>\n\
+    ';
+    fs.open(file, 'w', function(err, fd){
+        if(err) throw err;
+        console.log('file open complete');
+        
+        fs.writeFile(file, '<h1>Test!</h1>\n'+text, 'utf-8', function(err){
+           if(err) throw err;
+            console.log("file write complete");
+        });
+    });
 });
 
 
