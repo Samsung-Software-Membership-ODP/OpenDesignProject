@@ -2,6 +2,7 @@
         <!Doctype html>
         <html>
         <head>
+            <script src="//code.jquery.com/jquery.min.js"></script>
             <title></title>
             <style>
                 body:hover{
@@ -17,10 +18,18 @@
                     color:red;
                 }
             </style>
+            <script>
+                $(document).ready(function(){
+                    $("#test").click(function(){
+                        $("#result").append(document.documentElement.innerHTML);
+                    });
+                });
+            </script>
         </head>
         <body>
                 <h1>hello world!</h1>
                 <div id="test"></div>
+                <div id="result"></div>
         </body>
         </html>
     

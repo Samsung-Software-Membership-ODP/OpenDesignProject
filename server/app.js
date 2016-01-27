@@ -202,6 +202,7 @@ app.get('/workspace', function(req, res){
         <!Doctype html>\n\
         <html>\n\
         <head>\n\
+            <script src="//code.jquery.com/jquery.min.js"></script>\n\
             <title></title>\n\
             <style>\n\
                 body:hover{\n\
@@ -217,10 +218,18 @@ app.get('/workspace', function(req, res){
                     color:red;\n\
                 }\n\
             </style>\n\
+            <script>\n\
+                $(document).ready(function(){\n\
+                    $("#test").click(function(){\n\
+                        $("#result").append(document.documentElement.innerHTML);\n\
+                    });\n\
+                });\n\
+            </script>\n\
         </head>\n\
         <body>\n\
                 <h1>hello world!</h1>\n\
                 <div id="test"></div>\n\
+                <div id="result"></div>\n\
         </body>\n\
         </html>\n\
     ';

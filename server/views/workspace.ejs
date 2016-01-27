@@ -90,7 +90,10 @@
         </style>
         <script>
             $(document).ready(function(){
-                $('#frame').contents().find('#test').text('test !!!!!!!');
+                $('#btn').click(function(){
+                    $('#frame').contents().find('#test').append('test !!!!!!!');    
+                });
+                
             });
         </script>
     </head>
@@ -98,7 +101,7 @@
         <div id="main_nav">
             <h2 class="logo">Open Design Project</h2>
             <ul style="float:left;">
-                <li><a href="#"><i class="xi-plus xi-x">&nbsp;</i></br> </a></li>
+                <li><a href="#"><i id="btn" class="xi-plus xi-x">&nbsp;</i></br> </a></li>
                 <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
             </ul>
             <h5 id="user_msg"> 님 접속을 환영합니다.</h5>
