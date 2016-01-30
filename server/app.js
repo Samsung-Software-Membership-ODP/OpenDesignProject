@@ -229,7 +229,7 @@ app.get('/workspace', function(req, res){
         <body>\n\
                 <h1>hello world!</h1>\n\
                 <div id="test"></div>\n\
-                <div id="result"></div>\n\
+                <div id="result"></div>\n\z
         </body>\n\
         </html>\n\
     ';
