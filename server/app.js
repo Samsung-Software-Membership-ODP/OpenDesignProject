@@ -229,7 +229,7 @@ app.get('/workspace', function(req, res){
         <body>\n\
                 <h1>hello world!</h1>\n\
                 <div id="test"></div>\n\
-                <div id="result"></div>\n\z
+                <div id="result"></div>\n\
         </body>\n\
         </html>\n\
     ';
@@ -242,6 +242,11 @@ app.get('/workspace', function(req, res){
             console.log("file write complete");
         });
     });
+});
+
+
+app.get('/test', function(req, res){
+    res.render('test', {user_id : checkedID});
 });
 
 

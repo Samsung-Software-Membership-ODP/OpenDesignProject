@@ -1,5 +1,5 @@
 <!Doctype html>
-<html>
+<html ng-app="myApp">
     <head>
         <title>Project View</title>
 <!--        <link rel="stylesheet" type="text/css" href="main.css">-->
@@ -8,6 +8,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
         <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
+        <link href='styles/dragular.css' rel='stylesheet' type='text/css' />
+        <script src='scripts/dragular.js'></script>
         <style>
             *{
                 margin: 0 auto;
@@ -89,6 +91,7 @@
 
         </style>
         <script>
+            var app = angular.module('myApp', ['dragularModule', 'otherDependencies']);
             $(document).ready(function(){
                 $('#btn').click(function(){
                     $('#frame').contents().find('#test').append('test !!!!!!!');    

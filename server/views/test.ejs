@@ -1,23 +1,98 @@
 <!Doctype html>
-<html>
+<html ng-app="myApp">
     <head>
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+        <link href='./stylesheets/dragular.css' rel='stylesheet' type='text/css' />
+        <link href="http://luckylooke.github.io/dragular/dist/examples.css" rel="stylesheet" type="text/css"/>
+        <script src='./scripts/dragular.js'></script>
         <title></title>
         <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+
+        <script>
+            var app = angular.module('myApp', ['dragularModule']);
+            app.controller('CopyModel', ['$scope', '$element', 'dragularService', function TodoCtrl($scope, $element, dragularService) {
+                $scope.items1 = [{
+                  content: 'Move me, and make copy on drop.'
+                }, {
+                  content: 'If you try to drop me somewhere other than these containers, I\'ll just come back.'
+                }, {
+                  content: 'Item 3'
+                }, {
+                  content: 'Item 4'
+                }];
+                $scope.items2 = [{
+                  content: 'Item 5'
+                }, {
+                  content: 'Item 6'
+                }, {
+                  content: 'Item 7'
+                }, {
+                  content: 'Item 8'
+                }];
+                
+                $scope.styles = [
+                    {"background" : "green"},
+                    {"background" : "red"},
+                    {"background" : "violet"},
+                    {"background" : "blue"}
+                ]
+                
+                $scope.mystyle = {
+                    "background" : "red",
+                    "border" : "1px solid blue"
+                }
+                
+                var containers = $element.children().children();
+                dragularService([containers[0],containers[1]],{
+                  containersModel: [$scope.items1, $scope.items2],
+                  copy: true
+                });
+              }]);
+            
+            
+        </script>
         <style>
-            *{margin: auto;}
+            .card{
+                padding : 30px;
+                background: white;
+                border: 1px solid black;
+            }
         </style>
         <script>
-           $(document).ready(function() {
-               var test = "<%= user_id %>";
-               $("#right").text(test);
-               alert("<%= user_id %>");
-            });
+            
+//           $(document).ready(function() {
+//               var test = "<%= user_id %>";
+//               $("#right").text(test);
+//               alert("<%= user_id %>");
+//            });
         </script>
     </head>
     
     
+<!--    <body ng-controller="CopyModel">-->
     <body>
+        <div class='wrapper' ng-controller="CopyModel" >
+            <div class='tableRow'>
+              <div class='containerVertical'>
+                <div ng-style="styles[$index]" ng-repeat="item in items1">{{item.content}}</div>
+              </div>
+              <div class='containerVertical'>
+                <div ng-style="mystyle" ng-repeat="item in items2">{{item.content}}</div>
+              </div>
+            </div>
+            <div class="tableRow">
+              <div class="container">
+                <div>Items1:
+                  <br/>{{items1 | json}}</div>
+              </div>
+              <div class="container">
+                <div>Items2:
+                  <br/>{{items2 | json}}</div>
+              </div>
+            </div>
+      </div>
+<!--
         <div id="main_nav">
             <ul style="float:left;">
                 <li><a href="#">Home</a></li>
@@ -46,6 +121,7 @@
                 
             </div>
         </div>
+-->
         
     </body>
 </html>
