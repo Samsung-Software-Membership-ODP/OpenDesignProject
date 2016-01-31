@@ -53,9 +53,9 @@
     <script>
     function change()
     {
-      alert($('#input_width').val());
-      $('draggable1').width($('#input_width').val());
-      alert("Done");
+//      alert($('#input_width').val());
+      $('#draggable1').width($('#input_width').val());
+//      alert("Done");
 
       //       window.alert(5 + 6);
       // var x=document.getElementById("changeObject");//error
@@ -102,7 +102,7 @@
     {
       e.preventDefault();
 //      e.target.style.backgroundColor = "#1E8BC3";
-      event.target.style.border = "3px dotted red";
+      event.target.style.border = "3px solid blue";
       return true;
     }
     </script>
