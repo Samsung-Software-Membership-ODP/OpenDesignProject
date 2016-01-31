@@ -32,7 +32,10 @@
                 }];
                 
                 $scope.styles = [
-                    {"background" : "green"},
+                    {
+                        "background" : "green",
+                        "width" : "80%"
+                    },
                     {"background" : "red"},
                     {"background" : "violet"},
                     {"background" : "blue"}
@@ -43,9 +46,18 @@
                     "border" : "1px solid blue"
                 }
                 
+                $scope.$on('dragulardragend', function($index){
+                   alert($index);
+                });
+                
+                $scope.test = function(index){
+                    alert("????");
+                }
+                
                 var containers = $element.children().children();
                 dragularService([containers[0],containers[1]],{
-                  containersModel: [$scope.items1, $scope.items2],
+                    scope: $scope,
+//                  containersModel: [$scope.items1, $scope.items2],
                   copy: true
                 });
               }]);
@@ -60,27 +72,29 @@
             }
         </style>
         <script>
-            
-//           $(document).ready(function() {
-//               var test = "<%= user_id %>";
-//               $("#right").text(test);
-//               alert("<%= user_id %>");
-//            });
+            $(document).ready(function(){
+               $('#btn').click(function(){
+                 $('#test').append(document.documentElement.innerHTML);
+               });
+            });
         </script>
+        
     </head>
     
     
 <!--    <body ng-controller="CopyModel">-->
     <body>
         <div class='wrapper' ng-controller="CopyModel" >
+            
             <div class='tableRow'>
               <div class='containerVertical'>
-                <div ng-style="styles[$index]" ng-repeat="item in items1">{{item.content}}</div>
+                <div ng-style="styles[$index]" ng-drag="test()" ng-repeat="item in items1">{{item.content}}</div>
               </div>
               <div class='containerVertical'>
                 <div ng-style="mystyle" ng-repeat="item in items2">{{item.content}}</div>
               </div>
             </div>
+            
             <div class="tableRow">
               <div class="container">
                 <div>Items1:
@@ -91,37 +105,11 @@
                   <br/>{{items2 | json}}</div>
               </div>
             </div>
-      </div>
-<!--
-        <div id="main_nav">
-            <ul style="float:left;">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Home</a></li>
-                
-            </ul>
-            <h5 id="user_msg"><%= user_id %> 님 접속을 환영합니다.</h5>
             
         </div>
-        <div id="mainframe">
-            <div id="left">
-                <div class="nav_title">
-                    <h2>Components</h2>
-                </div>
-                    <li>Buttons</li>
-                    <li>Buttons</li>
-                    <li>Buttons</li>
-                    <li>Buttons</li>
-                    <li>Buttons</li>
-                    <li><button id = "btntest">Buttons</button></li>
-                
-            </div>
-            <div id="right">
-                
-            </div>
+        <button id="btn" value="??">?</button>
+        <div id="test">
         </div>
--->
         
     </body>
 </html>
