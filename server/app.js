@@ -8,6 +8,12 @@ var mongoose = require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
 var mkdir = require('mkdirp');
 var fs = require('fs');
+var beautify = require('js-beautify').js_beautify;
+
+var beautify_js = require('js-beautify');
+var beautify_css = require('js-beautify').css;
+var beautify_html = require('js-beautify').html;
+
 //var $ = require('jquery');
 //var bootstrap = require('bootstrap');
 
@@ -23,6 +29,22 @@ var mongopw = 'opd1234'
 
 
 console.log("Server Start");
+
+//fs.readFile('foo.js', 'utf8', function (err, data) {
+//    if (err) {
+//        throw err;
+//    }
+//    var temp = data.toString().split("<script>");
+//
+//    console.log(beautify_html(temp[0], { indent_size: 2 }));
+//    console.log(beautify(temp[1], { indent_size: 2 }));
+//    console.log(beautify_html(temp[2], { indent_size: 2 }));
+////    for(var i = 0; i < temp.length; i++){
+////        console.log(temp[i]+'\n\n\n\n\n\n');
+////    }
+////    console.log(temp[0]+'\n\n\n\n\n\n'+temp[1]);
+//    
+//});
 
 
 
@@ -80,6 +102,32 @@ app.get('/users', function(req, res){
     User.find({}, function(err, docs){
        res.json(docs);
         console.log(docs);
+    });
+});
+
+app.get('/test2', function(req, res){
+    res.render('test2');
+});
+app.post('/test2', function(req,res){
+    console.log('post!') ;
+//    console.log(req.body.data);
+    console.log(beautify_html(req.body.data, { indent_size: 2 }));
+    
+    console.log('폴더를 생성합니다.');
+    mkdir('./public/workspaces', function(err){
+        console.log(err);
+    });
+    
+    var file = './public/workspaces/index.html';
+    
+    fs.open(file, 'w', function(err, fd){
+        if(err) throw err;
+        console.log('file open complete');
+        
+        fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
+           if(err) throw err;
+            console.log("file write complete");
+        });
     });
 });
 

@@ -1,35 +1,182 @@
-<h1>Test!</h1>
-        <!Doctype html>
-        <html>
-        <head>
-            <script src="//code.jquery.com/jquery.min.js"></script>
-            <title></title>
-            <style>
-                body:hover{
-                    background:blue
-                }
-                div{
-                    height:100px
-                }
-                div:hover{
-                    height:100px;background:green;
-                }
-                h1:hover{
-                    color:red;
-                }
-            </style>
-            <script>
-                $(document).ready(function(){
-                    $("#test").click(function(){
-                        $("#result").append(document.documentElement.innerHTML);
-                    });
-                });
-            </script>
-        </head>
-        <body>
-                <h1>hello world!</h1>
-                <div id="test"></div>
-                <div id="result"></div>
-        </body>
-        </html>
+<head>
+  <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+
+
+  <meta charset="utf-8">
+  <title>Drag and Drop example</title>
+
+  <style>
+    #target1 {
+      float: left;
+      width: 98%;
+      height: 200px;
+      padding: 10px;
+      margin: 10px;
+    }
     
+    #target2 {
+      float: left;
+      width: 98%;
+      height: 700px;
+      padding: 10px;
+      margin: 10px;
+    }
+    
+    #draggable1 {
+      float: inherit;
+      width: 200px;
+      height: 200px;
+      padding: 5px;
+      margin: 5px;
+    }
+    
+    #draggable2 {
+      float: inherit;
+      width: 75px;
+      height: 70px;
+      padding: 10px;
+      margin: 5px;
+    }
+    
+    #draggable3 {
+      float: inherit;
+      width: 75px;
+      height: 70px;
+      padding: 5px;
+      margin: 50px;
+    }
+    
+    #target1 {
+      background-color: #1E8111;
+    }
+    
+    #target2 {
+      background-color: #1E3333;
+    }
+    
+    #draggable1 {
+      background-color: white;
+      color: white;
+    }
+    
+    #draggable2 {
+      background-color: gray;
+      color: white;
+    }
+    
+    #draggable3 {
+      background-color: black;
+      color: white;
+    }
+    
+    #set {
+      width: 98%;
+      background-color: inherit;
+    }
+  </style>
+
+  <script>
+    function change() {
+      //      alert($('#input_width').val());
+      //      $('#draggable1').width($('#input_width').val());
+      //      alert("Done");
+      $.post('/test2', {
+        data: document.documentElement.innerHTML
+      });
+      window.location.href = "data:text/plain;charset=UTF-8," + document.documentElement.innerHTML;
+      //       window.alert(5 + 6);
+      // var x=document.getElementById("changeObject");//error
+      // x.style.width=setWidth;
+
+    }
+
+    function drop(e) {
+      event.target.style.border = "";
+      e.preventDefault();
+      var iddraggable = e.dataTransfer.getData("Data");
+      e.target.appendChild(document.getElementById(iddraggable));
+      e.stopPropagation();
+      var changeObject = iddraggable;
+      //      event.target.style.backgroundColor = "red";
+      return false;
+    }
+
+    function start(e) // 드래그 시작
+    {
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData("Data", e.target.getAttribute('id'));
+      e.dataTransfer.setDragImage(e.target, 10, 10); // 드래그 위치
+
+      return true;
+    }
+
+    function end(e) // 드래그 끝
+    {
+      e.dataTransfer.clearData("Data");
+      //    e.target.style.backgroundColor = "red";
+      return true;
+    }
+
+    function over(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+      //      e.target.style.backgroundColor = "#1E8BC3";
+      return false;
+    }
+
+    function Leave(e) {
+      event.target.style.border = "";
+
+    }
+
+    function enter(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+      e.preventDefault();
+      //      e.target.style.backgroundColor = "#1E8BC3";
+      event.target.style.border = "3px solid blue";
+      return true;
+    }
+  </script>
+  <script>
+    // jquery
+    $(document).ready(function() {
+      alert("?");
+      $('#draggable1').click(function() {
+        alert($(this).width());
+        alert($(this).height());
+        // alert($(this).margin());
+        // alert($(this).padding());
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <h1>Drag and Drop</h1>
+  <div id="setdiv">
+    <h3>width<input id="input_width" name="setWidth" size="3">
+        height<input id="input_height" name="setHeight" size="3">
+        margin<input name="setMargin" size="3">
+        padding<input name="setPadding" size="3">
+        <button type="button" onclick="change()">Change</button>
+      </h3>
+  </div>
+  <div id="target1" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)" style="">
+
+
+
+
+
+
+    <div id="draggable3" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" ondragleave="return Leave(event)">3
+    </div>
+  </div>
+
+  <div id="target2" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)" style="">
+    <div id="draggable1" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" ondragleave="return Leave(event)" style="">1
+      <div id="draggable2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" ondragleave="return Leave(event)" style="">2
+      </div>
+    </div>
+  </div>
+
+
+</body>
