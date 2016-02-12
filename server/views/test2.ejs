@@ -50,12 +50,32 @@
     </style>
 
     <script>
+        
+        
+        
+        
     var flag=0;
     var cnt=1;
+    var selectedElement;
+
+        
+        
+    $(document).ready(function(){
+        $('.draggable1').click(function(){
+            selectedElement = $(this);
+        });
+        $('.draggable2').click(function(){
+            selectedElement = $(this);
+        });
+    });
         
         
     function change(){
-        
+        var width = $('#input_width').val();
+        var height = $('#input_height').val();
+        selectedElement.width(width);
+        selectedElement.height(height);
+//        alert(element.width());
     }
     function save(){
         $.post('/test2',{data : document.documentElement.innerHTML});
@@ -154,17 +174,7 @@
     </script>
     <script>
     // jquery
-      $(document).ready(function(){
-        $('.draggable1').click(function(){
-            var element = $(this);
-            alert(element.width()+100);
-            
-//              alert($(this).width());
-//              alert($(this).height());
-          // alert($(this).margin());
-          // alert($(this).padding());
-        });
-      });
+      
     </script>
   </head>
   <body>
@@ -174,7 +184,7 @@
         height<input id="input_height"name="setHeight" size="3"></input>
         margin<input name="setMargin" size="3"></input>
         padding<input name="setPadding" size="3"></input>
-        <button type="button" onclick="change()">save</button>
+        <button type="button" onclick="change()">change</button>
         <button type="button" onclick="save()">save</button>
       </h3>
     </div>
