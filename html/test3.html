@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Drag and Drop example</title>
+
+    <style>
+    div.draggable1 {
+      float : inherit;
+      width: 200px; height: 200px; padding: 5px;
+      margin: 5px;
+      background-color: white; color:white;
+    }
+    #target1
+    {
+      float: left; width: 98%; height: 200px;
+      padding: 10px; margin: 10px;
+    }
+
+    #target2
+    {
+      float: left; width: 98%; height: 700px;
+      padding: 10px; margin: 10px;
+
+    }
+    div.draggable2
+    {
+      float : inherit;
+      width: 75px; height: 70px; padding: 10px;
+      margin: 5px;
+      background-color: gray; color:white;
+    }
+    div.draggable3
+    {
+      float : inherit;
+      width: 75px; height: 70px; padding: 5px;
+      margin: 5px;
+      background-color: black; color:white;
+    }
+    #target1 {background-color: #1E8111;}
+    #target2 {background-color: #1E3333;}
+
+    #set
+    {
+      width : 98%;
+      background-color: inherit;
+    }
+    </style>
+
+    <script>
+    var flag=0;
+    var cnt=1;
+    function change(){
+        $.post('/test2',{data : document.documentElement.innerHTML});
+        window.location.href="data:text/plain;charset=UTF-8,"+document.documentElement.innerHTML;
+
+      //       window.alert(5 + 6);
+      // var x=document.getElementById("changeObject");//error
+      // x.style.width=setWidth;
+
+    }
+    function drop(e)
+    {
+
+      event.target.style.border = "";
+      // e.preventDefault();
+      var iddraggable = e.dataTransfer.getData("Data");
+      // console.log(e.dataTransfer.getData("Data.parentNode"));
+
+      // console.log(iddraggable);
+      // console.log(nodeCopy);
+      console.log(flag);
+      // console.log(e.toElement.previousElementSibling);
+      // console.log(e.target.previousElementSibling);
+      if(flag==1)
+      {
+        var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
+        nodeCopy.className=iddraggable;
+        nodeCopy.id="New ID"+ cnt;
+        console.log(nodeCopy.id);
+        cnt=cnt+1;
+        e.target.appendChild(nodeCopy);
+      }
+      else
+      {
+        e.target.appendChild(document.getElementById(iddraggable));
+      }
+    }
+
+    function dropCopy(e)
+    {
+      console.log("dropCopy");
+      event.target.style.border = "";
+      var iddraggable = e.dataTransfer.getData("Data");
+      var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
+      e.target.appendChild(nodeCopy);
+      // e.stopPropagation();
+      // event.target.style.backgroundColor = "red";
+
+    }
+    function start(e) // 드래그 시작
+    {
+       e.dataTransfer.effectAllowed="copy";
+
+       e.dataTransfer.setData("Data", e.target.getAttribute('id'));
+       var chk =  e.dataTransfer.getData("Data");
+       var chkp = document.getElementById(chk);
+      //  console.log(chkp.parentNode);
+       if(chkp.parentNode.id=="target1")
+       {
+         flag=1;
+       }
+       else {
+         flag=0;
+       }
+
+      //  console.log(e.target.getAttribute('id'));
+       e.dataTransfer.setDragImage(e.target,10,10); // 드래그 위치
+
+      return true;
+    }
+
+    function end(e) // 드래그 끝
+    {
+      e.dataTransfer.clearData("Data");
+  //    e.target.style.backgroundColor = "red";
+      return true;
+    }
+    function over(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+//      e.target.style.backgroundColor = "#1E8BC3";
+      var iddraggable = e.dataTransfer.getData("Data");
+      var id = e.target.getAttribute('id');
+      var ifo = e.target;
+      // console.log(ifo.parentNode);
+      if(id == 'target1' || ifo.parentNode.id == 'target1') return true;
+      return false;
+    }
+
+    function Leave(e) {
+            event.target.style.border = "";
+
+    }
+    function enter(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+      e.preventDefault();
+//      e.target.style.backgroundColor = "#1E8BC3";
+      event.target.style.border = "3px dotted red";
+      return true;
+    }
+    </script>
+    <script>
+    // jquery
+      $(document).ready(function(){
+        alert("?");
+        $('#draggable1').click(function(){
+          alert($(this).width());
+          alert($(this).height());
+          // alert($(this).margin());
+          // alert($(this).padding());
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Drag and Drop</h1>
+    <div id="setdiv">
+      <h3>width<input id="input_width"name="setWidth" size="3"></input>
+        height<input id="input_height"name="setHeight" size="3"></input>
+        margin<input name="setMargin" size="3"></input>
+        padding<input name="setPadding" size="3"></input>
+        <button type="button" onclick="change()">Change</button>
+      </h3>
+    </div>
+    <div id="target1"
+      ondragover="return over(event)"
+      ondrop="return drop(event)"
+      ondragenter="return enter(event)"
+      ondragleave="return Leave(event)"
+      >
+
+
+      <div class="draggable1" id="draggable1" draggable="true"
+        ondragstart="return start(event)"
+        ondragend="return end(event)"
+        style="width: 200px; height: 200px;">1
+      </div>
+
+      <div class="draggable2" id="draggable2" draggable="true"
+        ondragstart="return start(event)"
+        ondragend="return end(event)"
+        >2
+      </div>
+
+      <div class="draggable3" id="draggable3" draggable="true"
+        ondragstart="return start(event)"
+        ondragend="return end(event)"
+        >3
+      </div>
+    </div>
+
+    <div id="target2"
+      ondragover="return over(event)"
+      ondrop="return drop(event)"
+      ondragenter="return enter(event)"
+      ondragleave="return Leave(event)">
+    </div>
+  </body>
+</html>

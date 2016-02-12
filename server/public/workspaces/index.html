@@ -6,6 +6,16 @@
   <title>Drag and Drop example</title>
 
   <style>
+    div.draggable1 {
+      float: inherit;
+      width: 200px;
+      height: 200px;
+      padding: 5px;
+      margin: 5px;
+      background-color: white;
+      color: white;
+    }
+    
     #target1 {
       float: left;
       width: 98%;
@@ -22,28 +32,24 @@
       margin: 10px;
     }
     
-    #draggable1 {
-      float: inherit;
-      width: 200px;
-      height: 200px;
-      padding: 5px;
-      margin: 5px;
-    }
-    
-    #draggable2 {
+    div.draggable2 {
       float: inherit;
       width: 75px;
       height: 70px;
       padding: 10px;
       margin: 5px;
+      background-color: gray;
+      color: white;
     }
     
-    #draggable3 {
+    div.draggable3 {
       float: inherit;
       width: 75px;
       height: 70px;
       padding: 5px;
-      margin: 50px;
+      margin: 5px;
+      background-color: black;
+      color: white;
     }
     
     #target1 {
@@ -54,21 +60,6 @@
       background-color: #1E3333;
     }
     
-    #draggable1 {
-      background-color: white;
-      color: white;
-    }
-    
-    #draggable2 {
-      background-color: gray;
-      color: white;
-    }
-    
-    #draggable3 {
-      background-color: black;
-      color: white;
-    }
-    
     #set {
       width: 98%;
       background-color: inherit;
@@ -76,35 +67,67 @@
   </style>
 
   <script>
+    var flag = 0;
+    var cnt = 1;
+
     function change() {
-      //      alert($('#input_width').val());
-      //      $('#draggable1').width($('#input_width').val());
-      //      alert("Done");
       $.post('/test2', {
         data: document.documentElement.innerHTML
       });
       window.location.href = "data:text/plain;charset=UTF-8," + document.documentElement.innerHTML;
-      //       window.alert(5 + 6);
-      // var x=document.getElementById("changeObject");//error
-      // x.style.width=setWidth;
 
     }
 
     function drop(e) {
+
       event.target.style.border = "";
-      e.preventDefault();
+      // e.preventDefault();
       var iddraggable = e.dataTransfer.getData("Data");
-      e.target.appendChild(document.getElementById(iddraggable));
-      e.stopPropagation();
-      var changeObject = iddraggable;
-      //      event.target.style.backgroundColor = "red";
-      return false;
+      // console.log(e.dataTransfer.getData("Data.parentNode"));
+
+      // console.log(iddraggable);
+      // console.log(nodeCopy);
+      console.log(flag);
+      // console.log(e.toElement.previousElementSibling);
+      // console.log(e.target.previousElementSibling);
+      if (flag == 1) {
+        var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
+        nodeCopy.className = iddraggable;
+        nodeCopy.id = "New ID" + cnt;
+        console.log(nodeCopy.id);
+        cnt = cnt + 1;
+        e.target.appendChild(nodeCopy);
+      } else {
+        e.target.appendChild(document.getElementById(iddraggable));
+      }
+    }
+
+    function dropCopy(e) {
+      console.log("dropCopy");
+      event.target.style.border = "";
+      var iddraggable = e.dataTransfer.getData("Data");
+      var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
+      e.target.appendChild(nodeCopy);
+      // e.stopPropagation();
+      // event.target.style.backgroundColor = "red";
+
     }
 
     function start(e) // 드래그 시작
     {
-      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.effectAllowed = "copy";
+
       e.dataTransfer.setData("Data", e.target.getAttribute('id'));
+      var chk = e.dataTransfer.getData("Data");
+      var chkp = document.getElementById(chk);
+      //  console.log(chkp.parentNode);
+      if (chkp.parentNode.id == "target1") {
+        flag = 1;
+      } else {
+        flag = 0;
+      }
+
+      //  console.log(e.target.getAttribute('id'));
       e.dataTransfer.setDragImage(e.target, 10, 10); // 드래그 위치
 
       return true;
@@ -120,6 +143,11 @@
     function over(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
     {
       //      e.target.style.backgroundColor = "#1E8BC3";
+      var iddraggable = e.dataTransfer.getData("Data");
+      var id = e.target.getAttribute('id');
+      var ifo = e.target;
+      // console.log(ifo.parentNode);
+      if (id == 'target1' || ifo.parentNode.id == 'target1') return true;
       return false;
     }
 
@@ -132,15 +160,14 @@
     {
       e.preventDefault();
       //      e.target.style.backgroundColor = "#1E8BC3";
-      event.target.style.border = "3px solid blue";
+      event.target.style.border = "3px dotted red";
       return true;
     }
   </script>
   <script>
     // jquery
     $(document).ready(function() {
-      alert("?");
-      $('#draggable1').click(function() {
+      $('.draggable1').click(function() {
         alert($(this).width());
         alert($(this).height());
         // alert($(this).margin());
@@ -160,21 +187,23 @@
         <button type="button" onclick="change()">Change</button>
       </h3>
   </div>
-  <div id="target1" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)" style="">
+  <div id="target1" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)">
 
 
+    <div class="draggable1" id="draggable1" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
+    </div>
 
+    <div class="draggable2" id="draggable2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)">2
+    </div>
 
-
-
-    <div id="draggable3" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" ondragleave="return Leave(event)">3
+    <div class="draggable3" id="draggable3" draggable="true" ondragstart="return start(event)" ondragend="return end(event)">3
     </div>
   </div>
 
   <div id="target2" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)" style="">
-    <div id="draggable1" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" ondragleave="return Leave(event)" style="">1
-      <div id="draggable2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" ondragleave="return Leave(event)" style="">2
-      </div>
+    <div class="draggable1" id="New ID1" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
+    </div>
+    <div class="draggable1" id="New ID2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
     </div>
   </div>
 
