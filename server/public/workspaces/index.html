@@ -1,35 +1,168 @@
-<h1>Test!</h1>
-        <!Doctype html>
-        <html>
-        <head>
-            <script src="//code.jquery.com/jquery.min.js"></script>
-            <title></title>
-            <style>
-                body:hover{
-                    background:blue
-                }
-                div{
-                    height:100px
-                }
-                div:hover{
-                    height:100px;background:green;
-                }
-                h1:hover{
-                    color:red;
-                }
-            </style>
-            <script>
-                $(document).ready(function(){
-                    $("#test").click(function(){
-                        $("#result").append(document.documentElement.innerHTML);
-                    });
-                });
-            </script>
-        </head>
-        <body>
-                <h1>hello world!</h1>
-                <div id="test"></div>
-                <div id="result"></div>
-        </body>
-        </html>
+<html>
+
+<head>
+  <title>Project View</title>
+  <!--        <link rel="stylesheet" type="text/css" href="main.css">-->
+
+  <!-- jquery -->
+
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,200" rel="stylesheet" type="text/css">
+  <!--  <link href='styles/dragular.css' rel='stylesheet' type='text/css' />-->
+  <!--   -->
+  <style>
+    * {
+      margin: 0 auto;
+      font-family: 'Titillium Web', sans-serif;
+    }
     
+    #mainframe {
+      background: #EBEBEC;
+      height: 1000px;
+      padding: 50px;
+    }
+    
+    #main_nav {
+      padding: 10px;
+      background: #003C6C;
+    }
+    
+    #main_nav > ul {
+      list-style: none;
+    }
+    
+    #main_nav > ul > li {
+      font-size: 14px;
+      float: left;
+      margin-right: 10px;
+    }
+    
+    #main_nav > ul > li > a {
+      text-decoration: none;
+      color: #888888;
+    }
+    
+    #main_nav > ul > li > a:hover {
+      text-decoration: none;
+      color: white;
+    }
+    
+    #user_msg {
+      float: right;
+      margin-right: 20px;
+      color: white;
+      line-height: 42px;
+    }
+    
+    .nav_title > h2 {
+      color: white;
+      text-align: center;
+    }
+    
+    .card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 3px;
+      height: 50px;
+      width: 70%;
+      margin-top: 20px;
+    }
+    
+    .card > h2 {
+      line-height: 50px;
+    }
+    
+    .logo {
+      color: white;
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+    /*
+            #component_view{
+                padding-left: 40px;
+                vertical-align: middle;
+                height: 40px;
+                background: white;
+                border-bottom: 2px solid #003C6C;
+            }
+            #component_view > p{
+                line-height: 40px;
+            }
+            
+*/
+    
+    #footer {
+      background: #5D5D5D;
+      height: 50px;
+      padding-left: 100px;
+    }
+    
+    #footer > h3 {
+      color: #B7B7B7;
+      line-height: 50px;
+    }
+  </style>
+  <style>
+    div.draggable1 {
+      float: inherit;
+      width: 200px;
+      height: 200px;
+      padding: 5px;
+      margin: 5px;
+      background-color: #eeeeee;
+      color: white;
+    }
+    
+    #target2 {
+      float: left;
+      width: 98%;
+      height: 700px;
+      padding: 10px;
+      margin: 10px;
+    }
+    
+    div.draggable2 {
+      float: inherit;
+      width: 75px;
+      height: 70px;
+      padding: 10px;
+      margin: 5px;
+      background-color: gray;
+      color: white;
+    }
+    
+    div.draggable3 {
+      float: inherit;
+      width: 75px;
+      height: 70px;
+      padding: 5px;
+      margin: 5px;
+      background-color: black;
+      color: white;
+    }
+    /*        #component_view {background-color: #1E8111;}*/
+    
+    #target2 {
+      background-color: #1E3333;
+    }
+    
+    #set {
+      width: 98%;
+      background-color: inherit;
+    }
+  </style>
+
+
+  <!--Drag and Drop part-->
+
+</head>
+
+<body>
+
+  <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
+  </div>
+  <div class="draggable2" id="New ID2" style="">2
+  </div>
+</body>
+
+</html>

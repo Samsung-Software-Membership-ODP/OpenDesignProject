@@ -264,48 +264,35 @@ app.get('/workspace', function(req, res){
     mkdir('./public/workspaces', function(err){
         console.log(err);
     });
+//    
+//    var file = './public/workspaces/index.html';
+//    
+//    fs.open(file, 'w', function(err, fd){
+//        if(err) throw err;
+//        console.log('file open complete');
+//        
+//        fs.writeFile(file, '<h1>Test!</h1>\n'+text, 'utf-8', function(err){
+//           if(err) throw err;
+//            console.log("file write complete");
+//        });
+//    });
+});
+
+app.post('/workspace', function(req, res){
+//    console.log(beautify_html(req.body.data, { indent_size: 2 }));
+    
+    console.log('폴더를 생성합니다.');
+    mkdir('./public/workspaces', function(err){
+        console.log(err);
+    });
     
     var file = './public/workspaces/index.html';
-    var text = '\
-        <!Doctype html>\n\
-        <html>\n\
-        <head>\n\
-            <script src="//code.jquery.com/jquery.min.js"></script>\n\
-            <title></title>\n\
-            <style>\n\
-                body:hover{\n\
-                    background:blue\n\
-                }\n\
-                div{\n\
-                    height:100px\n\
-                }\n\
-                div:hover{\n\
-                    height:100px;background:green;\n\
-                }\n\
-                h1:hover{\n\
-                    color:red;\n\
-                }\n\
-            </style>\n\
-            <script>\n\
-                $(document).ready(function(){\n\
-                    $("#test").click(function(){\n\
-                        $("#result").append(document.documentElement.innerHTML);\n\
-                    });\n\
-                });\n\
-            </script>\n\
-        </head>\n\
-        <body>\n\
-                <h1>hello world!</h1>\n\
-                <div id="test"></div>\n\
-                <div id="result"></div>\n\
-        </body>\n\
-        </html>\n\
-    ';
+    
     fs.open(file, 'w', function(err, fd){
         if(err) throw err;
         console.log('file open complete');
         
-        fs.writeFile(file, '<h1>Test!</h1>\n'+text, 'utf-8', function(err){
+        fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
            if(err) throw err;
             console.log("file write complete");
         });
