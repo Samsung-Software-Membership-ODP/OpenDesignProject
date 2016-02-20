@@ -69,8 +69,29 @@
   <script>
     var flag = 0;
     var cnt = 1;
+    var selectedElement;
+
+
+
+    $(document).ready(function() {
+      $('.draggable1').click(function() {
+        selectedElement = $(this);
+      });
+      $('.draggable2').click(function() {
+        selectedElement = $(this);
+      });
+    });
+
 
     function change() {
+      var width = $('#input_width').val();
+      var height = $('#input_height').val();
+      selectedElement.width(width);
+      selectedElement.height(height);
+      //        alert(element.width());
+    }
+
+    function save() {
       $.post('/test2', {
         data: document.documentElement.innerHTML
       });
@@ -166,14 +187,6 @@
   </script>
   <script>
     // jquery
-    $(document).ready(function() {
-      $('.draggable1').click(function() {
-        alert($(this).width());
-        alert($(this).height());
-        // alert($(this).margin());
-        // alert($(this).padding());
-      });
-    });
   </script>
 </head>
 
@@ -184,26 +197,41 @@
         height<input id="input_height" name="setHeight" size="3">
         margin<input name="setMargin" size="3">
         padding<input name="setPadding" size="3">
-        <button type="button" onclick="change()">Change</button>
+        <button type="button" onclick="change()">change</button>
+        <button type="button" onclick="save()">save</button>
       </h3>
   </div>
-  <div id="target1" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)">
+  <div id="target1" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)" style="">
 
 
-    <div class="draggable1" id="draggable1" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
+    <div class="draggable1" id="draggable1" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 120px; height: 100px;">1
     </div>
 
-    <div class="draggable2" id="draggable2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)">2
+    <div class="draggable2" id="draggable2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="">2
     </div>
 
-    <div class="draggable3" id="draggable3" draggable="true" ondragstart="return start(event)" ondragend="return end(event)">3
+    <div class="draggable3" id="draggable3" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="">3
     </div>
   </div>
 
   <div id="target2" ondragover="return over(event)" ondrop="return drop(event)" ondragenter="return enter(event)" ondragleave="return Leave(event)" style="">
     <div class="draggable1" id="New ID1" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
+      <div class="draggable1" id="New ID2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
+        <div class="draggable2" id="New ID4" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="">2
+          <div class="draggable3" id="New ID6" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="">3
+            <div class="draggable3" id="New ID7" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="">3
+              <div class="draggable2" id="New ID8" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="">2
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="draggable1" id="New ID2" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
+    <div class="draggable1" id="New ID3" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 200px; height: 200px;">1
+    </div>
+    <div class="draggable2" id="New ID5" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="">2
+    </div>
+    <div class="draggable1" id="New ID9" draggable="true" ondragstart="return start(event)" ondragend="return end(event)" style="width: 120px; height: 100px;">1
     </div>
   </div>
 
