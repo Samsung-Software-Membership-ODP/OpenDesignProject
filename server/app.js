@@ -57,6 +57,8 @@ var db = mongoose.connect('mongodb://'+mongoid+':'+mongopw+'@ds039155.mongolab.c
 });
 console.log("MongoDB : Connected");
 
+// firebase Connect
+
 
 var Schema = mongoose.Schema;
 var UserSchema = new Schema({
