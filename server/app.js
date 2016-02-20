@@ -14,6 +14,9 @@ var beautify_js = require('js-beautify');
 var beautify_css = require('js-beautify').css;
 var beautify_html = require('js-beautify').html;
 
+// firebase
+var Firebase = require("firebase");
+
 //var $ = require('jquery');
 //var bootstrap = require('bootstrap');
 
@@ -57,7 +60,14 @@ var db = mongoose.connect('mongodb://'+mongoid+':'+mongopw+'@ds039155.mongolab.c
 });
 console.log("MongoDB : Connected");
 
+
+
 // firebase Connect
+var firebaseDB = new Firebase('https://odp.firebaseio.com/');
+firebaseDB.child('users').update({
+    add : '2'
+});
+console.log('Firebase DB : Connected Successfully')
 
 
 var Schema = mongoose.Schema;
@@ -72,6 +82,29 @@ var UserSchema = new Schema({
 })
 
 var User = mongoose.model('users', UserSchema);
+
+
+
+
+firebaseDB.child('users').on('child_added', function(snapshot){
+    console.log(snapshot.val().id);
+})
+
+
+// Get a reference to our posts
+var ref = new Firebase("https://docs-examples.firebaseio.com/web/saving-data/fireblog/posts");
+
+// Get the data on a post that has changed
+ref.on("child_changed", function(snapshot) {
+  var changedPost = snapshot.val();
+  console.log("The updated post title is " + changedPost.title);
+});
+
+
+
+
+
+
 
 
 // view engine setup
@@ -100,6 +133,9 @@ var projectCount;
 var projects;
 var titles = new Array();
 
+
+
+
 app.get('/users', function(req, res){
     User.find({}, function(err, docs){
        res.json(docs);
@@ -107,9 +143,18 @@ app.get('/users', function(req, res){
     });
 });
 
+
+
+
+
+
+
+// testing space
+
 app.get('/test2', function(req, res){
     res.render('test2');
 });
+
 app.post('/test2', function(req,res){
     console.log('post!') ;
 //    console.log(req.body.data);
@@ -133,7 +178,15 @@ app.post('/test2', function(req,res){
     });
 });
 
-// project 부분
+// 
+
+
+
+
+
+
+
+// project part
 app.get('/project', function(req, res){
     res.render('project', {user_name : checkedName, projects : projects, titles : titles});
 });
@@ -172,17 +225,31 @@ app.post('/signup', function(req, res){
     var pw = req.body.pw;
     
     var user = new User({id : id, pw : pw, name : name});
-    user.save(function(err){
-        if(err){
-            console.err(err);
-            throw err;
+    
+    firebaseDB.child('users').push(
+        {
+            id : id,
+            pw : pw,
+            name : name
         }
-        console.log("name : " + name);
-        console.log("id : " + id);
-        console.log("pw : " + pw);
-        console.log("으로 저장되었습니다.");
-        res.redirect('/');
-    });
+    );
+    console.log("name : " + name);
+    console.log("id : " + id);
+    console.log("pw : " + pw);
+    console.log("으로 저장되었습니다.");
+    res.redirect('/');
+    
+//    user.save(function(err){
+//        if(err){
+//            console.err(err);
+//            throw err;
+//        }
+//        console.log("name : " + name);
+//        console.log("id : " + id);
+//        console.log("pw : " + pw);
+//        console.log("으로 저장되었습니다.");
+//        res.redirect('/');
+//    });
 });
 
 
