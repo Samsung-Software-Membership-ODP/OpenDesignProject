@@ -1,124 +1,344 @@
 <!Doctype html>
 <html ng-app="myApp">
-    <head>
-        <title>Project View</title>
-<!--        <link rel="stylesheet" type="text/css" href="main.css">-->
-        
-        <!-- jquery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
-        <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
-        <link href='styles/dragular.css' rel='stylesheet' type='text/css' />
-        <script src='scripts/dragular.js'></script>
-        <style>
-            *{
-                margin: 0 auto;
-                font-family: 'Titillium Web', sans-serif;
-            }
-            
-            #mainframe{
-                background: #EBEBEC;
-                height: 1000px;
-                padding: 50px;
-            }
-            #main_nav{
-                height: 120px;
-                background: #003C6C;
-            }
-            #main_nav > ul{
-                padding-top: 12px;
-                list-style: none;
-            }
-            #main_nav > ul > li{
-                float: left;
-                margin-right: 10px;
-            }
-            #main_nav > ul > li > a{
-                text-decoration: none;
-                color: dimgrey;
-            }
-            #main_nav > ul > li > a:hover{
-                text-decoration: none;
-                color: white;
-            }
-            #user_msg{
-                float: right;
-                margin-right: 20px;
-                color: white;
-                line-height: 42px;
-            }
-            .nav_title > h2{
-                color: white;
-                text-align: center;
-            }
-            .card{
-                background: #ffffff;
-                padding: 20px;
-                border-radius: 3px;
-                height: 50px;
-                width: 70%;
-                margin-top: 20px;
-            }
-            .card > h2{
-                line-height: 50px;
-            }
-            .logo{
-                color: white;
-                padding-top : 20px;
-                padding-left : 20px;
-                margin-bottom: 15px;
-            }
-            #sub_nav{
-                padding-left: 40px;
-                vertical-align: middle;
-                height: 40px;
-                background: white;
-                border-bottom: 2px solid #003C6C;
-            }
-            #sub_nav > p{
-                line-height: 40px;
-            }
-            
-            #footer{
-                background: #5D5D5D;
-                height: 50px;
-                padding-left: 100px;
-            }
-            #footer > h3{
-                color: #B7B7B7;
-                line-height: 50px;
-            }
+<head>
+  <title>Project View</title>
+  <!--        <link rel="stylesheet" type="text/css" href="main.css">-->
+  
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
+<!--  <link href='styles/dragular.css' rel='stylesheet' type='text/css' />-->
+<!--  <script src='scripts/dragular.js'></script> -->
+  <style>
+      
+    *{
+      margin: 0 auto;
+      font-family: 'Titillium Web', sans-serif;
+    }
+    
+    #mainframe{
+      background: #EBEBEC;
+      height: 1000px;
+      padding: 50px;
+    }
+    #main_nav{
+      height: 120px;
+      background: #003C6C;
+    }
+    #main_nav > ul{
+      padding-top: 12px;
+      list-style: none;
+    }
+    #main_nav > ul > li{
+      float: left;
+      margin-right: 10px;
+    }
+    #main_nav > ul > li > a{
+      text-decoration: none;
+      color: dimgrey;
+    }
+    #main_nav > ul > li > a:hover{
+      text-decoration: none;
+      color: white;
+    }
+    #user_msg{
+      float: right;
+      margin-right: 20px;
+      color: white;
+      line-height: 42px;
+    }
+    .nav_title > h2{
+      color: white;
+      text-align: center;
+    }
+    .card{
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 3px;
+      height: 50px;
+      width: 70%;
+      margin-top: 20px;
+    }
+    .card > h2{
+      line-height: 50px;
+    }
+    .logo{
+      color: white;
+      padding-top : 20px;
+      padding-left : 20px;
+      margin-bottom: 15px;
+    }
+    #component_view{
+      padding-left: 40px;
+      vertical-align: middle;
+/*      height: 40px;*/
+      background: white;
+      border-bottom: 2px solid #003C6C;
+    }
+    #sub_nav > p{
+      line-height: 40px;
+    }
+    
+    #footer{
+      background: #5D5D5D;
+      height: 50px;
+      padding-left: 100px;
+    }
+    #footer > h3{
+      color: #B7B7B7;
+      line-height: 50px;
+    }
 
-        </style>
-        <script>
-            var app = angular.module('myApp', ['dragularModule', 'otherDependencies']);
-            $(document).ready(function(){
-                $('#btn').click(function(){
-                    $('#frame').contents().find('#test').append('test !!!!!!!');    
-                });
-                
-            });
-        </script>
-    </head>
-    <body>
-        <div id="main_nav">
-            <h2 class="logo">Open Design Project</h2>
-            <ul style="float:left;">
-                <li><a href="#"><i id="btn" class="xi-plus xi-x">&nbsp;</i></br> </a></li>
-                <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
-            </ul>
-            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>
-        </div>
-        <div id="sub_nav">
+  </style>
+  <style>
+        div.draggable1 {
+          float : inherit;
+          width: 200px; height: 200px; padding: 5px;
+          margin: 5px;
+          background-color: #eeeeee; color:white;
+        }
+        #target1
+        {
+          float: left; width: 98%; height: 200px;
+          padding: 10px; margin: 10px;
+        }
+
+        #target2
+        {
+          float: left; width: 98%; height: 700px;
+          padding: 10px; margin: 10px;
+
+        }
+        div.draggable2
+        {
+          float : inherit;
+          width: 75px; height: 70px; padding: 10px;
+          margin: 5px;
+          background-color: gray; color:white;
+        }
+        div.draggable3
+        {
+          float : inherit;
+          width: 75px; height: 70px; padding: 5px;
+          margin: 5px;
+          background-color: black; color:white;
+        }
+/*        #target1 {background-color: #1E8111;}*/
+        #target2 {background-color: #1E3333;}
+
+        #set
+        {
+          width : 98%;
+          background-color: inherit;
+        }
+  </style>
+    
+    
+<!--Drag and Drop part-->
+  <script>
+
+    var flag=0;
+    var cnt=1;
+    var selectedElement;
+    var comCode;
+
+
+    $(document).ready(function(){
+        $('.draggable1').click(function(){
+            selectedElement = $(this);
+
+        });
+        $('.draggable2').click(function(){
+            selectedElement = $(this);
+        });
+    });
+
+
+    function change(){
+      var code = document.documentElement.innerHTML;
+      var start,end,removeCode;
+      start = code.indexOf("\<head\>");
+      end = code.indexOf("\</head\>");
+      // alert(start+" "+end);
+
+
+      var headCode = code.slice(start,end+8);
+      while(1)  // script remove
+      {
+          start = headCode.search("<script");
+          end = headCode.search("<\/script>");
+          console.log(start+ " " + end);
+          removeCode=headCode.slice(start,end+9);
+          headCode = headCode.replace(removeCode,"");
+          if(start == -1 || end == -1) break;
+      }
+      // console.log(headCode);
+      // head
+
+      // Target2 div
+      var bodyCode = document.getElementById("target2").innerHTML;
+//      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
+      bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+      bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
+      bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
+      bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
+      bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+      bodyCode.trim();
+      console.log(bodyCode);
+      // body
+
+      comCode = "<html>\n";
+      comCode = comCode.concat(headCode);
+      comCode = comCode.concat("\n<body>\n");
+      comCode = comCode.concat(bodyCode);
+      comCode = comCode.concat("\n</body>\n");
+      comCode = comCode.concat("</html>");
+      console.log(comCode);
+    }
+    function save(){
+        $.post('/test2',{data : comCode});
+        window.location.href="data:text/plain;charset=UTF-8,"+comCode;
+
+
+    }
+    function drop(e)
+    {
+
+      event.target.style.border = "";
+      // e.preventDefault();
+      var iddraggable = e.dataTransfer.getData("Data");
+      // console.log(e.dataTransfer.getData("Data.parentNode"));
+
+      // console.log(iddraggable);
+      // console.log(nodeCopy);
+      console.log(flag);
+      // console.log(e.toElement.previousElementSibling);
+      // console.log(e.target.previousElementSibling);
+      console.log(event.target);
+      if(flag==1)
+      {
+        var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
+        nodeCopy.className=iddraggable;
+        nodeCopy.id="New ID"+ cnt;
+        console.log(nodeCopy.id);
+        cnt=cnt+1;
+        e.target.appendChild(nodeCopy);
+      }
+      else
+      {
+        e.target.appendChild(document.getElementById(iddraggable));
+      }
+    }
+
+    function start(e) // 드래그 시작
+    {
+       e.dataTransfer.effectAllowed="copy";
+
+       e.dataTransfer.setData("Data", e.target.getAttribute('id'));
+       var chk =  e.dataTransfer.getData("Data");
+       var chkp = document.getElementById(chk);
+      //  console.log(chkp.parentNode);
+       if(chkp.parentNode.id=="target1")
+       {
+         flag=1;
+       }
+       else {
+         flag=0;
+       }
+
+      //  console.log(e.target.getAttribute('id'));
+       e.dataTransfer.setDragImage(e.target,10,10); // 드래그 위치
+
+      return true;
+    }
+
+    function end(e) // 드래그 끝
+    {
+      e.dataTransfer.clearData("Data");
+  //    e.target.style.backgroundColor = "red";
+      return true;
+    }
+    function over(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+//      e.target.style.backgroundColor = "#1E8BC3";
+      var iddraggable = e.dataTransfer.getData("Data");
+      var id = e.target.getAttribute('id');
+      var ifo = e.target;
+      // console.log(ifo.parentNode);
+      if(id == 'target1' || ifo.parentNode.id == 'target1') return true;
+      return false;
+    }
+
+    function Leave(e) {
+            event.target.style.border = "";
+
+    }
+    function enter(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+      e.preventDefault();
+//      e.target.style.backgroundColor = "#1E8BC3";
+      event.target.style.border = "3px dotted red";
+      return true;
+    }
+    </script>
+</head>
+<body>
+      <div id="main_nav">
+        <h2 class="logo">Open Design Project</h2>
+        <ul style="float:left;">
+          <li><a href="#"><i id="btn" class="xi-plus xi-x">&nbsp;</i></br> </a></li>
+          <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
+        </ul>
+        <h5 id="user_msg"> 님 접속을 환영합니다.</h5>
+      </div>
+      <div id="target1"
+            ondragover="return over(event)"
+            ondrop="return drop(event)"
+            ondragenter="return enter(event)"
+            ondragleave="return Leave(event)">
+          
             <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
-        </div>
-        
-        <div id="mainframe">
-            <iframe id="frame" style="width:100%; height:1000px; border: 0px;" src="./workspaces/index.html">
-            </iframe>
-        </div>
+          
+            <div class="draggable1" id="draggable1" draggable="true"
+            ondragstart="return start(event)"
+            ondragend="return end(event)"
+            style="width: 200px; height: 200px;">1
+            </div>
+
+            <div class="draggable2" id="draggable2" draggable="true"
+            ondragstart="return start(event)"
+            ondragend="return end(event)">2
+            </div>
+
+            <div class="draggable3" id="draggable3" draggable="true"
+            ondragstart="return start(event)"
+            ondragend="return end(event)">3
+            </div>
+      </div>
+
+
+    <div id="target2"
+      ondragover="return over(event)"
+      ondrop="return drop(event)"
+      ondragenter="return enter(event)"
+      ondragleave="return Leave(event)">
+    </div>
+
+      <div id="mainframe" ondragover="return over(event)"
+      ondrop="return drop(event)"
+      ondragenter="return enter(event)"
+      ondragleave="return Leave(event)">
+          
+    <!--
+        <iframe id="frame" style="width:100%; height:1000px; border: 0px;" src="./workspaces/index.html">
+        </iframe>
+      -->
+
+
+    </div>
         <div id="footer">
-            <h3>Open Design Project</h3>
+          <h3>Open Design Project</h3>
         </div>
-    </body>
+</body>
 </html>

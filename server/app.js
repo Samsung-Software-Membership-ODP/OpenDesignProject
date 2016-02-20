@@ -58,17 +58,8 @@ var db = mongoose.connect('mongodb://'+mongoid+':'+mongopw+'@ds039155.mongolab.c
         throw err;
     }
 });
+
 console.log("MongoDB : Connected");
-
-
-
-// firebase Connect
-var firebaseDB = new Firebase('https://odp.firebaseio.com/');
-firebaseDB.child('users').update({
-    add : '2'
-});
-console.log('Firebase DB : Connected Successfully')
-
 
 var Schema = mongoose.Schema;
 var UserSchema = new Schema({
@@ -82,29 +73,6 @@ var UserSchema = new Schema({
 })
 
 var User = mongoose.model('users', UserSchema);
-
-
-
-
-firebaseDB.child('users').on('child_added', function(snapshot){
-    console.log(snapshot.val().id);
-})
-
-
-// Get a reference to our posts
-var ref = new Firebase("https://docs-examples.firebaseio.com/web/saving-data/fireblog/posts");
-
-// Get the data on a post that has changed
-ref.on("child_changed", function(snapshot) {
-  var changedPost = snapshot.val();
-  console.log("The updated post title is " + changedPost.title);
-});
-
-
-
-
-
-
 
 
 // view engine setup
@@ -178,19 +146,11 @@ app.post('/test2', function(req,res){
     });
 });
 
-// 
-
-
-
-
-
-
 
 // project part
 app.get('/project', function(req, res){
     res.render('project', {user_name : checkedName, projects : projects, titles : titles});
 });
-
 
 app.post('/project', function(req, res){
     var project_name = req.body.input_project_name;
@@ -198,10 +158,13 @@ app.post('/project', function(req, res){
     console.log('Project Name : ' + project_name);
     
     User.findOne({id : checkedID}, function(err, doc){
+        
         console.log("Find id")
+        
         if(err){ 
             throw err;
         }
+        
         doc.projects.push({title : project_name, val : ''});
         doc.save();
         
@@ -226,30 +189,17 @@ app.post('/signup', function(req, res){
     
     var user = new User({id : id, pw : pw, name : name});
     
-    firebaseDB.child('users').push(
-        {
-            id : id,
-            pw : pw,
-            name : name
+    user.save(function(err){
+        if(err){
+            console.err(err);
+            throw err;
         }
-    );
-    console.log("name : " + name);
-    console.log("id : " + id);
-    console.log("pw : " + pw);
-    console.log("으로 저장되었습니다.");
-    res.redirect('/');
-    
-//    user.save(function(err){
-//        if(err){
-//            console.err(err);
-//            throw err;
-//        }
-//        console.log("name : " + name);
-//        console.log("id : " + id);
-//        console.log("pw : " + pw);
-//        console.log("으로 저장되었습니다.");
-//        res.redirect('/');
-//    });
+        console.log("name : " + name);
+        console.log("id : " + id);
+        console.log("pw : " + pw);
+        console.log("으로 저장되었습니다.");
+        res.redirect('/');
+    });
 });
 
 
@@ -261,7 +211,8 @@ app.post('/', function(request, response, next){
     console.log("Login request");
     console.log("ID : " +  id);
     console.log("PW : " + pw);
-    console.log("위 정보로 부터 로그인 요청이 들어왔습니다.\n\n")
+    console.log("위 정보로 부터 로그인 요청이 들어왔습니다.\n\n");
+    
     
     User.findOne({id : id}, function(err, doc){
         console.log("Find id")
