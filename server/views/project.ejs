@@ -110,12 +110,14 @@
             $(document).ready(function(){
                 for(var i = 0; i < titles.length; i++){
                     $('#cardSection').append(
-                        '<a href="/workspace"><div class="card"><h4>'+titles[i]+'</h4></div></a>'
+                        '<div class="card"><h4>'+titles[i]+'</h4></div>'
                     );
                 }
                 
                 $('.card').click(function(){
                     alert($(this).text());
+                    $.get('/workspace', {data : $(this).text()});
+                    
                 })
             });
         </script>

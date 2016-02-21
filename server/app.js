@@ -260,10 +260,15 @@ app.post('/', function(request, response, next){
 app.get('/workspace', function(req, res){
     res.render('workspace');
     
-    console.log('폴더를 생성합니다.');
-    mkdir('./public/workspaces', function(err){
-        console.log(err);
-    });
+    console.log('get!!');
+    console.log(req.param('data'));
+    
+    
+//    
+//    console.log('폴더를 생성합니다.');
+//    mkdir('./public/workspaces', function(err){
+//        console.log(err);
+//    });
 //    
 //    var file = './public/workspaces/index.html';
 //    
