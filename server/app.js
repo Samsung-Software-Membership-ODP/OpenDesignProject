@@ -94,6 +94,16 @@ app.use('/signup', signup);
 app.use('/success', success);
 
 
+
+
+
+
+
+
+
+
+// server start
+
 var checkedID;
 var checkedPW;
 var checkedName;
@@ -255,13 +265,55 @@ app.post('/', function(request, response, next){
 });
 
 
+var project_title;
 
 // workspace part
 app.get('/workspace', function(req, res){
-    res.render('workspace');
+    
+    var project_val;    
+    project_title = req.param('data');
+    
     
     console.log('get!!');
-    console.log(req.param('data'));
+//    console.log();
+    
+    User.findOne({id : checkedID}, function(err, doc){
+        
+        console.log("Find id")
+        
+        if(err){ 
+            throw err;
+        }
+        
+        projects = doc.get('projects');
+        
+        for(var i = 0; i < projects.length; i++){
+            titles[i] = projects[i]['title'];
+            
+            if(projects[i]['title'] == req.param('data')){
+                project_val = projects[i]['val'];
+                
+                var bodyCode = project_val;
+                var start = bodyCode.indexOf('\<body\>');
+                var end = bodyCode.indexOf('\</body\>');
+                bodyCode = bodyCode.slice(start+8, end);
+                
+                console.log(bodyCode);
+                                             
+                res.render('workspace', {val : bodyCode});
+
+                break;
+            }
+        }
+        
+    });
+    
+//    console.log('test2!!!!\n\n\n\n\n');
+//    console.log(project_val);
+//    
+//    res.render('workspace', {val : project_val});
+    
+    
     
     
 //    
@@ -286,6 +338,9 @@ app.get('/workspace', function(req, res){
 app.post('/workspace', function(req, res){
 //    console.log(beautify_html(req.body.data, { indent_size: 2 }));
     
+//    var project_title = req.param('data');
+    var project_val = beautify_html(req.body.data, { indent_size: 2 });
+    
     console.log('폴더를 생성합니다.');
     mkdir('./public/workspaces', function(err){
         console.log(err);
@@ -302,6 +357,38 @@ app.post('/workspace', function(req, res){
             console.log("file write complete");
         });
     });
+    
+    
+    
+    User.findOne({id : checkedID}, function(err, doc){
+        
+        console.log("Find id")
+        
+        if(err){ 
+            throw err;
+        }
+        
+//        doc.projects.push({title : project_title, val : project_val});
+//        doc.save();
+        
+        projects = doc.get('projects');
+        
+        for(var i = 0; i < projects.length; i++){
+            
+            
+            if(projects[i]['title'] == project_title){
+                console.log(projects[i]['title']);
+                projects[i]['val'] = project_val;
+                console.log(projects[i]['val']);
+                doc.save();
+                break;
+            }
+        }
+        
+    });
+    
+    
+    
 });
 
 

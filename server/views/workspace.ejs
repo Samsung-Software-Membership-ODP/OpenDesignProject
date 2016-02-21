@@ -140,6 +140,17 @@
 
 
     $(document).ready(function(){
+        
+        var t = $('#target2').text();
+        $('#target2').html(t.replace('&lt','<').replace('&gt','>'));
+//        
+//        var start = bodyCode.indexOf("\<body\>");
+//        var end = bodyCode.indexOf("\</body\>");
+//        
+//        bodyCode = bodyCode.slice(start, end+8);
+
+        
+        
         $('.draggable1').click(function(){
             selectedElement = $(this);
 
@@ -327,6 +338,9 @@
           ondrop="return drop(event)"
           ondragenter="return enter(event)"
           ondragleave="return Leave(event)">
+            
+            <%= val %>
+            
         </div>
 
           <div id="mainframe" ondragover="return over(event)"

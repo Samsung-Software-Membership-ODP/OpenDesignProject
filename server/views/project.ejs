@@ -115,9 +115,7 @@
                 }
                 
                 $('.card').click(function(){
-                    alert($(this).text());
-                    $.get('/workspace', {data : $(this).text()});
-                    
+                    window.location.href = "/workspace?data="+$(this).text();
                 })
             });
         </script>
