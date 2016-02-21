@@ -16,27 +16,25 @@
                 font-family: 'Titillium Web', sans-serif;
             }
             
-            #mainframe{
+           #mainframe{
                 background: #EBEBEC;
-/*                height: 1000px;*/
                 padding: 50px;
             }
             #main_nav{
-/*                height: 120px;*/
+                padding: 10px;
                 background: #003C6C;
             }
             #main_nav > ul{
-                padding: 12px;
-                margin-left: 20px;
                 list-style: none;
             }
             #main_nav > ul > li{
+                font-size: 14px;
                 float: left;
                 margin-right: 10px;
             }
             #main_nav > ul > li > a{
                 text-decoration: none;
-                color: dimgrey;
+                color: #888888;
             }
             #main_nav > ul > li > a:hover{
                 text-decoration: none;
@@ -73,8 +71,6 @@
             }
             .logo{
                 color: white;
-                margin-top: 0px;
-                padding-top : 20px;
                 padding-left : 20px;
                 margin-bottom: 15px;
             }
@@ -121,12 +117,14 @@
         </script>
     </head>
     <body>
+     
         <div id="main_nav">
-            <h2 class="logo">Open Design Project</h2>
-                <ul class="clearfix">
-                    <li><a id="add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>
-                    <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
-                </ul>  
+            <h4 class="logo">Open Design Project</h4>
+            <ul style="float:left;">
+                <li><a id="add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>
+                <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
+            </ul>
+            <div style="clear:both;"></div>
         </div>
         <div id="sub_nav">
             <p><i class="xi-angle-right">&nbsp;</i> <%= user_name %> 님 접속을 환영합니다.</p>
