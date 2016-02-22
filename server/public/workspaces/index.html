@@ -24,8 +24,11 @@
     }
     
     #main_nav {
+      position: fixed;
+      width: 100%;
       padding: 10px;
       background: #003C6C;
+      z-index: 10;
     }
     
     #main_nav > ul {
@@ -89,6 +92,20 @@
       color: #B7B7B7;
       line-height: 50px;
     }
+    
+    #optionPanel {
+      top: 0px;
+      right: 0px;
+      position: fixed;
+      width: 25%;
+      background: #333333;
+      opacity: 0.8;
+      height: 1000px;
+      z-index: 8;
+      color: white;
+      padding: 20px;
+      padding-top: 90px;
+    }
   </style>
   <style>
     div.draggable1 {
@@ -128,7 +145,10 @@
       background-color: black;
       color: white;
     }
-    /*        #component_view {background-color: #1E8111;}*/
+    
+    #component_view {
+      background: white;
+    }
     
     #target2 {
       background-color: #1E3333;
@@ -149,8 +169,17 @@
 
 
 
+
+
+
   <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
     <div class="draggable2" id="New ID1" style="">2
+      <div class="draggable3" id="New ID3" style="">3
+        <div class="draggable2" id="New ID4" style="">2
+        </div>
+        <div class="draggable3" id="New ID2" style="">3
+        </div>
+      </div>
     </div>
   </div>
 
@@ -160,6 +189,19 @@
 
 
 
+
+
+  <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
+  </div>
+
+
+
+
+
+  <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
+  </div>
+  <div class="draggable2" id="New ID2" style="">2
+  </div>
 </body>
 
 </html>

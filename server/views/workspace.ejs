@@ -23,8 +23,11 @@
                 padding: 50px;
             }
             #main_nav{
+                position: fixed;
+                width:100%;
                 padding: 10px;
                 background: #003C6C;
+                z-index: 10;
             }
             #main_nav > ul{
                 list-style: none;
@@ -77,6 +80,21 @@
                 color: #B7B7B7;
                 line-height: 50px;
             }
+     
+             #optionPanel{
+                top:0px;
+                right: 0px; 
+                position: fixed;
+                width: 25%;
+                background: #333333;
+                opacity: 0.8;
+                
+                height: 1000px;
+                z-index : 8;
+                color: white;
+                padding: 20px;
+                padding-top:90px;
+             }
     </style>
   <style>
         div.draggable1 {
@@ -107,7 +125,10 @@
           margin: 5px;
           background-color: black; color:white;
         }
-/*        #component_view {background-color: #1E8111;}*/
+        #component_view {background: white;}
+        #component_view > .compo{
+            float:left;
+        }
         #target2 {background-color: #1E3333;}
 
         #set
@@ -125,19 +146,43 @@
     var cnt=1;
     var selectedElement;
     var comCode;
-
+      
+    // 0 = hide
+    var menuSelect = 0;
+    var optionSelect = 0;
+      
 
     $(document).ready(function(){
         
+        // DB loading part
+        // Database에서 정보를 읽어와서 target2에 뿌려주는 부분
         var t = $('#target2').text();
         $('#target2').html(t.replace('&lt','<').replace('&gt','>'));
-//        
-//        var start = bodyCode.indexOf("\<body\>");
-//        var end = bodyCode.indexOf("\</body\>");
-//        
-//        bodyCode = bodyCode.slice(start, end+8);
 
         
+        // hide part
+        $('#component_view').hide();
+        $('#optionPanel').hide();
+        
+        
+        // click part
+        $('#add_compo').click(function(){
+            $('#component_view').slideToggle('slow');
+//            if(menuSelect == 0){
+//                $('#component_view').slideDown('slow');
+//                menuSelect = 3;
+//            }
+//            else if(menuSelect == 3){
+//                $('#component_view').hide('slow');
+//                menuSelect = 0;
+//            }
+        });
+        
+        $('#btn_option').click(function(){
+           if(optionSelect == 0) {
+               $('#optionPanel').animate({width:'toggle'},350);
+           }
+        });
         
         $('.draggable1').click(function(){
             selectedElement = $(this);
@@ -151,6 +196,13 @@
             $.post('/workspace', {data : comCode});
             alert('saved!');
         })
+    });
+      
+    $(document).change(function(){
+        alert('change!');
+       if(menuSelect == 0){
+           $('#component_view').hide();
+       }
     });
 
 
@@ -270,14 +322,16 @@
     }
 
     function Leave(e) {
-            event.target.style.border = "";
+        event.target.style.border = "";
+        event.target.style.boxShadow = "";
 
     }
     function enter(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
     {
       e.preventDefault();
 //      e.target.style.backgroundColor = "#1E8BC3";
-      event.target.style.border = "3px dotted red";
+      event.target.style.border = "3px solid #6799FF";
+//      event.target.style.boxShadow = "0px 0px 20px #6799FF";
       return true;
     }
     </script>
@@ -288,36 +342,47 @@
             <ul style="float:left;">
                 <li id="save"><a href="#"><i class="xi-diskette xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
+                <li id="add_compo"><a href="#"><i class="xi-cube xi-x">&nbsp;</i></br> </a></li>
+                <li id="btn_option"><a href="#"><i class="xi-cog xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-plus xi-x">&nbsp;</i></br> </a></li>
                 <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
                 
             </ul>
             <div style="clear:both;"></div>
-            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>
+<!--            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>-->
+
+            <div id="component_view"
+                ondragover="return over(event)"
+                ondrop="return drop(event)"
+                ondragenter="return enter(event)"
+                ondragleave="return Leave(event)">
+
+                <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
+                
+                <div class="compo draggable1" id="draggable1" draggable="true"
+                ondragstart="return start(event)"
+                ondragend="return end(event)"
+                style="width: 200px; height: 200px;">1
+                </div>
+
+
+                <div class="compo draggable2" id="draggable2" draggable="true"
+                ondragstart="return start(event)"
+                ondragend="return end(event)">2
+                </div>
+
+
+                <div class="compo draggable3" id="draggable3" draggable="true"
+                ondragstart="return start(event)"
+                ondragend="return end(event)">3
+                </div>
+                    
+                
+                <div style="clear:both"></div>
+            </div>
         </div>
-        <div id="component_view"
-            ondragover="return over(event)"
-            ondrop="return drop(event)"
-            ondragenter="return enter(event)"
-            ondragleave="return Leave(event)">
-
-            <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
-
-            <div class="draggable1" id="draggable1" draggable="true"
-            ondragstart="return start(event)"
-            ondragend="return end(event)"
-            style="width: 200px; height: 200px;">1
-            </div>
-
-            <div class="draggable2" id="draggable2" draggable="true"
-            ondragstart="return start(event)"
-            ondragend="return end(event)">2
-            </div>
-
-            <div class="draggable3" id="draggable3" draggable="true"
-            ondragstart="return start(event)"
-            ondragend="return end(event)">3
-            </div>
+        
+        <div style="padding-top:100px;">
         </div>
 
 
@@ -345,6 +410,14 @@
         </div>
         <div id="footer">
           <h3>Open Design Project</h3>
+        </div>
+
+        <div id="optionPanel">
+            <h1>1dss</h1>
+            <h1>2dss</h1>
+            <h1>3dss</h1>
+            <h1>4dss</h1>
+            <h1>5dss</h1>
         </div>
 </body>
 </html>
