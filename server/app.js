@@ -94,14 +94,6 @@ app.use('/signup', signup);
 app.use('/success', success);
 
 
-
-
-
-
-
-
-
-
 // server start
 
 var checkedID;
@@ -122,15 +114,10 @@ app.get('/users', function(req, res){
 });
 
 
-
-
-
-
-
 // testing space
 
 app.get('/test2', function(req, res){
-    res.render('test2');
+    res.render('mid2');
 });
 
 app.post('/test2', function(req,res){

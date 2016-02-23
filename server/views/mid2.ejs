@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Drag and Drop example</title>
+
+    <style>
+
+      .compo{
+      float : inherit;
+    }
+    div.draggable1 {
+      float : inherit;
+      width: 200px; height: 200px; padding: 5px;
+      margin: 5px;
+      background-color: white; color:white;
+    }
+    #target1
+    {
+      float: left; width: 98%; height: 200px;
+      padding: 10px; margin: 10px;
+    }
+
+    #target2
+    {
+      float: left; width: 98%; height: 700px;
+      padding: 10px; margin: 10px;
+
+    }
+    div.draggable2
+    {
+      float : inherit;
+      width: 75px; height: 70px; padding: 10px;
+      margin: 5px;
+      background-color: gray; color:white;
+    }
+    div.draggable3
+    {
+      float : inherit;
+      width: 75px; height: 70px; padding: 5px;
+      margin: 5px;
+      background-color: black; color:white;
+    }
+    #target1 {background-color: #1E8111;}
+    #target2 {background-color: #1E3333;}
+
+    #set
+    {
+      width : 98%;
+      background-color: inherit;
+    }
+
+    </style>
+
+    <script>
+
+
+
+
+    var flag=0;
+    var cnt=1;
+    var selectedElement;
+     var child;
+    var childInfo;
+    var comCode;
+
+    $(document).ready(function(){
+        // $('.draggable1').click(function(){
+        //     selectedElement = $(this);
+        //     child = selectedElement.attr('id');
+        //     console.log(child);
+        // });
+        $("#target2").on("click", ".compo", function (event) {
+          selectedElement = $(this);
+          console.log(selectedElement);
+          // 중복클릭 금지
+          event.stopPropagation();
+          // var childInfo=document.getElementById(child);
+          // var parent=childInfo.parentNode;
+          // console.log(parent);
+        });
+
+
+
+        // $('.compo').live('click', function(){
+        //   selectedElement = $(this);
+        //   child = selectedElement.attr('id');
+        //   console.log(child);
+        // });
+        // $('.draggable2').click(function(){
+        //     selectedElement = $(this);
+        //     console.log(selectedElement);
+        // });
+    });
+
+    function newCssClass()
+    {
+      //
+
+      var styleStart,styleEnd;
+      var code,midCode;
+      var concatFront,concatEnd;
+      code = document.head.innerHTML;
+      console.log(code);
+      styleStart=code.indexOf("<style>");
+
+      concatFront=code.slice(0,styleStart+7);
+      concatEnd=code.slice(styleStart+7,code.length);
+
+      midCode="\n";
+      midCode=midCode.concat("."+document.getElementById("newClassName").value+"{\n");
+      midCode=midCode.concat(comSave());
+      midCode=midCode.concat("\n}");
+      console.log(midCode);
+
+      code = "";
+      code = code.concat(concatFront + midCode + concatEnd);
+      console.log(code);
+      document.head.innerHTML=code;
+      console.log(document.head.innerHTML);
+      document.getElementById("newClassName").value = "";
+    }
+
+    function comSave()
+    {
+      var selID,selClass;
+      var codeStart,styleStart;
+      var cssStart,cssEnd;
+      var inlineCode,code;
+
+      selID=selectedElement.attr('id');
+      code=document.body.innerHTML;
+      console.log(code);
+      console.log(selID);
+      // style 찾기
+
+      codeStart=code.indexOf(selID);
+
+      styleStart=code.indexOf("style",codeStart);
+      console.log(styleStart);
+
+      cssStart=code.indexOf("\"",styleStart);
+      cssEnd=code.indexOf("\"",cssStart+1);
+      console.log(cssStart);
+      console.log(cssEnd);
+
+      inlineCode=code.slice(cssStart+1,cssEnd);
+      console.log(inlineCode);
+
+       selectedElement.removeClass('compo');  // 컴포넌트 클래스 임시 제거
+       selClass=selectedElement.attr('class');
+      console.log(selClass);
+
+       selectedElement.addClass('compo');  // 컴포넌트 클래스 재생성
+       code=document.head.innerHTML;
+       console.log(code);
+
+       styleStart=code.indexOf("."+selClass);
+       console.log(styleStart);
+       // {  } 찾기!
+
+       cssStart=code.indexOf("{",styleStart);
+       cssEnd=code.indexOf("}",styleStart);
+      console.log(cssStart);
+      console.log(cssEnd);
+
+      var cssCode;
+
+      cssCode=code.slice(cssStart+1,cssEnd);
+      console.log(cssCode);
+
+      var checkpoint=0,colend;
+      var inline,inlineVal,css,cssVal;
+      var csspoint,bef;
+      var concatFront,concatEnd;
+      while(1)
+      {
+        colend=inlineCode.indexOf(":",checkpoint);
+        if(colend == -1) break;     // exit
+        inline=inlineCode.slice(checkpoint,colend);
+
+        inline=inline.trim();
+        console.log("inline "+ inline);    // inline name
+
+        checkpoint=colend+1;
+        colend=inlineCode.indexOf(";",checkpoint);
+        inlineVal=inlineCode.slice(checkpoint,colend);
+
+        checkpoint=colend+1;
+        inlineVal=inlineVal.trim();
+        console.log("inlineVal "+inlineVal); // inline Value
+
+        csspoint=0;
+        while(1)
+        {
+          cssend=cssCode.indexOf(":",csspoint);
+          if(cssend == -1) break;     // exit
+          css=cssCode.slice(csspoint,cssend);
+
+          css=css.trim();
+          console.log("css "+css);    // inline name
+
+
+          csspoint=cssend+1;
+          bef=csspoint;
+          cssend=cssCode.indexOf(";",csspoint);
+          cssVal=cssCode.slice(csspoint,cssend);
+
+          csspoint=cssend+1;
+          cssVal=cssVal.trim();
+          console.log("cssVal "+cssVal); // inline Value
+
+          if(inline == css)
+          {
+            concatFront=cssCode.slice(0,bef);
+            console.log(concatFront);
+            concatEnd=cssCode.slice(cssend,cssCode.length);
+            console.log(concatEnd);
+            var newCode = "";
+            newCode=newCode.concat(concatFront);
+            newCode=newCode.concat(inlineVal);
+            newCode=newCode.concat(concatEnd);
+            cssCode=newCode;
+            console.log(cssCode);
+            break;
+          }
+        }
+      } // css 속에 inline 삽입 완료
+      var test=code.slice(cssStart+1,cssEnd);
+      // console.log(test+code.indexOf(test));
+      // console.log(cssCode);
+      code=code.replace(test,cssCode);
+      console.log(code);
+      document.head.innerHTML=code;
+      console.log(document.head.innerHTML);
+      //원래 코드로 변경
+      return cssCode;
+    }
+
+    function setInfo()
+    {
+      console.log(selectedElement.attr('id'));
+
+      $('#'+selectedElement.attr('id')).css('width',$('#input_width').val());
+      $('#'+selectedElement.attr('id')).css('height',$('#input_height').val());
+      // $('draggable1').width($('#input_width').val());
+
+    }
+
+    function remove2()
+    {
+      // console.log(child);
+      // var childInfo=document.getElementById(child);
+      child = selectedElement.attr('id');
+      $('#' + child).remove();
+      // childInfo=document.getElementById(child);
+      // var parent=childInfo.parentNode;
+      // console.log(parent);
+      // parent.removeChild(childInfo);
+    }
+
+    function change(){
+      var code = document.documentElement.innerHTML;
+      var start,end,removeCode;
+      start = code.indexOf("\<head\>");
+      end = code.indexOf("\</head\>");
+      // alert(start+" "+end);
+
+
+      var headCode = code.slice(start,end+8);
+      while(1)  // script remove
+      {
+          start = headCode.search("<script");
+          end = headCode.search("<\/script>");
+          console.log(start+ " " + end);
+          removeCode=headCode.slice(start,end+9);
+          headCode = headCode.replace(removeCode,"");
+          if(start == -1 || end == -1) break;
+      }
+      // console.log(headCode);
+      // head
+
+      // Target2 div
+      var bodyCode = document.getElementById("target2").innerHTML;
+//      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
+      bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+      bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
+      bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
+      bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
+      bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+      bodyCode.trim();
+      console.log(bodyCode);
+      // body
+
+      comCode = "<html>\n";
+      comCode = comCode.concat(headCode);
+      comCode = comCode.concat("\n<body>\n");
+      comCode = comCode.concat(bodyCode);
+      comCode = comCode.concat("\n</body>\n");
+      comCode = comCode.concat("</html>");
+      console.log(comCode);
+    }
+
+    function save(){
+        $.post('/test2',{data : comCode});
+        window.location.href="data:text/plain;charset=UTF-8," + comCode;
+
+
+    }
+    function drop(e)
+    {
+
+      event.target.style.border = "";
+      // e.preventDefault();
+      var iddraggable = e.dataTransfer.getData("Data");
+      // console.log(e.dataTransfer.getData("Data.parentNode"));
+
+      // console.log(iddraggable);
+      // console.log(nodeCopy);
+      console.log(flag);
+      // console.log(e.toElement.previousElementSibling);
+      // console.log(e.target.previousElementSibling);
+      console.log(event.target);
+      if(flag==1)
+      {
+        var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
+        // nodeCopy.className=iddraggable+" compo";
+
+
+        // $(nodeCopy).removeClass(iddraggable);
+        // $(nodeCopy).removeClass("compo");
+        // $(nodeCopy).addClass(iddraggable);
+        // $(nodeCopy).addClass("compo");
+        nodeCopy.id="NewID"+cnt;
+        console.log(nodeCopy.id);
+        cnt=cnt+1;
+        e.target.appendChild(nodeCopy);
+        // $(nodeCopy).live('click',(function(){
+        //   selectedElement = $(this);
+        //   child = selectedElement.attr('id');
+        //   console.log(child);
+        // });
+      }
+      else
+      {
+        e.target.appendChild(document.getElementById(iddraggable));
+      }
+    }
+
+    function start(e) // 드래그 시작
+    {
+       e.dataTransfer.effectAllowed="copy";
+
+       e.dataTransfer.setData("Data", e.target.getAttribute('id'));
+       var chk =  e.dataTransfer.getData("Data");
+       var chkp = document.getElementById(chk);
+      //  console.log(chkp.parentNode);
+       if(chkp.parentNode.id=="target1")
+       {
+         flag=1;
+       }
+       else {
+         flag=0;
+       }
+
+      //  console.log(e.target.getAttribute('id'));
+       e.dataTransfer.setDragImage(e.target,10,10); // 드래그 위치
+
+      return true;
+    }
+
+    function end(e) // 드래그 끝
+    {
+      e.dataTransfer.clearData("Data");
+  //    e.target.style.backgroundColor = "red";
+      return true;
+    }
+    function over(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+//      e.target.style.backgroundColor = "#1E8BC3";
+      var iddraggable = e.dataTransfer.getData("Data");
+      var id = e.target.getAttribute('id');
+      var ifo = e.target;
+      // console.log(ifo.parentNode);
+      if(id == 'target1' || ifo.parentNode.id == 'target1') return true;
+      return false;
+    }
+
+    function Leave(e) {
+            event.target.style.border = "";
+
+    }
+    function enter(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    {
+      e.preventDefault();
+//      e.target.style.backgroundColor = "#1E8BC3";
+      event.target.style.border = "3px dotted red";
+      return true;
+    }
+    </script>
+    <script>
+    // jquery
+
+    </script>
+  </head>
+  <body>
+    <h1>Drag and Drop</h1>
+    <p id = "test">This is a paragraph.</p>
+    <div id="setdiv">
+      <h3>width<input id="input_width"name="setWidth" size="3" value="150"></input>
+        height<input id="input_height"name="setHeight" size="3" value="150"></input>
+        margin<input name="setMargin" size="3"></input>
+        padding<input name="setPadding" size="3"></input>
+        <button type="button" onclick="change()">change</button>
+        <button type="button" onclick="save()">save</button>
+        <button type="button" onclick="remove2()">remove</button>
+        <button type="button" onclick="setInfo()">set</button>
+        <button type="button" onclick="comSave()">componantSave</button>
+        <input id="newClassName" size="5" value="test">
+        <button type="button" onclick="newCssClass()">createCssClass!!</button>
+      </h3>
+    </div>
+    <div id="target1"
+      ondragover="return over(event)"
+      ondrop="return drop(event)"
+      ondragenter="return enter(event)"
+      ondragleave="return Leave(event)"
+      >
+
+
+      <div class="draggable1 compo" id="draggable1" draggable="true"
+        ondragstart="return start(event)"
+        ondragend="return end(event)"
+        style="width: 200px; height: 200px;">1
+      </div>
+
+      <div class="draggable2 compo" id="draggable2" draggable="true"
+        ondragstart="return start(event)"
+        ondragend="return end(event)"
+        >2
+      </div>
+
+      <div class="draggable3 compo" id="draggable3" draggable="true"
+        ondragstart="return start(event)"
+        ondragend="return end(event)"
+        >3
+      </div>
+    </div>
+
+    <div id="target2"
+      ondragover="return over(event)"
+      ondrop="return drop(event)"
+      ondragenter="return enter(event)"
+      ondragleave="return Leave(event)">
+    </div>
+  </body>
+</html>
