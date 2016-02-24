@@ -98,7 +98,7 @@
 
             
             $(function(){
-                $('#add').click(function(){
+                $('#btn_add').click(function(){
                     $('#myModal').modal();
                 });
             });
@@ -106,13 +106,19 @@
             $(document).ready(function(){
                 for(var i = 0; i < titles.length; i++){
                     $('#cardSection').append(
-                        '<div class="card"><h4>'+titles[i]+'</h4></div>'
+                        '<div class="card"><h4>'+titles[i]+'</h4></div>'+'<button>'+'test'+'</button>'
                     );
                 }
                 
                 $('.card').click(function(){
                     window.location.href = "/workspace?data="+$(this).text();
-                })
+                });
+                
+                $('button').click(function(){
+                    var index = $('button').index(this);
+                    alert(index);
+                });
+                
             });
         </script>
     </head>
@@ -121,7 +127,9 @@
         <div id="main_nav">
             <h4 class="logo">Open Design Project</h4>
             <ul style="float:left;">
-                <li><a id="add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>
+                <li><a id="btn_add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>
+                <li><a id="btn_lib" href="#"><i class="xi-tagged-book xi-x">&nbsp;</i></br></a></li>
+                <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
             </ul>
             <div style="clear:both;"></div>

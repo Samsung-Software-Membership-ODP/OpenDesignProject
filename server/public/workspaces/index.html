@@ -17,6 +17,11 @@
       font-family: 'Titillium Web', sans-serif;
     }
     
+    input {
+      border-radius: 3px;
+      font-size: 18px;
+    }
+    
     #mainframe {
       background: #EBEBEC;
       height: 1000px;
@@ -83,6 +88,11 @@
       margin-bottom: 15px;
     }
     
+    .logo > a {
+      color: white;
+      text-decoration: none;
+    }
+    
     #footer {
       background: #5D5D5D;
       height: 50px;
@@ -111,6 +121,17 @@
     #optionPanel > input {
       color: #444444;
       width: 100%;
+    }
+    
+    #msg {
+      width: 100%;
+      position: fixed;
+      bottom: 0px;
+      opacity: 0.6;
+      padding: 10px;
+      padding-left: 30px;
+      color: white;
+      background: #444444;
     }
   </style>
   <style>
@@ -154,10 +175,15 @@
     
     #component_view {
       background: white;
+      white-space: nowrap;
+      overflow-y: hidden;
+      overflow-x: scroll;
     }
     
     #component_view > .compo {
-      float: left;
+      width: 500px;
+      display: inline;
+      /*            float:left;*/
     }
     
     #target2 {
@@ -183,39 +209,62 @@
 
 
 
-  <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
-    <div class="draggable2" id="New ID1" style="">2
-      <div class="draggable3" id="New ID3" style="">3
-        <div class="draggable2" id="New ID4" style="">2
+
+
+  <div class="compo draggable1" id="NewID1" style="width: 200px; height: 200px;">1
+    <div class="compo draggable1" id="NewID3" style="width: 200px; height: 200px;">1
+      <div class="compo draggable3" id="NewID10" style="">3
+      </div>
+      <div class="compo draggable2" id="NewID18" style="">2
+      </div>
+      <div class="compo draggable2" id="NewID19" style="">2
+      </div>
+    </div>
+  </div>
+  <div class="compo draggable1" id="NewID2" style="width: 200px; height: 200px;">1
+    <div class="compo draggable1" id="NewID5" style="width: 200px; height: 200px;">1
+      <div class="compo draggable3" id="NewID4" style="">3
+      </div>
+      <div class="compo draggable3" id="NewID9" style="">3
+      </div>
+      <div class="compo draggable3" id="NewID11" style="">3
+      </div>
+      <div class="compo draggable1" id="NewID26" style="width: 200px; height: 200px;">1
+      </div>
+    </div>
+    <div class="compo draggable3" id="NewID15" style="">3
+    </div>
+  </div>
+  <div class="compo draggable1" id="NewID6" style="width: 200px; height: 200px;">1
+    <div class="compo draggable3" id="NewID8" style="">3
+    </div>
+    <div class="compo draggable3" id="NewID12" style="">3
+    </div>
+    <div class="compo draggable3" id="NewID13" style="">3
+      <div class="compo draggable1" id="NewID22" style="width: 200px; height: 200px;">1
+      </div>
+    </div>
+    <div class="compo draggable1" id="NewID21" style="width: 200px; height: 200px;">1
+      <div class="compo draggable2" id="NewID23" style="">2
+        <div class="compo draggable3" id="NewID24" style="">3
         </div>
-        <div class="draggable3" id="New ID2" style="">3
+        <div class="compo draggable2" id="NewID25" style="">2
         </div>
       </div>
     </div>
   </div>
-
-
-  <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
+  <div class="compo draggable3" id="NewID7" style="">3
   </div>
-
-
-
-
-
-  <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
+  <div class="compo draggable3" id="NewID14" style="">3
   </div>
-
-
-
-
-
-  <div class="draggable1" id="New ID1" style="width: 200px; height: 200px;">1
+  <div class="compo draggable2" id="NewID16" style="">2
   </div>
-  <div class="draggable2" id="New ID2" style="">2
+  <div class="compo draggable2" id="NewID17" style="">2
   </div>
-
-
-
+  <div class="compo draggable2" id="NewID20" style="">2
+  </div>
+  <div class="compo draggable3" id="NewID27" style="">3
+  </div>
 </body>
 
 </html>
