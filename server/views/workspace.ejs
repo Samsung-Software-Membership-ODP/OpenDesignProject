@@ -1,128 +1,155 @@
 <!Doctype html>
 <html ng-app="myApp">
 <head>
-  <title>Project View</title>
-  <!--        <link rel="stylesheet" type="text/css" href="main.css">-->
+    <title>Project View</title>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >  
-  <!-- jquery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
-<!--  <link href='styles/dragular.css' rel='stylesheet' type='text/css' />-->
-<!--  <script src='scripts/dragular.js'></script> -->
- <style>
-            *{
-                margin: 0 auto;
-                font-family: 'Titillium Web', sans-serif;
-            }
-            
-             input{
-                border-radius: 3px;
-                font-size: 18px;
-             }
-            #mainframe{
-                background: #EBEBEC;
-                height: 1000px;
-                padding: 50px;
-            }
-            #main_nav{
-                position: fixed;
-                width:100%;
-                padding: 10px;
-                background: #003C6C;
-                z-index: 10;
-                box-shadow:0 1px 2px #444;
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
 
-            }
-            #main_nav > ul{
-                list-style: none;
-            }
-            #main_nav > ul > li{
-                font-size: 14px;
-                float: left;
-                margin-right: 10px;
-            }
-            #main_nav > ul > li > a{
-                text-decoration: none;
-                color: #888888;
-            }
-            #main_nav > ul > li > a:hover{
-                text-decoration: none;
-                color: white;
-            }
-            #user_msg{
-                float: right;
-                margin-right: 20px;
-                color: white;
-                line-height: 42px;
-            }
-            .nav_title > h2{
-                color: white;
-                text-align: center;
-            }
-            .card{
-                background: #ffffff;
-                padding: 20px;
-                border-radius: 3px;
-                height: 50px;
-                width: 70%;
-                margin-top: 20px;
-            }
-            .card > h2{
-                line-height: 50px;
-            }
-            .logo{
-                color: white;
-                padding-left : 20px;
-                margin-bottom: 15px;
-            }
-            .logo > a{
-                color: white;
-                text-decoration: none;
-             }
-            
-            #footer{
-                background: #5D5D5D;
-                height: 50px;
-                padding-left: 100px;
-            }
-            #footer > h3{
-                color: #B7B7B7;
-                line-height: 50px;
-            }
-     
-             #optionPanel{
-                top:0px;
-                right: 0px; 
-                position: fixed;
-                width: 25%;
-                background: #333333;
-                opacity: 0.8;
-                
-                height: 1000px;
-                z-index : 8;
-                color: white;
-                padding: 20px;
-                padding-top:90px;
-             }
-             #optionPanel > input{
-                color : #444444;
-                width: 100%;
-             }
-             #msg{
-                 width: 100%;
-                 position: fixed;
-                 bottom: 0px;
-                 opacity: 0.6;
-                 padding: 10px;
-                 padding-left: 30px;
-                 color: white;
-                 background: #444444;
-             }
-     
-            
-    </style>
+ <style>
+    *{
+        margin: 0 auto;
+        font-family: 'Titillium Web', sans-serif;
+    }
+     body{
+        background: #232323; 
+     }
+    #mainframe{
+/*        background: #2c2c2c;*/
+        height: 1000px;
+        padding: 50px;
+    }
+    #main_nav{
+        position: fixed;
+        width:100%;
+        padding: 10px;
+        background: #003C6C;
+        z-index: 10;
+        box-shadow:0 1px 3px 0 rgba(0,0,0,.2);
+
+    }
+    #main_nav > ul{
+        list-style: none;
+    }
+    #main_nav > ul > li{
+        font-size: 14px;
+        float: left;
+        margin-right: 10px;
+    }
+    #main_nav > ul > li > a{
+        text-decoration: none;
+        color: #888888;
+    }
+    #main_nav > ul > li > a:hover{
+        text-decoration: none;
+        color: white;
+    }
+    #user_msg{
+        float: right;
+        margin-right: 20px;
+        color: white;
+        line-height: 42px;
+    }
+    .nav_title > h2{
+        color: white;
+        text-align: center;
+    }
+    .card{
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 3px;
+        height: 50px;
+        width: 70%;
+        margin-top: 20px;
+    }
+    .card > h2{
+        line-height: 50px;
+    }
+    .logo{
+        color: white;
+        padding-left : 20px;
+        margin-bottom: 15px;
+    }
+    .logo > a{
+        color: white;
+        text-decoration: none;
+     }
+
+    #footer{
+        background: #5D5D5D;
+        height: 50px;
+        padding-left: 100px;
+    }
+    #footer > h3{
+        color: #B7B7B7;
+        line-height: 50px;
+    }
+
+     #optionPanel{
+        top:0px;
+        right: 0px; 
+        position: fixed;
+        width: 20%;
+        background: #2c2c2c;
+        z-index : 8;
+    /*                opacity: 0.8;*/
+
+        height: 1000px;
+        color: white;
+        padding-top:90px;
+     }
+     #optionPanel > #optionClassName{
+        background: #1a1a1a;
+        padding: 20px;
+     }
+     #optionPanel > #optionContent{
+        padding: 20px;
+     }
+     #optionPanel > #optionContent > input{
+        
+         border: none;
+         padding: 5px;
+         background: #242424;
+         box-shadow: none;
+         color : #b3b3b3;
+         width: 100%;
+     }
+     #optionPanel > #optionContent > input:focus{
+         border: 1px solid blue;
+         outline: none;
+         box-shadow: none;
+     }
+     #optionPanel > #optionContent > #btn_save_component{
+         transition: 0.3s;
+         border: 1px solid white;
+         border-radius: 3px;
+         color: white;
+         padding: 5px;
+         width: 100%;
+         display: block;
+         text-align: center;
+     }
+     #optionPanel > #optionContent > #btn_save_component:hover{
+         background: white;
+         transition: 0.3s;
+         text-decoration: none;
+         color: #444444;
+         
+     }
+     #msg{
+         width: 100%;
+         position: fixed;
+         bottom: 0px;
+         opacity: 0.6;
+         padding: 10px;
+         padding-left: 30px;
+         color: white;
+         background: #444444;
+     }    
+</style>
   <style>
         div.draggable1 {
           float : inherit;
@@ -572,11 +599,14 @@
                 <li id="save"><a href="#"><i class="xi-diskette xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
                 <li id="add_compo"><a href="#"><i class="xi-cube xi-x">&nbsp;</i></br> </a></li>
-                <li id="btn_option"><a href="#"><i class="xi-cog xi-x">&nbsp;</i></br></a></li>
+                
                 <li><a href="#"><i class="xi-plus xi-x">&nbsp;</i></br> </a></li>
                 <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li id="btn_remove"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
                 
+            </ul>
+            <ul style="float:right;">
+                <li id="btn_option"><a href="#"><i class="xi-layout-side-right xi-x">&nbsp;</i></br></a></li>
             </ul>
             <div style="clear:both;"></div>
 <!--            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>-->
@@ -710,15 +740,22 @@
         </div>
 
         <div id="optionPanel">
-            <h3>width</h3>
-            <input id="input_width"name="setWidth" size="3" value="150"></input>
-            <h3>height</h3>
-            <input id="input_height"name="setHeight" size="3" value="150"></input>
-            <a>Change</a>
-            <h3>background-color</h3>
-            <input id="input_background"name="setHeight" size="3" value="150"></input>
-            <h3>4dss</h3>
-            <h3>5dss</h3>
+            <div id="optionClassName">
+                <h4>Component Name</h4>
+            </div>
+            <div id="optionContent">
+                <h5>width</h5>
+                <label for="input_width" class="icon-font-arrows-height only-icon-font" data-reactid=".0.3:$right-panel.4.$section-canvas.2.0.1.1.0">Height</label>
+                <input id="input_width" name="setWidth" size="3" value data-unit="px" data-reactid=".0.3:$right-panel.4.$section-canvas.2.0.1.0.1"></input>
+                <h5>height</h5>
+                <input id="input_height"name="setHeight" size="3" value="150"></input>
+                
+                <h5>background-color</h5>
+                <input id="input_background"name="setHeight" size="3" value="150"></input>
+                <h5>4dss</h5>
+                <h5>5dss</h5>
+                <a id="btn_save_component">Change</a>
+            </div>
         </div>
         <div id="msg">
             <h4>test text</h4>
