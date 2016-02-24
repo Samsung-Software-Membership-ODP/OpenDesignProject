@@ -2,28 +2,25 @@
 
 <head>
   <title>Project View</title>
-  <!--        <link rel="stylesheet" type="text/css" href="main.css">-->
   <!-- bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <!-- jquery -->
 
   <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,200" rel="stylesheet" type="text/css">
-  <!--  <link href='styles/dragular.css' rel='stylesheet' type='text/css' />-->
-  <!--   -->
+
   <style>
     * {
       margin: 0 auto;
       font-family: 'Titillium Web', sans-serif;
     }
     
-    input {
-      border-radius: 3px;
-      font-size: 18px;
+    body {
+      background: #1d1f21;
     }
     
     #mainframe {
-      background: #EBEBEC;
+      /*        background: #2c2c2c;*/
       height: 1000px;
       padding: 50px;
     }
@@ -32,9 +29,10 @@
       position: fixed;
       width: 100%;
       padding: 10px;
-      background: #003C6C;
+      /*        background: #003C6C;*/
+      background: #2c2c2c;
       z-index: 10;
-      box-shadow: 0 1px 2px #444;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
     }
     
     #main_nav > ul {
@@ -108,26 +106,62 @@
       top: 0px;
       right: 0px;
       position: fixed;
-      width: 25%;
-      background: #333333;
-      opacity: 0.8;
-      height: 1000px;
+      width: 20%;
+      background: #2c2c2c;
       z-index: 8;
+      /*                opacity: 0.8;*/
+      height: 1000px;
       color: white;
-      padding: 20px;
       padding-top: 90px;
     }
     
-    #optionPanel > input {
-      color: #444444;
+    #optionPanel > #optionClassName {
+      background: #1a1a1a;
+      padding: 20px;
+    }
+    
+    #optionPanel > #optionContent {
+      padding: 20px;
+    }
+    
+    #optionPanel > #optionContent > input {
+      border: none;
+      padding: 5px;
+      background: #242424;
+      box-shadow: none;
+      color: #b3b3b3;
       width: 100%;
+    }
+    
+    #optionPanel > #optionContent > input:focus {
+      border: 1px solid blue;
+      outline: none;
+      box-shadow: none;
+    }
+    
+    #optionPanel > #optionContent > #btn_save_component {
+      transition: 0.3s;
+      border: 1px solid white;
+      border-radius: 3px;
+      color: white;
+      padding: 5px;
+      width: 100%;
+      display: block;
+      text-align: center;
+    }
+    
+    #optionPanel > #optionContent > #btn_save_component:hover {
+      background: white;
+      transition: 0.3s;
+      text-decoration: none;
+      color: #444444;
     }
     
     #msg {
       width: 100%;
       position: fixed;
       bottom: 0px;
-      opacity: 0.6;
+      opacity: 0.8;
       padding: 10px;
       padding-left: 30px;
       color: white;
@@ -187,7 +221,7 @@
     }
     
     #target2 {
-      background-color: #1E3333;
+      background-color: white;
     }
     
     #set {
@@ -211,6 +245,8 @@
 
 
 
+
+
   <div class="compo draggable1" id="NewID1" style="width: 200px; height: 200px;">1
     <div class="compo draggable1" id="NewID3" style="width: 200px; height: 200px;">1
       <div class="compo draggable3" id="NewID10" style="">3
@@ -221,40 +257,9 @@
       </div>
     </div>
   </div>
-  <div class="compo draggable1" id="NewID2" style="width: 200px; height: 200px;">1
-    <div class="compo draggable1" id="NewID5" style="width: 200px; height: 200px;">1
-      <div class="compo draggable3" id="NewID4" style="">3
-      </div>
-      <div class="compo draggable3" id="NewID9" style="">3
-      </div>
-      <div class="compo draggable3" id="NewID11" style="">3
-      </div>
-      <div class="compo draggable1" id="NewID26" style="width: 200px; height: 200px;">1
-      </div>
-    </div>
-    <div class="compo draggable3" id="NewID15" style="">3
-    </div>
-  </div>
-  <div class="compo draggable1" id="NewID6" style="width: 200px; height: 200px;">1
-    <div class="compo draggable3" id="NewID8" style="">3
-    </div>
-    <div class="compo draggable3" id="NewID12" style="">3
-    </div>
-    <div class="compo draggable3" id="NewID13" style="">3
-      <div class="compo draggable1" id="NewID22" style="width: 200px; height: 200px;">1
-      </div>
-    </div>
-    <div class="compo draggable1" id="NewID21" style="width: 200px; height: 200px;">1
-      <div class="compo draggable2" id="NewID23" style="">2
-        <div class="compo draggable3" id="NewID24" style="">3
-        </div>
-        <div class="compo draggable2" id="NewID25" style="">2
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="compo draggable3" id="NewID7" style="">3
-  </div>
+
+
+
   <div class="compo draggable3" id="NewID14" style="">3
   </div>
   <div class="compo draggable2" id="NewID16" style="">2
@@ -264,6 +269,15 @@
   <div class="compo draggable2" id="NewID20" style="">2
   </div>
   <div class="compo draggable3" id="NewID27" style="">3
+  </div>
+
+
+
+
+
+  <div class="compo draggable1" id="NewID1" style="width: 200px; height: 200px;">1
+  </div>
+  <div class="compo draggable1" id="NewID2" style="width: 200px; height: 200px;">1
   </div>
 </body>
 

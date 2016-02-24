@@ -15,7 +15,7 @@
         font-family: 'Titillium Web', sans-serif;
     }
      body{
-        background: #232323; 
+        background: #1d1f21; 
      }
     #mainframe{
 /*        background: #2c2c2c;*/
@@ -26,7 +26,8 @@
         position: fixed;
         width:100%;
         padding: 10px;
-        background: #003C6C;
+/*        background: #003C6C;*/
+        background: #2c2c2c;
         z-index: 10;
         box-shadow:0 1px 3px 0 rgba(0,0,0,.2);
 
@@ -143,7 +144,7 @@
          width: 100%;
          position: fixed;
          bottom: 0px;
-         opacity: 0.6;
+         opacity: 0.8;
          padding: 10px;
          padding-left: 30px;
          color: white;
@@ -159,8 +160,7 @@
         }
 
 
-        #target2
-        {
+        #workspace_view{
           float: left; width: 98%; height: 700px;
           padding: 10px; margin: 10px;
 
@@ -190,7 +190,9 @@
             display:inline;
 /*            float:left;*/
         }
-        #target2 {background-color: #1E3333;}
+        #workspace_view {
+            background-color: white;
+        }
 
         #set
         {
@@ -218,9 +220,9 @@
     $(document).ready(function(){
         
         // DB loading part
-        // Database에서 정보를 읽어와서 target2에 뿌려주는 부분
-        var t = $('#target2').text();
-        $('#target2').html(t.replace('&lt','<').replace('&gt','>'));
+        // Database에서 정보를 읽어와서 workspace_view에 뿌려주는 부분
+        var t = $('#workspace_view').text();
+        $('#workspace_view').html(t.replace('&lt','<').replace('&gt','>'));
 
         
         // hide part
@@ -234,7 +236,7 @@
         // click part
         
         
-        $("#target2").on("click", ".compo", function (event) {
+        $("#workspace_view").on("click", ".compo", function (event) {
           selectedElement = $(this);
           $('#input_width').val(selectedElement.width());
           $('#input_height').val(selectedElement.height());
@@ -467,8 +469,8 @@
       // console.log(headCode);
       // head
 
-      // Target2 div
-      var bodyCode = document.getElementById("target2").innerHTML;
+      // workspace_view div
+      var bodyCode = document.getElementById("workspace_view").innerHTML;
 //      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
       bodyCode=bodyCode.replace(/draggable="true"/gi,"");
       bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
@@ -600,8 +602,8 @@
                 <li><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
                 <li id="add_compo"><a href="#"><i class="xi-cube xi-x">&nbsp;</i></br> </a></li>
                 
-                <li><a href="#"><i class="xi-plus xi-x">&nbsp;</i></br> </a></li>
-                <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
+                <li><a href="#"><i class="xi-code xi-x">&nbsp;</i></br> </a></li>
+                <li id="btn_share"><a href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li id="btn_remove"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
                 
             </ul>
@@ -713,7 +715,7 @@
         </div>
 
 
-        <div id="target2"
+        <div id="workspace_view"
           ondragover="return over(event)"
           ondrop="return drop(event)"
           ondragenter="return enter(event)"
@@ -739,6 +741,10 @@
           <h3>Open Design Project</h3>
         </div>
 
+        <!-- hide Views-->
+
+        <div id="add_tags_view">
+        </div>
         <div id="optionPanel">
             <div id="optionClassName">
                 <h4>Component Name</h4>
