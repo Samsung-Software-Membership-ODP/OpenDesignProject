@@ -9,8 +9,12 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
   <!-- -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,200" rel="stylesheet" type="text/css">
+
+
+  <!-- Color Picker -->
+  <link rel="stylesheet" media="screen" type="text/css" href="ColorPicker/css/colorpicker.css">
+
 
   <style>
     * {
@@ -20,6 +24,7 @@
     
     body {
       background: #1d1f21;
+      height: 100%;
     }
     
     .left {
@@ -32,6 +37,22 @@
     
     .clear {
       clear: both;
+    }
+    
+    .element {
+      transition: 0.3s;
+      display: inline-block;
+      vertical-align: middle;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, .7);
+      margin: 5px;
+      border-radius: 3px;
+    }
+    
+    .element:hover {
+      background: #232323;
     }
     
     #mainframe {
@@ -120,7 +141,7 @@
     }
     
     #optionPanel {
-      top: 0px;
+      top: 90px;
       right: 0px;
       position: fixed;
       width: 20%;
@@ -128,9 +149,9 @@
       z-index: 8;
       /*                opacity: 0.8;*/
       overflow-y: scroll;
-      height: 1000px;
+      height: 90%;
       color: #f3f3f3;
-      padding-top: 90px;
+      /*        padding-top:90px;*/
     }
     
     #option {
@@ -181,6 +202,8 @@
     
     #tags {
       background: #363636;
+      height: 450px;
+      overflow-y: scroll;
     }
     
     #tab > ul > li {
@@ -306,26 +329,39 @@
 
 
 
-  <div class="compo draggable2" id="NewID16" style="">2
-  </div>
-  <div class="compo draggable2" id="NewID17" style="">2
-  </div>
-  <div class="compo draggable2" id="NewID20" style="">2
-  </div>
-  <div class="compo draggable3" id="NewID27" style="">3
-  </div>
 
 
-
-
-
-  <div class="compo draggable1" id="NewID1" style="width: 200px; height: 200px;">1
+  <div class="compo draggable2" id="NewID16" style="width: 65px; height: 60px; background: rgb(128, 128, 128);">2
   </div>
-  <div class="compo draggable1" id="NewID2" style="width: 200px; height: 200px;">1
+  <div class="compo draggable2" id="NewID17" style="width: 55px; height: 50px; background: rgb(135, 27, 135);">2
+  </div>
+  <div class="compo draggable2" id="NewID20" style="width: 65px; height: 60px; background: rgb(58, 181, 181);">2
+  </div>
+  <div class="compo draggable3" id="NewID27" style="width: 75px; height: 70px; background: rgb(201, 87, 201);">3
   </div>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="compo draggable1" id="NewID2" style="width: 200px; height: 200px; background: rgb(140, 54, 140);">1
+    <div class="compo draggable1" id="NewID2" style="width: 200px; height: 200px;">1
+      <div class="compo draggable1" id="NewID1" style="width: 200px; height: 200px; background: rgb(95, 250, 193);">1
+        <div class="compo draggable1" id="NewID1" style="width: 200px; height: 200px;">1
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

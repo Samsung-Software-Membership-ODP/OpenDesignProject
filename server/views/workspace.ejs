@@ -21,9 +21,14 @@
         margin: 0 auto;
         font-family: 'Titillium Web', sans-serif;
     }
+    html, body {
+        height: 100%;
+        max-height: 100%;
+    }
     body{
         background: #1d1f21; 
-        height:100%;
+        min-height: 1000px;
+
     }
      .left{
          float:left;
@@ -35,6 +40,7 @@
         clear:both;
      }
      .element{
+         font-size:32px;
          transition: 0.3s;
          display: inline-block;
          vertical-align: middle;
@@ -130,13 +136,16 @@
         background: #2c2c2c;
         z-index : 8;
     /*                opacity: 0.8;*/
+        
         overflow-y: scroll;
-        height: 90%;
+        max-height: 91%;
         color: #f3f3f3;
 /*        padding-top:90px;*/
      }
      #option{
+/*         height: 500px;*/
          background: #363636;
+         overflow-y: scroll;
      }
      #optionClassName{
         background: #1a1a1a;
@@ -226,12 +235,11 @@
 
 
         #workspace_view{
-          float: left; width: 98%; height: 700px;
-          padding: 10px; margin: 10px;
-
+          float: left;
+          width: 98%; height: auto;
+          padding: 5px; margin: 10px;
         }
-        div.draggable2
-        {
+        div.draggable2{
           float : inherit;
           width: 75px; height: 70px; padding: 10px;
           margin: 5px;
@@ -256,6 +264,7 @@
 /*            float:left;*/
         }
         #workspace_view {
+            height: 100%;
             background-color: #f3f3f3;
         }
 
@@ -333,6 +342,7 @@
           selectedElement = $(this);
           $('#input_width').val(Number(selectedElement.width())+10);
           $('#input_height').val(Number(selectedElement.height())+10);
+          $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
           console.log(selectedElement + 'click');
           // 중복클릭 금지
           event.stopPropagation();
@@ -386,6 +396,17 @@
         })
     });
       
+    function hexc(colorval) {
+        var color = '';
+        var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        delete(parts[0]);
+        for (var i = 1; i <= 3; ++i) {
+            parts[i] = parseInt(parts[i]).toString(16);
+            if (parts[i].length == 1) parts[i] = '0' + parts[i];
+        }
+        color = '#' + parts.join('');
+        return color;
+    }
 
   function remove(){
       // console.log(child);
@@ -706,9 +727,7 @@
             <ul style="float:left;">
                 <li id="save"><a href="#"><i class="xi-diskette xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
-                <li id="btn_add_compo"><a href="#"><i class="xi-cube xi-x">&nbsp;</i></br> </a></li>
                 
-                <li><a href="#"><i class="xi-code xi-x">&nbsp;</i></br> </a></li>
                 <li id="btn_share"><a href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li id="btn_remove"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
                 
@@ -719,102 +738,6 @@
             <div style="clear:both;"></div>
 <!--            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>-->
 
-            <div id="component_view"
-                ondragover="return over(event)"
-                ondrop="return drop(event)"
-                ondragenter="return enter(event)"
-                ondragleave="return Leave(event)">
-
-                <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
-                
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-                <div class="compo draggable1" id="draggable1" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"
-                style="width: 200px; height: 200px;">1
-                </div>
-
-
-                <div class="compo draggable2" id="draggable2" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)">2
-                </div>
-
-
-                <div class="compo draggable3" id="draggable3" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)">3
-                </div>
-                
-                <button class="compo" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"> test</button>
-                    <button class="compo" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"> test</button>
-                    <button class="compo" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"> test</button>
-                    <button class="compo" draggable="true"
-                ondragstart="return start(event)"
-                ondragend="return end(event)"> test</button>
-                    
-                
-                <div style="clear:both"></div>
-            </div>
         </div>
         
         <div style="padding-top:100px;">
@@ -830,19 +753,21 @@
             <%= val %>
             
         </div>
-
+        <div class="clear"></div>
+<!--
           <div id="mainframe" ondragover="return over(event)"
           ondrop="return drop(event)"
           ondragenter="return enter(event)"
           ondragleave="return Leave(event)">
 
-        <!--
+        
             <iframe id="frame" style="width:100%; height:1000px; border: 0px;" src="./workspaces/index.html">
             </iframe>
-          -->
+          
 
 
         </div>
+-->
         <div id="footer">
           <h3>Open Design Project</h3>
         </div>
@@ -869,6 +794,104 @@
                         </a>
                     </li>
                     <li>
+                        <div id="component_view"
+                            ondragover="return over(event)"
+                            ondrop="return drop(event)"
+                            ondragenter="return enter(event)"
+                            ondragleave="return Leave(event)">
+
+                            <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+                            <div class="compo draggable1" id="draggable1" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"
+                            style="width: 200px; height: 200px;">1
+                            </div>
+
+
+                            <div class="compo draggable2" id="draggable2" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)">2
+                            </div>
+
+
+                            <div class="compo draggable3" id="draggable3" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)">3
+                            </div>
+
+                            <button class="compo" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"> test</button>
+                                <button class="compo" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"> test</button>
+                                <button class="compo" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"> test</button>
+                                <button class="compo" draggable="true"
+                            ondragstart="return start(event)"
+                            ondragend="return end(event)"> test</button>
+
+
+                            <div style="clear:both"></div>
+                        </div>
+                        
+                        
                     </li>
                     <li id="btn_add_tags">
                         <a href="#">
@@ -889,7 +912,9 @@
                             </div>
                             <div id="optionContent" style="text-align:center">
                                
-                               <a href="#" class="element"><p><i class="xi-caps xi-3x"></i></p></a>
+                               <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
+                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
+                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
