@@ -7,6 +7,9 @@
   <!-- jquery -->
 
   <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
+  <!-- -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,200" rel="stylesheet" type="text/css">
 
   <style>
@@ -17,6 +20,18 @@
     
     body {
       background: #1d1f21;
+    }
+    
+    .left {
+      float: left;
+    }
+    
+    .right {
+      float: right;
+    }
+    
+    .clear {
+      clear: both;
     }
     
     #mainframe {
@@ -46,24 +61,26 @@
     }
     
     #main_nav > ul > li > a {
+      transition: 0.3s;
       text-decoration: none;
       color: #888888;
     }
     
     #main_nav > ul > li > a:hover {
+      transition: 0.3s;
       text-decoration: none;
-      color: white;
+      color: #f3f3f3;
     }
     
     #user_msg {
       float: right;
       margin-right: 20px;
-      color: white;
+      color: #f3f3f3;
       line-height: 42px;
     }
     
     .nav_title > h2 {
-      color: white;
+      color: #f3f3f3;
       text-align: center;
     }
     
@@ -81,13 +98,13 @@
     }
     
     .logo {
-      color: white;
+      color: #f3f3f3;
       padding-left: 20px;
       margin-bottom: 15px;
     }
     
     .logo > a {
-      color: white;
+      color: #f3f3f3;
       text-decoration: none;
     }
     
@@ -110,21 +127,26 @@
       background: #2c2c2c;
       z-index: 8;
       /*                opacity: 0.8;*/
+      overflow-y: scroll;
       height: 1000px;
-      color: white;
+      color: #f3f3f3;
       padding-top: 90px;
     }
     
-    #optionPanel > #optionClassName {
+    #option {
+      background: #363636;
+    }
+    
+    #optionClassName {
       background: #1a1a1a;
       padding: 20px;
     }
     
-    #optionPanel > #optionContent {
+    #optionContent {
       padding: 20px;
     }
     
-    #optionPanel > #optionContent > input {
+    #optionContent > input {
       border: none;
       padding: 5px;
       background: #242424;
@@ -133,28 +155,50 @@
       width: 100%;
     }
     
-    #optionPanel > #optionContent > input:focus {
+    #optionContent > input:focus {
       border: 1px solid blue;
       outline: none;
       box-shadow: none;
     }
     
-    #optionPanel > #optionContent > #btn_save_component {
+    #optionContent > #btn_save_component {
       transition: 0.3s;
-      border: 1px solid white;
+      border: 1px solid #f3f3f3;
       border-radius: 3px;
-      color: white;
+      color: #f3f3f3;
       padding: 5px;
       width: 100%;
       display: block;
       text-align: center;
     }
     
-    #optionPanel > #optionContent > #btn_save_component:hover {
-      background: white;
+    #optionContent > #btn_save_component:hover {
+      background: #f3f3f3;
       transition: 0.3s;
       text-decoration: none;
       color: #444444;
+    }
+    
+    #tags {
+      background: #363636;
+    }
+    
+    #tab > ul > li {
+      /*         float: left;*/
+      list-style: none;
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+    
+    #tab > ul > li > a {
+      transition: 0.3s;
+      color: #aaa;
+      text-decoration: none;
+    }
+    
+    #tab > ul > li > a:hover {
+      transition: 0.3s;
+      color: white;
     }
     
     #msg {
@@ -164,7 +208,16 @@
       opacity: 0.8;
       padding: 10px;
       padding-left: 30px;
-      color: white;
+      color: #f3f3f3;
+      background: #444444;
+    }
+    
+    #add_tags_view {
+      position: fixed;
+      width: 100%;
+      top: 90px;
+      /*         padding-top:90px;*/
+      height: 50px;
       background: #444444;
     }
   </style>
@@ -176,10 +229,10 @@
       padding: 5px;
       margin: 5px;
       background-color: #eeeeee;
-      color: white;
+      color: #f3f3f3;
     }
     
-    #target2 {
+    #workspace_view {
       float: left;
       width: 98%;
       height: 700px;
@@ -194,7 +247,7 @@
       padding: 10px;
       margin: 5px;
       background-color: gray;
-      color: white;
+      color: #f3f3f3;
     }
     
     div.draggable3 {
@@ -204,11 +257,11 @@
       padding: 5px;
       margin: 5px;
       background-color: black;
-      color: white;
+      color: #f3f3f3;
     }
     
     #component_view {
-      background: white;
+      background: #f3f3f3;
       white-space: nowrap;
       overflow-y: hidden;
       overflow-x: scroll;
@@ -220,8 +273,8 @@
       /*            float:left;*/
     }
     
-    #target2 {
-      background-color: white;
+    #workspace_view {
+      background-color: #f3f3f3;
     }
     
     #set {
@@ -247,21 +300,12 @@
 
 
 
-  <div class="compo draggable1" id="NewID1" style="width: 200px; height: 200px;">1
-    <div class="compo draggable1" id="NewID3" style="width: 200px; height: 200px;">1
-      <div class="compo draggable3" id="NewID10" style="">3
-      </div>
-      <div class="compo draggable2" id="NewID18" style="">2
-      </div>
-      <div class="compo draggable2" id="NewID19" style="">2
-      </div>
-    </div>
-  </div>
 
 
 
-  <div class="compo draggable3" id="NewID14" style="">3
-  </div>
+
+
+
   <div class="compo draggable2" id="NewID16" style="">2
   </div>
   <div class="compo draggable2" id="NewID17" style="">2
@@ -279,6 +323,9 @@
   </div>
   <div class="compo draggable1" id="NewID2" style="width: 200px; height: 200px;">1
   </div>
+
+
+
 </body>
 
 </html>
