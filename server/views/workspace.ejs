@@ -397,7 +397,7 @@
         })
          $('#export').click(function(){
             change();
-            save();
+//            save();
 //            $.post('/workspace', {data : comCode});
             $('#msg').html('<h4><i class="xi-check"></i> 추출되었습니다.</h4>');
             $('#msg').css('background','#119933');
@@ -626,11 +626,14 @@
         comCode = comCode.concat("\n</body>\n");
         comCode = comCode.concat("</html>");
         console.log(comCode);
+        $.post('/workspace',{data : comCode, type: 'export'});
     }
       
       
     function save(){
-        $.post('/workspace',{data : comCode});
+        var bodyCode = document.getElementById("workspace_view").innerHTML;
+        $.post('/workspace',{data : bodyCode, type: 'save'});
+        console.log(bodyCode);
 //        window.location.href="data:text/plain;charset=UTF-8,"+comCode;
 
     }

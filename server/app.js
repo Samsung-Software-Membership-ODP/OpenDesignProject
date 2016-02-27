@@ -281,9 +281,9 @@ app.get('/workspace', function(req, res){
                 project_val = projects[i]['val'];
                 
                 var bodyCode = project_val;
-                var start = bodyCode.indexOf('\<body\>');
-                var end = bodyCode.indexOf('\</body\>');
-                bodyCode = bodyCode.slice(start+8, end);
+//                var start = bodyCode.indexOf('\<body\>');
+//                var end = bodyCode.indexOf('\</body\>');
+//                bodyCode = bodyCode.slice(start+8, end);
                 
                 console.log(bodyCode);
                                              
@@ -327,27 +327,30 @@ app.post('/workspace', function(req, res){
     
 //    var project_title = req.param('data');
     var project_val = beautify_html(req.body.data, { indent_size: 2 });
+    var type = req.body.type;
     
-    console.log('폴더를 생성합니다.');
-    mkdir('./public/workspaces', function(err){
-        console.log(err);
-    });
-    
-    var file = './public/workspaces/index.html';
-    
-    fs.open(file, 'w', function(err, fd){
-        if(err) throw err;
-        console.log('file open complete');
-        
-        fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
-           if(err) throw err;
-            console.log("file write complete");
+    if(type == 'export'){
+        console.log('export Start');
+        console.log('폴더를 생성합니다.');
+        mkdir('./public/workspaces', function(err){
+            console.log(err);
         });
-    });
-    
-    
-    
-    User.findOne({id : checkedID}, function(err, doc){
+
+        var file = './public/workspaces/index.html';
+
+        fs.open(file, 'w', function(err, fd){
+            if(err) throw err;
+            console.log('file open complete');
+
+            fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
+               if(err) throw err;
+                console.log("file write complete");
+            });
+        });    
+    }
+    else if(type == 'save'){
+        console.log('save Start');
+        User.findOne({id : checkedID}, function(err, doc){
         
         console.log("Find id")
         
@@ -373,6 +376,11 @@ app.post('/workspace', function(req, res){
         }
         
     });
+    }
+    
+    
+    
+    
     
     
     
