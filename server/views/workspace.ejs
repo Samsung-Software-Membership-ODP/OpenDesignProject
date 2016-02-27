@@ -5,7 +5,7 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >  
     <!-- jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
     <!-- -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -30,35 +30,39 @@
         min-height: 1000px;
 
     }
-     .left{
-         float:left;
-     }
-     .right{
-         float:right;
-     }
-     .clear{
+    .left{
+        float:left;
+    }
+    .right{
+        float:right;
+    }
+    .clear{
         clear:both;
+    }
+    .element{
+        color: #888888;
+        font-size:32px;
+        transition: 0.3s;
+        display: inline-block;
+        vertical-align: middle;
+        width: 100px;
+        height: 100px;
+        line-height:100px;
+        box-shadow : 0px 1px 1px rgba(0,0,0,.7);
+        margin:5px;
+        border-radius: 3px;
+    }
+    .element:hover{
+        color: white;
+        background: #232323;
      }
-     .element{
-         font-size:32px;
-         transition: 0.3s;
-         display: inline-block;
-         vertical-align: middle;
-         width: 100px;
-         height: 100px;
-         line-height:100px;
-         box-shadow : 0px 1px 1px rgba(0,0,0,.7);
-         margin:5px;
-         border-radius: 3px;
-     }
-     .element:hover{
-         background: #232323;
-     }
+     
     #mainframe{
 /*        background: #2c2c2c;*/
         height: 1000px;
         padding: 50px;
     }
+     
     #main_nav{
         position: fixed;
         width:100%;
@@ -120,15 +124,16 @@
 
     #footer{
         background: #5D5D5D;
-        height: 50px;
         padding-left: 100px;
+        
     }
     #footer > h3{
+        margin: 0px;
+        padding: 10px;
         color: #B7B7B7;
-        line-height: 50px;
     }
 
-     #optionPanel{
+    #optionPanel{
         top:90px;
         right: 0px; 
         position: fixed;
@@ -165,7 +170,7 @@
          width: 100%;
      }
      #optionContent > input:focus{
-         border: 1px solid blue;
+         border: 2px solid #003C6C;
          outline: none;
          box-shadow: none;
      }
@@ -225,59 +230,50 @@
          background:#444444;
      }
 </style>
-  <style>
-        div.draggable1 {
-          float : inherit;
-          width: 200px; height: 200px; padding: 5px;
-          margin: 5px;
-          background-color: #eeeeee; color:#f3f3f3;
-        }
-
-
-        #workspace_view{
-          float: left;
-          width: 98%; height: auto;
-          padding: 5px; margin: 10px;
-        }
-        div.draggable2{
-          float : inherit;
-          width: 75px; height: 70px; padding: 10px;
-          margin: 5px;
-          background-color: gray; color:#f3f3f3;
-        }
-        div.draggable3
-        {
-          float : inherit;
-          width: 75px; height: 70px; padding: 5px;
-          margin: 5px;
-          background-color: black; color:#f3f3f3;
-        }
-        #component_view {
-            background: #f3f3f3;
-            white-space: nowrap;
-            overflow-y: hidden;
-            overflow-x: scroll;
-        }
-        #component_view > .compo{
-            width:500px;
-            display:inline;
+<style>
+    div.draggable1 {
+        float : inherit;
+        width: 200px; height: 200px; padding: 5px;
+        margin: 5px;
+        background-color: #eeeeee; color:#f3f3f3;
+    }
+    #workspace_view{
+        height: 100%;
+        background-color: #f3f3f3;
+/*        float: left;*/
+        width: 98%; 
+        margin: 10px;
+    }
+    div.draggable2{
+        float : inherit;
+        width: 75px; height: 70px; padding: 10px;
+        background-color: gray; color:#f3f3f3;
+    }
+    div.draggable3{
+        float : inherit;
+        width: 75px; height: 70px; padding: 5px;
+        margin: 5px;
+        background-color: black; color:#f3f3f3;
+    }
+    #component_view {
+        background: #f3f3f3;
+        white-space: nowrap;
+        overflow-y: hidden;
+        overflow-x: scroll;
+    }
+    #component_view > .compo{
+        width:500px;
+        display:inline;
 /*            float:left;*/
-        }
-        #workspace_view {
-            height: 100%;
-            background-color: #f3f3f3;
-        }
-
-        #set
-        {
-          width : 98%;
-          background-color: inherit;
-        }
-  </style>
-    
+    }
+    #set{
+      width : 98%;
+      background-color: inherit;
+    }
+</style>
     
 <!--Drag and Drop part-->
-  <script>
+<script>
 
     var flag=0;
     var cnt=1;
@@ -285,7 +281,7 @@
     var child;
     var childInfo;
     var comCode;
-      
+
     // 0 = hide
     var menuSelect = 0;
     var optionSelect = 0;
@@ -307,23 +303,6 @@
         
         
         
-        $('#testpicker').ColorPicker({
-            flat: true,
-            color: '#EFEFEF',
-            onShow: function (colpkr) {
-                $(colpkr).fadeIn(500);
-                return false;
-            },
-            onHide: function (colpkr) {
-                $(colpkr).fadeOut(500);
-                return false;
-            },
-            onChange: function (hsb, hex, rgb) {
-                $('#colorSelector div').css('backgroundColor', '#' + hex);
-            }
-        });
-        
-        
         $('#input_bgColor').ColorPicker({
             onSubmit: function(hsb, hex, rgb, el, parent) {
                 $(el).val('#'+hex);
@@ -337,15 +316,38 @@
             $(this).ColorPickerSetColor(this.value);
         });
         
+        
+        
+        $('#add_textArea').click(function(){
+            
+//            $('#workspace_view').append('<p class="compo">sampleText</p>');
+//            var nodeCopy = document.createElement('h1');
+            var nodeCopy = $('<h1/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
+                                       draggable: 'true', ondragstart: 'return start(event)',
+                                       ondragend: 'return end(event)'
+                                      });
+            nodeCopy.css('background', '#ffffff');
+//            nodeCopy.text('test');
+//            var nodeCopy = '<p class="compo"' + ' id="NewID' + cnt + '" '+ 'draggable="true" ondragstart="return start(event)" ondragend="return end(event)">sampleText</p>';
+//            nodeCopy.id="NewID"+cnt;
+            console.log(nodeCopy.id);
+            cnt=cnt+1;
+            $('#workspace_view').append(nodeCopy);
+        });
+        
+        
         // click part
         $("#workspace_view").on("click", ".compo", function (event) {
-          selectedElement = $(this);
-          $('#input_width').val(Number(selectedElement.width())+10);
-          $('#input_height').val(Number(selectedElement.height())+10);
-          $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
-          console.log(selectedElement + 'click');
+            selectedElement = $(this);
+
+            $('#input_width').val(selectedElement.css('width'));
+            $('#input_height').val(selectedElement.css('height'));
+            $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
+            $('#input_text').val(selectedElement.text());
+            $('#input_fontSize').val(selectedElement.css('fontSize'));
+//          console.log(selectedElement + 'click');
           // 중복클릭 금지
-          event.stopPropagation();
+            event.stopPropagation();
           // var childInfo=document.getElementById(child);
           // var parent=childInfo.parentNode;
           // console.log(parent);
@@ -387,9 +389,17 @@
         });
         
         $('#save').click(function(){
-            change(); 
-            $.post('/workspace', {data : comCode});
+            save();
             $('#msg').html('<h4><i class="xi-check"></i> 저장되었습니다.</h4>');
+            $('#msg').css('background','#119933');
+            $('#msg').slideDown("fast").delay(800).fadeOut(400);
+//            alert('saved!');
+        })
+         $('#export').click(function(){
+            change();
+            save();
+//            $.post('/workspace', {data : comCode});
+            $('#msg').html('<h4><i class="xi-check"></i> 추출되었습니다.</h4>');
             $('#msg').css('background','#119933');
             $('#msg').slideDown("fast").delay(800).fadeOut(400);
 //            alert('saved!');
@@ -408,42 +418,42 @@
         return color;
     }
 
-  function remove(){
+    function remove(){
       // console.log(child);
       // var childInfo=document.getElementById(child);
-      child = selectedElement.attr('id');
-      $('#' + child).remove();
+        child = selectedElement.attr('id');
+        $('#' + child).remove();
       // childInfo=document.getElementById(child);
       // var parent=childInfo.parentNode;
       // console.log(parent);
       // parent.removeChild(childInfo);
     }
       
-   function newCssClass(){
+    function newCssClass(){
       //
 
-      var styleStart,styleEnd;
-      var code,midCode;
-      var concatFront,concatEnd;
-      code = document.head.innerHTML;
-      console.log(code);
-      styleStart=code.indexOf("<style>");
+        var styleStart,styleEnd;
+        var code,midCode;
+        var concatFront,concatEnd;
+        code = document.head.innerHTML;
+        console.log(code);
+        styleStart=code.indexOf("<style>");
 
-      concatFront=code.slice(0,styleStart+7);
-      concatEnd=code.slice(styleStart+7,code.length);
+        concatFront=code.slice(0,styleStart+7);
+        concatEnd=code.slice(styleStart+7,code.length);
 
-      midCode="\n";
-      midCode=midCode.concat("."+document.getElementById("newClassName").value+"{\n");
-      midCode=midCode.concat(comSave());
-      midCode=midCode.concat("\n}");
-      console.log(midCode);
+        midCode="\n";
+        midCode=midCode.concat("."+document.getElementById("newClassName").value+"{\n");
+        midCode=midCode.concat(comSave());
+        midCode=midCode.concat("\n}");
+        console.log(midCode);
 
-      code = "";
-      code = code.concat(concatFront + midCode + concatEnd);
-      console.log(code);
-      document.head.innerHTML=code;
-      console.log(document.head.innerHTML);
-      document.getElementById("newClassName").value = "";
+        code = "";
+        code = code.concat(concatFront + midCode + concatEnd);
+        console.log(code);
+        document.head.innerHTML=code;
+        console.log(document.head.innerHTML);
+        document.getElementById("newClassName").value = "";
     }
 
       
@@ -475,7 +485,7 @@
 
        selectedElement.removeClass('compo');  // 컴포넌트 클래스 임시 제거
        selClass=selectedElement.attr('class');
-      console.log(selClass);
+       console.log(selClass);
 
        selectedElement.addClass('compo');  // 컴포넌트 클래스 재생성
        code=document.head.innerHTML;
@@ -565,69 +575,68 @@
       
       
     function setInfo(){
-      console.log(selectedElement.attr('id'));
+        console.log(selectedElement.attr('id'));
 
-      $('#'+selectedElement.attr('id')).css('width', Number($('#input_width').val()));
-      $('#'+selectedElement.attr('id')).css('height', Number($('#input_height').val()));
-      $('#'+selectedElement.attr('id')).css('background', $('#input_bgColor').val());
-      // $('draggable1').width($('#input_width').val());
+        $('#'+selectedElement.attr('id')).css('width', $('#input_width').val());
+        $('#'+selectedElement.attr('id')).css('height', $('#input_height').val());
+        $('#'+selectedElement.attr('id')).css('background', $('#input_bgColor').val());
+        $('#'+selectedElement.attr('id')).text($('#input_text').val());
+        $('#'+selectedElement.attr('id')).css('font-size', $('#input_fontSize').val());
 
     }
       
     
     function change(){
-      var code = document.documentElement.innerHTML;
-      var start,end,removeCode;
-      start = code.indexOf("\<head\>");
-      end = code.indexOf("\</head\>");
-      // alert(start+" "+end);
+        var code = document.documentElement.innerHTML;
+        var start,end,removeCode;
+        start = code.indexOf("\<head\>");
+        end = code.indexOf("\</head\>");
+        // alert(start+" "+end);
 
 
-      var headCode = code.slice(start,end+8);
-      while(1)  // script remove
-      {
+        var headCode = code.slice(start,end+8);
+        while(1)  // script remove
+        {
           start = headCode.search("<script");
           end = headCode.search("<\/script>");
           console.log(start+ " " + end);
           removeCode=headCode.slice(start,end+9);
           headCode = headCode.replace(removeCode,"");
           if(start == -1 || end == -1) break;
-      }
-      // console.log(headCode);
-      // head
+        }
+        // console.log(headCode);
+        // head
 
-      // workspace_view div
-      var bodyCode = document.getElementById("workspace_view").innerHTML;
-//      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
-      bodyCode=bodyCode.replace(/draggable="true"/gi,"");
-      bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
-      bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
-      bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
-      bodyCode=bodyCode.replace(/draggable="true"/gi,"");
-      bodyCode.trim();
-      console.log(bodyCode);
-      // body
+        // workspace_view div
+        var bodyCode = document.getElementById("workspace_view").innerHTML;
+        //      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
+        bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+        bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
+        bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
+        bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
+        bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+        bodyCode.trim();
+        console.log(bodyCode);
+        // body
 
-      comCode = "<html>\n";
-      comCode = comCode.concat(headCode);
-      comCode = comCode.concat("\n<body>\n");
-      comCode = comCode.concat(bodyCode);
-      comCode = comCode.concat("\n</body>\n");
-      comCode = comCode.concat("</html>");
-      console.log(comCode);
+        comCode = "<html>\n";
+        comCode = comCode.concat(headCode);
+        comCode = comCode.concat("\n<body>\n");
+        comCode = comCode.concat(bodyCode);
+        comCode = comCode.concat("\n</body>\n");
+        comCode = comCode.concat("</html>");
+        console.log(comCode);
     }
       
       
     function save(){
-        $.post('/test2',{data : comCode});
+        $.post('/workspace',{data : comCode});
 //        window.location.href="data:text/plain;charset=UTF-8,"+comCode;
-
 
     }
       
       
-    function drop(e)
-    {
+    function drop(e){
 
       event.target.style.border = "";
       // e.preventDefault();
@@ -640,8 +649,7 @@
       // console.log(e.toElement.previousElementSibling);
       // console.log(e.target.previousElementSibling);
       console.log(event.target);
-      if(flag==1)
-      {
+      if(flag==1){
         var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
         // nodeCopy.className=iddraggable+" compo";
 
@@ -660,8 +668,7 @@
         //   console.log(child);
         // });
       }
-      else
-      {
+      else{
         e.target.appendChild(document.getElementById(iddraggable));
       }
     }
@@ -688,15 +695,16 @@
 
       return true;
     }
-
-    function end(e) // 드래그 끝
-    {
+      
+    // 드래그 끝
+    function end(e) {
       e.dataTransfer.clearData("Data");
   //    e.target.style.backgroundColor = "red";
       return true;
     }
-    function over(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
-    {
+      
+    //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    function over(e) {
 //      e.target.style.backgroundColor = "#1E8BC3";
       var iddraggable = e.dataTransfer.getData("Data");
       var id = e.target.getAttribute('id');
@@ -709,16 +717,17 @@
     function Leave(e) {
         event.target.style.border = "";
         event.target.style.boxShadow = "";
-
     }
-    function enter(e) //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
-    {
+      
+    //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
+    function enter(e) {
       e.preventDefault();
 //      e.target.style.backgroundColor = "#1E8BC3";
       event.target.style.border = "3px solid #6799FF";
 //      event.target.style.boxShadow = "0px 0px 20px #6799FF";
       return true;
     }
+      
     </script>
 </head>
 <body>
@@ -726,7 +735,7 @@
             <h4 class="logo"><a href="/project">Open Design Project</a></h4>
             <ul style="float:left;">
                 <li id="save"><a href="#"><i class="xi-diskette xi-x">&nbsp;</i></br></a></li>
-                <li><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
+                <li id="export"><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
                 
                 <li id="btn_share"><a href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li id="btn_remove"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
@@ -912,12 +921,12 @@
                             </div>
                             <div id="optionContent" style="text-align:center">
                                
-                               <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
+                               <a href="#" class="element" id="add_textArea"><p><i class="xi-caps"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
+                               <a href="#" class="element"><p><i class="xi-list-ul"></i></p></a>
+                               <a href="#" class="element"><p><i class="xi-list-ol"></i></p></a>
+                               <a href="#" class="element"><p><i class="xi-external-link"></i></p></a>
+                               <a href="#" class="element"><p><i class="xi-check-box"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
@@ -946,17 +955,20 @@
                                 <h4>Component Name</h4>
                             </div>
                             <div id="optionContent">
-                                <h5>width</h5>
-                                <label for="input_width" class="icon-font-arrows-height only-icon-font" data-reactid=".0.3:$right-panel.4.$section-canvas.2.0.1.1.0">Height</label>
+                                <h5>Width</h5>
                                 <input id="input_width" name="setWidth" size="3" value data-unit="px" data-reactid=".0.3:$right-panel.4.$section-canvas.2.0.1.0.1"></input>
-                                <h5>height</h5>
-                                <input id="input_height"name="setHeight" size="3" value="150"></input>
+                                <h5>Height</h5>
+                                <input id="input_height"name="setHeight" size="3"></input>
 
                                 <h5>Background-color</h5>
-                                <input id="input_bgColor"name="setBgColor" size="3" value="150"></input>
+                                <input id="input_bgColor"name="setBgColor" size="3"></input>
                                 
-                                <h5>4dss</h5>
-                                <h5>5dss</h5>
+                                <h5>Text</h5>
+                                <input id="input_text" name="setText" size="3"></input>
+
+                                <h5>Font-size</h5>
+                                <input id="input_fontSize" name="setFontSize" size="3"></input>
+                                <h1>s</h1>
                                 <a href="#" id="btn_save_component">Change</a>
                             </div>
                         </div>
