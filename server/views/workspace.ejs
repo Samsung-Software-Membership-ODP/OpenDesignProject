@@ -352,6 +352,8 @@
             onSubmit: function(hsb, hex, rgb, el, parent) {
                 $(el).val('#'+hex);
                 $(el).ColorPickerHide();
+                $('#'+selectedElement.attr('id')).css('background', $('#input_bgColor').val());
+
             },
             onBeforeShow: function () {
                 $(this).ColorPickerSetColor(this.value);
@@ -365,6 +367,7 @@
             onSubmit: function(hsb, hex, rgb, el, parent) {
                 $(el).val('#'+hex);
                 $(el).ColorPickerHide();
+                $('#'+selectedElement.attr('id')).css('color', $('#input_fontColor').val());
             },
             onBeforeShow: function () {
                 $(this).ColorPickerSetColor(this.value);
@@ -453,6 +456,41 @@
           // console.log(parent);
         });
         
+        $('#input_width').change(function(){
+            $('#'+selectedElement.attr('id')).css('width', $('#input_width').val());
+        });
+        
+        $('#input_height').change(function(){
+            $('#'+selectedElement.attr('id')).css('height', $('#input_height').val());
+        });
+        
+        
+        $('#input_text').change(function(){ 
+            $('#'+selectedElement.attr('id')).html($('#input_text').val()+temp);
+        });
+        
+        $('#input_fontSize').change(function(){
+            $('#'+selectedElement.attr('id')).css('fontSize', $('#input_fontSize').val());
+        });
+        
+        $('#input_opacity').change(function(){
+            $('#'+selectedElement.attr('id')).css('opacity', $('#input_opacity').val());
+        });
+        
+        $('#input_display').change(function(){
+            $('#'+selectedElement.attr('id')).css('display', $('#input_display').val());
+        });
+        
+        $('#input_padding').change(function(){
+            $('#'+selectedElement.attr('id')).css('padding', $('#input_padding').val());
+        });
+        
+        $('#input_margin').change(function(){
+            $('#'+selectedElement.attr('id')).css('margin', $('#input_margin').val());
+        });
+        
+        
+        
         $('#btn_add_compo').click(function(){
             $('#component_view').slideToggle('slow');
         });
@@ -465,14 +503,16 @@
             $('#option').slideToggle('slow');
         });
         
+        var tmp_width = document.getElementById('workspace_view').style.width;
+        
         $('#btn_sidePanel').click(function(){
-            var tmp_width;
+//            var tmp_width;
             
             if(optionSelect == 0) {
                $('#optionPanel').animate({width:'toggle'},350);
             }
             if(document.getElementById('workspace_view').style.width != '78%'){
-              tmp_width = document.getElementById('workspace_view').style.width;
+//              tmp_width = document.getElementById('workspace_view').style.width;
               $('#workspace_view').css('width','78%');    
             }
             else{
@@ -1213,7 +1253,7 @@
                                 <h5>Opacity</h5>
                                 <input id="input_opacity" name="setOpacity" size="3"></input>
 
-                                <h5>Margin</h5>
+                                <h5>Display</h5>
                                 <input id="input_display" name="setDisplay" size="3"></input>
 
                                 <h5>Padding</h5>
