@@ -5,7 +5,7 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >  
     <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
     <!-- -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -40,6 +40,7 @@
         clear:both;
     }
     .element{
+        text-align: center;
         color: #888888;
         font-size:32px;
         transition: 0.3s;
@@ -56,6 +57,28 @@
         color: white;
         background: #232323;
      }
+     
+     
+     .small_element{
+        text-align: center;
+        color: #888888;
+        font-size: 18px;
+        transition: 0.3s;
+        display: inline-block;
+        vertical-align: middle;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        box-shadow : 0px 1px 1px rgba(0,0,0,.7);
+        margin:5px;
+        border-radius: 3px;
+    }
+    .small_element:hover{
+        text-decoration: none;
+        color: white;
+        background: #232323;
+     }
+     
      
     #mainframe{
 /*        background: #2c2c2c;*/
@@ -229,6 +252,24 @@
          height: 50px;
          background:#444444;
      }
+     #align_group{
+         text-align: center;
+     }
+     #align_group > a{
+
+         line-height: 32px;
+         transition: 0.3s;
+         font-size: 18px;
+         color: #b3b3b3;
+         margin: 10px;
+     }
+     #align_group > a:hover{
+         color: white;
+         
+     }
+     #shadow_group{
+         text-align: center;
+     }
 </style>
 <style>
     div.draggable1 {
@@ -238,7 +279,8 @@
         background-color: #eeeeee; color:#f3f3f3;
     }
     #workspace_view{
-        height: 100%;
+        min-height: 100%;
+        height: auto;
         background-color: #f3f3f3;
 /*        float: left;*/
         width: 98%; 
@@ -281,7 +323,7 @@
     var child;
     var childInfo;
     var comCode;
-
+    var temp;
     // 0 = hide
     var menuSelect = 0;
     var optionSelect = 0;
@@ -316,36 +358,88 @@
             $(this).ColorPickerSetColor(this.value);
         });
         
+        $('#input_fontColor').ColorPicker({
+            onSubmit: function(hsb, hex, rgb, el, parent) {
+                $(el).val('#'+hex);
+                $(el).ColorPickerHide();
+            },
+            onBeforeShow: function () {
+                $(this).ColorPickerSetColor(this.value);
+            }
+        })
+        .on('keyup', function(){
+            $(this).ColorPickerSetColor(this.value);
+        });
         
         
         $('#add_textArea').click(function(){
-            
-//            $('#workspace_view').append('<p class="compo">sampleText</p>');
-//            var nodeCopy = document.createElement('h1');
-            var nodeCopy = $('<h1/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
-                                       draggable: 'true', ondragstart: 'return start(event)',
-                                       ondragend: 'return end(event)'
-                                      });
-            nodeCopy.css('background', '#ffffff');
-//            nodeCopy.text('test');
-//            var nodeCopy = '<p class="compo"' + ' id="NewID' + cnt + '" '+ 'draggable="true" ondragstart="return start(event)" ondragend="return end(event)">sampleText</p>';
-//            nodeCopy.id="NewID"+cnt;
-            console.log(nodeCopy.id);
-            cnt=cnt+1;
-            $('#workspace_view').append(nodeCopy);
+            for(;;cnt++){
+                var imID='NewID'+cnt;
+
+                if(document.getElementById(imID) == null){
+                  console.log(imID);
+                  var nodeCopy = $('<p/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
+                                             draggable: 'true', ondragstart: 'return start(event)',
+                                             ondragend: 'return end(event)'
+                                            });
+                  nodeCopy.css('background', '#ffffff');
+      //            nodeCopy.text('test');
+      //            var nodeCopy = '<p class="compo"' + ' id="NewID' + cnt + '" '+ 'draggable="true" ondragstart="return start(event)" ondragend="return end(event)">sampleText</p>';
+      //            nodeCopy.id="NewID"+cnt;
+                  console.log(nodeCopy.id);
+                  cnt=cnt+1;
+                  $('#workspace_view').append(nodeCopy);
+                  break;
+               }
+            }
         });
         
         
         // click part
         $("#workspace_view").on("click", ".compo", function (event) {
+            
             selectedElement = $(this);
+            var setID = selectedElement.attr('id');
+            
+            if(document.getElementById(setID).style.width == ''){
+              $('#input_width').val(selectedElement.css('width'));  
+            }
+            else{
+                $('#input_width').val(document.getElementById(setID).style.width);    
+            }
+            
+            
+            if(document.getElementById(setID).style.height == ''){
+              $('#input_height').val(selectedElement.css('height'));  
+            }
+            else{
+                $('#input_height').val(document.getElementById(setID).style.height);
+            }
 
-            $('#input_width').val(selectedElement.css('width'));
-            $('#input_height').val(selectedElement.css('height'));
             $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
-            $('#input_text').val(selectedElement.text());
+            $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
+            $('#input_fontColor').val(hexc(selectedElement.css('color')));
+
+            temp = document.getElementById(setID).innerHTML;
+            
+            var start = temp.indexOf("<");
+            var text
+            if(start==-1){
+                text = temp;
+                temp = "";
+            }
+            else{
+                text = temp.slice(0, start);
+                temp = temp.slice(start,temp.length);
+            }
+            
+            $('#input_text').val(text);
+            $('#input_display').val(selectedElement.css('display'));
             $('#input_fontSize').val(selectedElement.css('fontSize'));
-//          console.log(selectedElement + 'click');
+            $('#input_padding').val(selectedElement.css('padding'));
+            $('#input_margin').val(selectedElement.css('margin'));
+            
+            
           // 중복클릭 금지
             event.stopPropagation();
           // var childInfo=document.getElementById(child);
@@ -393,6 +487,7 @@
             $('#msg').html('<h4><i class="xi-check"></i> 저장되었습니다.</h4>');
             $('#msg').css('background','#119933');
             $('#msg').slideDown("fast").delay(800).fadeOut(400);
+            $('#msg').slideDown("fast").delay(800).fadeOut(400);
 //            alert('saved!');
         })
          $('#export').click(function(){
@@ -404,6 +499,67 @@
             $('#msg').slideDown("fast").delay(800).fadeOut(400);
 //            alert('saved!');
         })
+        $('#btn_align_left').click(function(){
+           selectedElement.css('text-align','left');
+        });
+        
+        $('#btn_align_center').click(function(){
+           selectedElement.css('text-align','center');
+        });
+        
+        $('#btn_align_right').click(function(){
+           selectedElement.css('text-align','right');
+        });
+        
+        $('#btn_align_justify').click(function(){
+           selectedElement.css('text-align','justify');
+        });
+        $('#btn_bold').click(function(){
+
+           if(selectedElement.css('font-weight') != 'bold'){
+               selectedElement.css('font-weight','bold');
+           }
+           else{
+               selectedElement.css('font-weight','normal');
+           }
+        });
+        $('#btn_italic').click(function(){
+
+           if(selectedElement.css('font-style') != 'italic'){
+               selectedElement.css('font-style','italic');
+           }
+           else{
+               selectedElement.css('font-style','normal');
+           }
+        });
+        
+        $('#btn_dropshadow_leftup').click(function(){
+           selectedElement.css('box-shadow','-3px -3px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_up').click(function(){
+           selectedElement.css('box-shadow','0px -3px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_rightup').click(function(){
+           selectedElement.css('box-shadow','3px -3px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_left').click(function(){
+           selectedElement.css('box-shadow','-3px 0px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_none').click(function(){
+           selectedElement.css('box-shadow','0px 0px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_right').click(function(){
+           selectedElement.css('box-shadow','3px 0px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_leftdown').click(function(){
+           selectedElement.css('box-shadow','-3px 3px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_down').click(function(){
+           selectedElement.css('box-shadow','0px 3px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_rightdown').click(function(){
+           selectedElement.css('box-shadow','3px 3px 5px rgba(0, 0, 0, 0.7)');
+        });
     });
       
     function hexc(colorval) {
@@ -580,8 +736,15 @@
         $('#'+selectedElement.attr('id')).css('width', $('#input_width').val());
         $('#'+selectedElement.attr('id')).css('height', $('#input_height').val());
         $('#'+selectedElement.attr('id')).css('background', $('#input_bgColor').val());
-        $('#'+selectedElement.attr('id')).text($('#input_text').val());
+        $('#'+selectedElement.attr('id')).css('color', $('#input_fontColor').val());
+        
+        $('#'+selectedElement.attr('id')).html($('#input_text').val()+temp);
+        
         $('#'+selectedElement.attr('id')).css('font-size', $('#input_fontSize').val());
+        $('#'+selectedElement.attr('id')).css('display', $('#input_display').val());
+        $('#'+selectedElement.attr('id')).css('padding', $('#input_padding').val());
+        $('#'+selectedElement.attr('id')).css('margin', $('#input_margin').val());
+        
 
     }
       
@@ -652,6 +815,7 @@
       // console.log(e.toElement.previousElementSibling);
       // console.log(e.target.previousElementSibling);
       console.log(event.target);
+        
       if(flag==1){
         var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
         // nodeCopy.className=iddraggable+" compo";
@@ -661,15 +825,20 @@
         // $(nodeCopy).removeClass("compo");
         // $(nodeCopy).addClass(iddraggable);
         // $(nodeCopy).addClass("compo");
-        nodeCopy.id="NewID"+cnt;
-        console.log(nodeCopy.id);
-        cnt=cnt+1;
-        e.target.appendChild(nodeCopy);
-        // $(nodeCopy).live('click',(function(){
-        //   selectedElement = $(this);
-        //   child = selectedElement.attr('id');
-        //   console.log(child);
-        // });
+        for(;;cnt++)
+        {
+            var imID='NewID'+cnt;
+
+                if(document.getElementById(imID) == null)
+                {
+                  console.log(imID);
+                    nodeCopy.id="NewID"+cnt;
+                    console.log(nodeCopy.id);
+                    cnt=cnt+1;
+                    e.target.appendChild(nodeCopy);
+                    break;
+          }
+        }
       }
       else{
         e.target.appendChild(document.getElementById(iddraggable));
@@ -958,6 +1127,36 @@
                                 <h4>Component Name</h4>
                             </div>
                             <div id="optionContent">
+                                <h5>Text Setting</h5>
+                                <div id="align_group">
+                                    <a href="#" class="small_element" id="btn_align_left"><i class="xi-align-left"></i></a>
+                                    <a href="#" class="small_element" id="btn_align_center"><i class="xi-align-center"></i></a>
+                                    <a href="#" class="small_element" id="btn_align_right"><i class="xi-align-right"></i></a>
+                                    <a href="#" class="small_element" id="btn_align_justify"><i class="xi-align-justify"></i></a>
+                                    <a href="#" class="small_element" id="btn_bold"><i class="xi-bold"></i></a>
+                                    <a href="#" class="small_element" id="btn_italic"><i class="xi-italic"></i></a>
+                                </div>
+                                
+                                <h5>Shadow</h5>
+                                <div id="shadow_group">
+                                    <div> 
+                                        <a href="#" id="btn_dropshadow_leftup" class="small_element">↖</a>
+                                        <a href="#" id="btn_dropshadow_up" class="small_element">↑</a>
+                                        <a href="#" id="btn_dropshadow_rightup" class="small_element">↗</a>                                         
+                                    </div>
+                                    <div> 
+                                        <a href="#" id="btn_dropshadow_left" class="small_element">←</a>
+                                        <a href="#" id="btn_dropshadow_none" class="small_element">·</a>
+                                        <a href="#" id="btn_dropshadow_right" class="small_element">→</a>                                         
+                                    </div>
+                                    <div> 
+                                        <a href="#" id="btn_dropshadow_leftdown" class="small_element">↙</a>
+                                        <a href="#" id="btn_dropshadow_down" class="small_element">↓</a>
+                                        <a href="#" id="btn_dropshadow_rightdown" class="small_element">↘</a>
+                                    </div>
+                                </div>
+                                
+                                
                                 <h5>Width</h5>
                                 <input id="input_width" name="setWidth" size="3" value data-unit="px" data-reactid=".0.3:$right-panel.4.$section-canvas.2.0.1.0.1"></input>
                                 <h5>Height</h5>
@@ -966,11 +1165,24 @@
                                 <h5>Background-color</h5>
                                 <input id="input_bgColor"name="setBgColor" size="3"></input>
                                 
+                                <h5>Font-color</h5>
+                                <input id="input_fontColor"name="setFontColor" size="3"></input>
+
                                 <h5>Text</h5>
                                 <input id="input_text" name="setText" size="3"></input>
 
                                 <h5>Font-size</h5>
                                 <input id="input_fontSize" name="setFontSize" size="3"></input>
+                                
+                                <h5>Margin</h5>
+                                <input id="input_display" name="setDisplay" size="3"></input>
+
+                                <h5>Padding</h5>
+                                <input id="input_padding" name="setPadding" size="3"></input>
+
+                                <h5>Margin</h5>
+                                <input id="input_margin" name="setMargin" size="3"></input>
+
                                 <h1>s</h1>
                                 <a href="#" id="btn_save_component">Change</a>
                             </div>

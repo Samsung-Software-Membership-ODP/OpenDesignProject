@@ -12,12 +12,15 @@
                 font-family: 'Titillium Web', sans-serif;
             }
             body{
-                background-image: url(/img/keyboard.jpg);
+                background-image: url(/img/bg3.jpg);
                 background-size: cover;
             }
             #mainbg{
                 color: white;
 /*                height: 1000px;*/
+            }
+            a{
+                text-decoration: none;
             }
             #loginFrameTop{
                 width: 40%;
@@ -48,6 +51,7 @@
                 padding: 10px;
             }
             #btn_signin{
+                
                 width: 70%;
                 text-align: center;
                 background: #8C8C8C;
@@ -66,10 +70,12 @@
                 text-decoration: none;
             }
             #intro_box{
+                color: #003C6C;
                 margin-top: 300px;
                 margin-bottom: 32px;
             }
             #logo{
+/*                color: #003C6C;*/
                 text-align: center;
                 font-size: 42px;
                 
@@ -120,7 +126,7 @@
                 <form id="loginform" method="post">
                     <input type="text" placeholder="ID" name="id">
                     <input type="password" placeholder="Password" name="pw">
-                    <div id="btn_signin"> 로그인</div>
+                    <a href="#"><div id="btn_signin"> 로그인</div></a>
                 </form>
                 <a id="btn_signup" href="/signup">회원가입</a>
             </div>
