@@ -388,10 +388,49 @@
                                              draggable: 'true', ondragstart: 'return start(event)',
                                              ondragend: 'return end(event)'
                                             });
-                  nodeCopy.css('background', '#ffffff');
+//                  nodeCopy.css('background', 'rgba(0,0,0,0)');
       //            nodeCopy.text('test');
       //            var nodeCopy = '<p class="compo"' + ' id="NewID' + cnt + '" '+ 'draggable="true" ondragstart="return start(event)" ondragend="return end(event)">sampleText</p>';
       //            nodeCopy.id="NewID"+cnt;
+                  console.log(nodeCopy.id);
+                  cnt=cnt+1;
+                  $('#workspace_view').append(nodeCopy);
+                  break;
+               }
+            }
+        });
+        
+        $('#add_button').click(function(){
+            for(;;cnt++){
+                var imID='NewID'+cnt;
+
+                if(document.getElementById(imID) == null){
+                  console.log(imID);
+                  var nodeCopy = $('<button/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
+                                             draggable: 'true', ondragstart: 'return start(event)',
+                                             ondragend: 'return end(event)'
+                                            });
+                  nodeCopy.css('background', '#ffffff');
+                  console.log(nodeCopy.id);
+                  cnt=cnt+1;
+                  $('#workspace_view').append(nodeCopy);
+                  break;
+               }
+            }
+        });
+        
+        
+        $('#add_input').click(function(){
+            for(;;cnt++){
+                var imID='NewID'+cnt;
+
+                if(document.getElementById(imID) == null){
+                  console.log(imID);
+                  var nodeCopy = $('<input/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
+                                             draggable: 'true', ondragstart: 'return start(event)',
+                                             ondragend: 'return end(event)'
+                                            });
+                  nodeCopy.css('background', '#ffffff');
                   console.log(nodeCopy.id);
                   cnt=cnt+1;
                   $('#workspace_view').append(nodeCopy);
@@ -421,9 +460,13 @@
             else{
                 $('#input_height').val(document.getElementById(setID).style.height);
             }
-
-            $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
-            $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
+            
+            if(selectedElement.css('backgroundColor') != 'rgba(0, 0, 0, 0)'){
+                $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));    
+            }
+            
+            
+//            $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
             $('#input_fontColor').val(hexc(selectedElement.css('color')));
 
             temp = document.getElementById(setID).innerHTML;
@@ -1168,8 +1211,8 @@
                                <a href="#" class="element"><p><i class="xi-list-ol"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-external-link"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-check-box"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
+                               <a href="#" class="element" id="add_button"><p style="font-size: 18px">Button</p></a>
+                               <a href="#" class="element" id="add_input"><p style="font-size: 18px">Input</p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
