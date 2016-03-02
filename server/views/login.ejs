@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
         <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="../dist/css/animsition.min.css">
+        <script src="../dist/js/animsition.min.js"></script>
         <style>
             *{
                 margin: 0 auto;
@@ -87,12 +89,42 @@
             
         </style>
         <script>
+            $(document).keydown(function(event){
+                if(event.keyCode == '13'){
+                    event.preventDefault();
+                    $('#btn_signin').trigger('click');
+                }
+            });
             $(document).ready(function(){
                 var islogin = '<%= islogin %>';
                 if(islogin === 'fail'){
 //                    alert('로그인에 실패하였습니다.');
                 }
+                
+                $('body').animsition({
+                    inClass: 'fade-in',
+                    outClass: 'fade-out',
+                    inDuration: 1500,
+                    outDuration: 800,
+                    linkElement: '.animsition-link',
+                    // e.g. linkElement: 'a:not([target="_blank"]):not([href^=#])'
+                    loading: true,
+                    loadingParentElement: 'body', //animsition wrapper element
+                    loadingClass: 'animsition-loading',
+                    loadingInner: '', // e.g '<img src="loading.svg" />'
+                    timeout: false,
+                    timeoutCountdown: 5000,
+                    onLoadEvent: true,
+                    browser: [ 'animation-duration', '-webkit-animation-duration'],
+                    // "browser" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+                    // The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+                    overlay : false,
+                    overlayClass : 'animsition-overlay-slide',
+                    overlayParentElement : 'body',
+                    transition: function(url){ window.location.href = url; }
+                  });
             });
+            
             $(function(){
                 $( "#btn_signin" ).click(function() {
                     $('#loginform').submit();
@@ -126,7 +158,7 @@
                 <form id="loginform" method="post">
                     <input type="text" placeholder="ID" name="id">
                     <input type="password" placeholder="Password" name="pw">
-                    <a href="#"><div id="btn_signin"> 로그인</div></a>
+                    <a href="#" class="animsition-link"><div id="btn_signin"> 로그인</div></a>
                 </form>
                 <a id="btn_signup" href="/signup">회원가입</a>
             </div>

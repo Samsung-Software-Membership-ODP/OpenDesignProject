@@ -10,12 +10,15 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
         <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="../dist/css/animsition.min.css">
+        <script src="../dist/js/animsition.min.js"></script>
+
         <style>
             html{
                 height:100%;
             }
             body{
-                height:100%;
+/*                height:100%;*/
                 overflow-y: scroll;
             }
             *{
@@ -27,14 +30,19 @@
                 background: #EBEBEC;
                 padding: 50px;
                 height: 90%;
-                overflow-y: scroll;
+/*                overflow-y: scroll;*/
                 
                
             }
             #main_nav{
                 padding: 10px;
+                position: fixed;
+                width: 100%;
+                z-index: 10;
+                box-shadow: 0px 1px 3px rgba(0,0,0,.7);
 /*                background: #003C6C;*/
                 background : linear-gradient(135deg, rgba(53,49,87,1) 0%,rgba(71,28,60,1) 100%);
+                opacity: 0.9;
             }
             #main_nav > ul{
                 list-style: none;
@@ -64,7 +72,7 @@
             }
             #cardSection{
                 margin: 0 auto;
-                text-align: justify;
+                text-align: center;
             }
             .card{
 /*                float: left;*/
@@ -96,10 +104,18 @@
                 margin-bottom: 15px;
             }
             #sub_nav{
+/*                height:100px;*/
+                padding: 120px;
                 padding-left: 40px;
-                vertical-align: middle;
+                padding-top:200px;
+                color:white;
+/*                vertical-align: middle;*/
 /*                height: 40px;*/
                 background: white;
+                background-image: url(/img/writing.jpg);
+                background-size: cover;
+                background-position: 0px -350px;
+                background-attachment: fixed;
                 border-bottom: 2px solid #003C6C;
             }
             
@@ -125,9 +141,38 @@
                 });
             });
             
+            
+            $(document).keydown(function(event){
+                if(event.keyCode == '13'){
+                    cmdDown = true;
+                }
+            });
             $(document).ready(function(){
+                $('body').animsition({
+                    inClass: 'fade-in',
+                    outClass: 'fade-out',
+                    inDuration: 1500,
+                    outDuration: 800,
+                    linkElement: '.animsition-link',
+                    // e.g. linkElement: 'a:not([target="_blank"]):not([href^=#])'
+                    loading: true,
+                    loadingParentElement: 'body', //animsition wrapper element
+                    loadingClass: 'animsition-loading',
+                    loadingInner: '', // e.g '<img src="loading.svg" />'
+                    timeout: false,
+                    timeoutCountdown: 5000,
+                    onLoadEvent: true,
+                    browser: [ 'animation-duration', '-webkit-animation-duration'],
+                    // "browser" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+                    // The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
+                    overlay : false,
+                    overlayClass : 'animsition-overlay-slide',
+                    overlayParentElement : 'body',
+                    transition: function(url){ window.location.href = url; }
+                  });
+                
                 for(var i = 0; i < titles.length; i++){
-                    var card = $('<div>', {class: 'card'});
+                    var card = $('<a>', {class: 'card animsition-link', href:'#'});
                     card.html('<h4>'+titles[i]+'</h4>');
                     $('#cardSection').append(
 //                        '<div class="card"><h4>'+titles[i]+'</h4></div>'+'<button>'+'test'+'</button>'
@@ -157,13 +202,15 @@
                 <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
             </ul>
+            <p style="float:right; color:white"><i class="xi-user">&nbsp;</i> <b><%= user_name %></b> 님 접속을 환영합니다.</p>
             <div style="clear:both;"></div>
         </div>
         <div id="sub_nav">
-            <p><i class="xi-angle-right">&nbsp;</i> <%= user_name %> 님 접속을 환영합니다.</p>
+            
+            <h2>여러분만의 홈페이지를 디자인하세요</h2>
         </div>
         
-        <div id="mainframe">
+        <div id="mainframe" >
             <div id="cardSection">
                 
             </div>
