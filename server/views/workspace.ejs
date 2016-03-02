@@ -4,8 +4,11 @@
     <title>Project View</title>
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >  
+    
+
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-2.2.1.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
     <!-- -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -275,12 +278,7 @@
      }
 </style>
 <style>
-    div.draggable1 {
-        float : inherit;
-        width: 200px; height: 200px; padding: 5px;
-        margin: 5px;
-        background-color: #eeeeee; color:#f3f3f3;
-    }
+  
     #workspace_view{
         min-height: 100%;
         height: auto;
@@ -289,17 +287,7 @@
         width: 98%; 
         margin: 10px;
     }
-    div.draggable2{
-        float : inherit;
-        width: 75px; height: 70px; padding: 10px;
-        background-color: gray; color:#f3f3f3;
-    }
-    div.draggable3{
-        float : inherit;
-        width: 75px; height: 70px; padding: 5px;
-        margin: 5px;
-        background-color: black; color:#f3f3f3;
-    }
+
     #component_view {
         background: #f3f3f3;
         white-space: nowrap;
@@ -319,7 +307,9 @@
     
 <!--Drag and Drop part-->
 <script>
-
+    var comTitle= "<%= comTitle%>".split(',');
+    var comHead= "<%= comHead%>".split(',');
+    var comBody = "<%= comBody%>";
     var flag=0;
     var cnt=1;
     var selectedElement;
@@ -330,8 +320,100 @@
     // 0 = hide
     var menuSelect = 0;
     var optionSelect = 0;
+    
+    var cmdDown = false;
+    
+    $(document).keydown(function(event){
+        if(event.keyCode == '91'){
+            cmdDown = true;
+        }
+        // Btn SidePanel Click Event Trigger Cmd + K
+        if(cmdDown && event.keyCode == '75'){
+            $('#btn_sidePanel').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + S
+        if(cmdDown && event.keyCode == '83'){
+            // Chrome Cmd + S Key Event Ignore
+            event.preventDefault();
+            $('#save').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + 1
+        if(cmdDown && event.keyCode == '49'){
+            event.preventDefault();
+            $('#btn_add_compo').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + 2
+        if(cmdDown && event.keyCode == '50'){
+            event.preventDefault();
+            $('#btn_add_tags').trigger('click');
+        }
+        // Btn save Click Event Trigget Cmd + 3
+        if(cmdDown && event.keyCode == '51'){
+            event.preventDefault();
+            $('#btn_option').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + D
+        if(cmdDown && event.keyCode == '68'){
+            event.preventDefault();
+            $('#btn_remove').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + B
+        if(cmdDown && event.keyCode == '66'){
+            event.preventDefault();
+            $('#btn_bold').trigger('click');
+        }
+    }).keyup(function(event){
+       if(event.keyCode =='91'){
+           cmdDown = false;
+       }
+    });
+    
+    
+    
 
     $(document).ready(function(){
+        
+        // tooltip Initialize
+         $('[data-toggle="tooltip"]').tooltip(); 
+        comBody=comBody.replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/&#34;/gi,'\"');
+        comBody=comBody.split(',');
+
+        var ims=document.documentElement.innerHTML;
+        var start,end;
+        var concatFront,concatEnd;
+        start=ims.indexOf("<style>");
+
+        concatFront=ims.slice(0,start+7);
+        concatEnd=ims.slice(start+7,ims.length);
+        var innerHead = "";
+        for(var i = 0 ; i < comHead.length;i++)
+        {
+          innerHead=innerHead.concat(comHead[i]+"\n");
+        }
+        ims=concatFront+"\n"+innerHead+concatEnd;
+        document.documentElement.innerHTML=ims;
+        
+        console.log("Complete Insert ComponentCSS\n");
+
+        start=ims.indexOf("<p><i class=\"xi-angle-right\">&nbsp;</i> workspace</p>");
+
+        concatFront=ims.slice(0,start+54);
+        concatEnd=ims.slice(start+54,ims.length);
+        var innerBody = "";
+        for(var i = 0 ; i < comBody.length; i++)
+        {
+          innerBody=innerBody.concat(comBody[i]+"\n");
+        }
+        ims=concatFront+"\n"+innerBody+concatEnd;
+
+        document.documentElement.innerHTML=ims;
+        console.log("Complete Insert Component\n");
+
         
         // DB loading part
         // Database에서 정보를 읽어와서 workspace_view에 뿌려주는 부분
@@ -585,7 +667,6 @@
             save();
             $('#msg').html('<h4><i class="xi-check"></i> 저장되었습니다.</h4>');
             $('#msg').css('background','#119933');
-            $('#msg').slideDown("fast").delay(800).fadeOut(400);
             $('#msg').slideDown("fast").delay(800).fadeOut(400);
 //            alert('saved!');
         })
@@ -1018,15 +1099,15 @@
       <div id="main_nav">
             <h4 class="logo"><a href="/project">Open Design Project</a></h4>
             <ul style="float:left;">
-                <li id="save"><a href="#"><i class="xi-diskette xi-x">&nbsp;</i></br></a></li>
+                <li id="save" data-toggle="tooltip" title="Cmd + S"><a href="#"><i class="xi-diskette xi-x">&nbsp;</i></br></a></li>
                 <li id="export"><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
                 
                 <li id="btn_share"><a href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
-                <li id="btn_remove"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
+                <li id="btn_remove" data-toggle="tooltip" title="Cmd + D"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
                 
             </ul>
             <ul style="float:right;">
-                <li id="btn_sidePanel"><a href="#"><i class="xi-layout-side-right xi-x">&nbsp;</i></br></a></li>
+                <li id="btn_sidePanel" data-toggle="tooltip" title="Cmd + K"><a href="#"><i class="xi-layout-side-right xi-x">&nbsp;</i></br></a></li>
             </ul>
             <div style="clear:both;"></div>
 <!--            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>-->
@@ -1094,91 +1175,6 @@
                             ondragleave="return Leave(event)">
 
                             <p><i class="xi-angle-right">&nbsp;</i> workspace</p>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-                            <div class="compo draggable1" id="draggable1" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"
-                            style="width: 200px; height: 200px;">1
-                            </div>
-
-
-                            <div class="compo draggable2" id="draggable2" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)">2
-                            </div>
-
-
-                            <div class="compo draggable3" id="draggable3" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)">3
-                            </div>
-
-                            <button class="compo" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"> test</button>
-                                <button class="compo" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"> test</button>
-                                <button class="compo" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"> test</button>
-                                <button class="compo" draggable="true"
-                            ondragstart="return start(event)"
-                            ondragend="return end(event)"> test</button>
 
 
                             <div style="clear:both"></div>
@@ -1323,4 +1319,5 @@
             <h4>test text</h4>
         </div>
 </body>
+
 </html>

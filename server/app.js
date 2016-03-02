@@ -72,6 +72,13 @@ var UserSchema = new Schema({
     }]
 })
 
+var ComponentSchema = new Schema({
+  title : String,
+  head : String,
+  body : String
+});
+
+var ComponentDB = mongoose.model('Components',ComponentSchema);
 var User = mongoose.model('users', UserSchema);
 
 
@@ -102,6 +109,98 @@ var checkedName;
 var projectCount;
 var projects;
 var titles = new Array();
+
+
+
+app.get('/addCompo',function(req,res){
+  res.render('addCompo');
+});
+
+app.post('/addCompo',function(req,res){
+  var title = req.body.input_compo_title;
+  var head = req.body.input_compo_head;
+  var body = req.body.input_compo_body;
+
+  var start,end;
+  var ims,headEnd;
+  var concatFront,concatEnd;
+  var flag=0;
+
+  ComponentDB.find({}, function(err, docs){
+    flag=0;
+    for(var i=0 ; i<docs.length ; i++)
+    {
+      if(docs[i].title == title)
+      {
+        console.log("overlap name");
+        flag=1; break;
+      }
+    }
+    // 중복 확인
+
+
+    // 공백 체크
+    var blank_pattern = /[\s]/g;
+    if( blank_pattern.test(title) == true){
+      flag=1;
+      console.log("blank");
+    }
+    // 공백 체크
+    var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+    if( special_pattern.test(title) == true ){
+        flag=1;
+        console.log("special_pattern");
+    }
+    // 특수문자 체크
+    var number_pattern = /^[A-Za-z]{1}/;
+    if(number_pattern.test(title) == false){
+        flag=1;
+        console.log("First String Number!");
+    }
+    // 첫글자 숫자 체크
+  console.log("flag "+flag);
+  if(flag == 0)
+  {
+      ims=head;
+      headEnd=ims.indexOf("\{");
+
+      concatFront=".";
+      concatEnd=ims.slice(headEnd,ims.length);
+      head=concatFront+title+concatEnd;
+
+      // console.log(head);
+      //change Head
+
+      ims=body;
+      start=ims.indexOf("class=\"");
+      concatFront=ims.slice(0,start+7);
+      end=ims.indexOf("\"",start+7);
+      concatEnd=ims.slice(end,ims.length);
+
+      body=concatFront+"compo "+title+concatEnd;
+
+      ims=body;
+      start=ims.indexOf("id=\"");
+      concatFront=ims.slice(0,start+4);
+      end=ims.indexOf("\"",start+4);
+      concatEnd=ims.slice(end,ims.length);
+
+      body=concatFront+title+concatEnd;
+
+      // console.log(body);
+      ComponentDB.create({title:title, head : head , body : body },function(err,data){
+      });
+
+      console.log("Compo Create Complete");
+    }
+    else
+    {
+      console.log("Compo Create Fail");
+    }
+  res.render('addCompo');
+  });
+});
+
 
 
 
@@ -286,8 +385,14 @@ app.get('/workspace', function(req, res){
 //                bodyCode = bodyCode.slice(start+8, end);
                 
                 console.log(bodyCode);
-                                             
-                res.render('workspace', {val : bodyCode});
+                ComponentDB.find({},function(error,comDoc){
+                  var comTitle = new Array(), comHead = new Array(), comBody = new Array();
+                  for(var j = 0 ; j< comDoc.length ; j++)
+                  {
+                    comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
+                  }
+                res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
+              });
 
                 break;
             }
