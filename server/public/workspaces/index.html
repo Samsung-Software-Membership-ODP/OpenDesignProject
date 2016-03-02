@@ -4,7 +4,10 @@
   <title>Project View</title>
   <!-- bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+
   <!-- jquery -->
+
 
   <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
   <!-- -->
@@ -17,6 +20,36 @@
 
 
   <style>
+    .first_compo {
+      float: inherit;
+      width: 200px;
+      height: 200px;
+      padding: 5px;
+      margin: 5px;
+      background-color: #eeeeee;
+      color: #f3f3f3;
+    }
+    
+    .second_compo {
+      float: inherit;
+      width: 75px;
+      height: 70px;
+      padding: 10px;
+      margin: 5px;
+      background-color: gray;
+      color: white;
+    }
+    
+    .third_compo {
+      float: inherit;
+      width: 75px;
+      height: 70px;
+      padding: 5px;
+      margin: 5px;
+      background-color: black;
+      color: white;
+    }
+    
     * {
       margin: 0 auto;
       font-family: 'Titillium Web', sans-serif;
@@ -46,6 +79,7 @@
     }
     
     .element {
+      text-align: center;
       color: #888888;
       font-size: 32px;
       transition: 0.3s;
@@ -60,6 +94,27 @@
     }
     
     .element:hover {
+      color: white;
+      background: #232323;
+    }
+    
+    .small_element {
+      text-align: center;
+      color: #888888;
+      font-size: 18px;
+      transition: 0.3s;
+      display: inline-block;
+      vertical-align: middle;
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, .7);
+      margin: 5px;
+      border-radius: 3px;
+    }
+    
+    .small_element:hover {
+      text-decoration: none;
       color: white;
       background: #232323;
     }
@@ -254,18 +309,32 @@
       height: 50px;
       background: #444444;
     }
-  </style>
-  <style>
-    div.draggable1 {
-      float: inherit;
-      width: 200px;
-      height: 200px;
-      padding: 5px;
-      margin: 5px;
-      background-color: #eeeeee;
-      color: #f3f3f3;
+    
+    #align_group {
+      text-align: center;
     }
     
+    #align_group > a {
+      line-height: 32px;
+      transition: 0.3s;
+      font-size: 18px;
+      color: #b3b3b3;
+      margin: 10px;
+    }
+    
+    #align_group > a:hover {
+      color: white;
+    }
+    
+    #shadow_group {
+      text-align: center;
+    }
+    
+    #float_group {
+      text-align: center;
+    }
+  </style>
+  <style>
     #workspace_view {
       min-height: 100%;
       height: auto;
@@ -273,25 +342,6 @@
       /*        float: left;*/
       width: 98%;
       margin: 10px;
-    }
-    
-    div.draggable2 {
-      float: inherit;
-      width: 75px;
-      height: 70px;
-      padding: 10px;
-      background-color: gray;
-      color: #f3f3f3;
-    }
-    
-    div.draggable3 {
-      float: inherit;
-      width: 75px;
-      height: 70px;
-      padding: 5px;
-      margin: 5px;
-      background-color: black;
-      color: #f3f3f3;
     }
     
     #component_view {
@@ -320,15 +370,40 @@
 <body>
 
 
+  <button id="NewID2" class="compo" style="font-weight: bold; box-shadow: rgba(0, 0, 0, 0.701961) 3px 0px 5px; background: rgb(255, 255, 255);">test</button>
 
 
 
 
-  <div class="compo draggable2" id="NewID1" style="width: 100%; height: auto; color: rgb(243, 243, 243); font-size: 34px; display: block; padding: 0px; margin: 0px; background: rgb(128, 128, 128);">testestet </div>
-  <h1 id="NewID2" class="compo" style="width: 1862px; height: 39px; color: rgb(209, 25, 209); font-size: 36px; display: block; padding: 0px; margin: 20px 0px 10px; background: rgb(255, 255, 255);">test</h1>
-  <h1 id="NewID3" class="compo" style="width: 1862px; height: 39px; color: rgb(243, 243, 243); font-size: 36px; display: block; padding: 0px; margin: 0px; background: rgb(23, 187, 237);">test</h1>
-  <h1 id="NewID5" class="compo" style="width: 1882px; height: 98px; color: rgb(80, 240, 0); font-size: 36px; display: block; padding: 0px; margin: 0px; background: rgb(255, 255, 255);">title</h1>
-  <h1 id="NewID4" class="compo" style="background: rgb(255, 255, 255);">test</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <button id="NewID3" class="compo" style="font-weight: bold; background: rgb(255, 255, 255);">test</button>
+
+  <div class="compo second_compo" id="NewID5" style="float: right;">2 </div><button id="NewID1" class="compo" style="font-weight: bold; float: right; background: rgb(255, 255, 255);">test</button>
+  <div class="compo first_compo" id="NewID4" style="width: 200px; height: auto; background: rgb(163, 65, 163);">1 </div>
+
+  <div class="compo second_compo" id="NewID6" style="">2
+    <div class="compo first_compo" id="NewID7" style="width: 200px; height: 200px; background: rgb(97, 19, 97);">1 </div>
+  </div>
 </body>
 
 </html>
