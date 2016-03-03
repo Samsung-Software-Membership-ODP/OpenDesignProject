@@ -75,6 +75,7 @@
                 text-align: center;
             }
             .card{
+                transition : 0.3s;
 /*                float: left;*/
                 display: inline-block;
                 width: 300px;
@@ -82,19 +83,19 @@
                 margin: 20px;
                 background: #ffffff;
                 padding: 12px;
-                padding-left: 20px;
                 border-radius: 3px;
+                
 /*                height: 50px;*/
 /*                width: 70%;*/
                 margin-top: 20px;
                 opacity : 0.5;
                 box-shadow:0 1px 2px #aaa;
-                
-
             }
             .card:hover{
                 opacity : 1;
-                transition : 0.3s;
+                
+                color: #353157;
+                text-decoration: none;
 /*                background : #003C6C;*/
 /*                border : 2px solid #003C6C;*/
             }
@@ -129,6 +130,10 @@
                 color: #B7B7B7;
                 line-height: 50px;
             }
+            #btn_save{
+                background: #353157;
+                border: none;
+            }
         </style>
         <script>
 
@@ -142,16 +147,12 @@
             });
             
             
-            $(document).keydown(function(event){
-                if(event.keyCode == '13'){
-                    cmdDown = true;
-                }
-            });
+            
             $(document).ready(function(){
-                $('body').animsition({
+                $('#mainframe').animsition({
                     inClass: 'fade-in',
                     outClass: 'fade-out',
-                    inDuration: 1500,
+                    inDuration: 800,
                     outDuration: 800,
                     linkElement: '.animsition-link',
                     // e.g. linkElement: 'a:not([target="_blank"]):not([href^=#])'
@@ -197,10 +198,11 @@
         <div id="main_nav">
             <h4 class="logo">Open Design Project</h4>
             <ul style="float:left;">
-                <li><a id="btn_add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>
+<!--                <li><a id="btn_add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>-->
                 <li><a id="btn_lib" href="#"><i class="xi-tagged-book xi-x">&nbsp;</i></br></a></li>
                 <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
+                <li><a id="btn_logout" href="#"><i class="xi-user-add xi-x">&nbsp;</i></br></a></li>
             </ul>
             <p style="float:right; color:white"><i class="xi-user">&nbsp;</i> <b><%= user_name %></b> 님 접속을 환영합니다.</p>
             <div style="clear:both;"></div>
@@ -212,7 +214,9 @@
         
         <div id="mainframe" >
             <div id="cardSection">
-                
+                <a id="btn_add" class="card animsition-link" href="#">
+                    <h4><i class="xi-plus xi-x"></i></h4></br>새로운 프로젝트를 생성하세요
+                </a>
             </div>
         </div>
         <div id="footer">
