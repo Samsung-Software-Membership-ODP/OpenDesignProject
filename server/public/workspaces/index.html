@@ -50,6 +50,27 @@
       color: white;
     }
     
+    .first_border {
+      float: inherit;
+      width: 200px;
+      height: 200px;
+      padding: 5px;
+      margin: 5px;
+      background-color: black;
+      color: white;
+    }
+    
+    .sec_border {
+      float: inherit;
+      width: 75px;
+      height: 70px;
+      padding: 10px;
+      margin: 5px;
+      background-color: gray;
+      color: white;
+      border: 3px dotted yellow;
+    }
+    
     * {
       margin: 0 auto;
       font-family: 'Titillium Web', sans-serif;
@@ -129,10 +150,11 @@
       position: fixed;
       width: 100%;
       padding: 10px;
-      /*        background: #003C6C;*/
+      background: #003C6C;
       background: #2c2c2c;
+      background: linear-gradient(135deg, rgba(53, 49, 87, 1) 0%, rgba(71, 28, 60, 1) 100%);
       z-index: 10;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, .7);
     }
     
     #main_nav > ul {
@@ -333,8 +355,7 @@
     #float_group {
       text-align: center;
     }
-  </style>
-  <style>
+    
     #workspace_view {
       min-height: 100%;
       height: auto;
@@ -370,39 +391,22 @@
 <body>
 
 
-  <button id="NewID2" class="compo" style="font-weight: bold; box-shadow: rgba(0, 0, 0, 0.701961) 3px 0px 5px; background: rgb(255, 255, 255);">test</button>
+  <div class="compo second_compo" id="NewID1" style="width: 100%; height: auto; margin: 0px; padding: 30px; color: rgb(64, 52, 64); font-size: 28px; opacity: 1; display: block; box-shadow: rgba(0, 0, 0, 0.701961) 0px 3px 5px; font-weight: bold; background: rgb(255, 255, 255);">Your Logo
+    <div class="compo second_compo" id="NewID13" style="width: auto; height: auto; margin: 0px; padding: 10px 0px 0px; float: right; color: rgb(156, 156, 156); font-size: 20px; background: rgb(255, 255, 255);">
+      <p id="NewID14" class="compo" style="float: right; margin: 0px 10px;">Example</p>
+      <p id="NewID15" class="compo" style="float: right; margin: 0px 10px;">Library</p>
+      <p id="NewID16" class="compo" style="margin: 0px 10px; float: right;">Get Start</p>
+      <p id="NewID17" class="compo" style="width: auto; float: right; margin: 0px 10px;">HOME</p>
+    </div>
+  </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <button id="NewID3" class="compo" style="font-weight: bold; background: rgb(255, 255, 255);">test</button>
-
-  <div class="compo second_compo" id="NewID5" style="float: right;">2 </div><button id="NewID1" class="compo" style="font-weight: bold; float: right; background: rgb(255, 255, 255);">test</button>
-  <div class="compo first_compo" id="NewID4" style="width: 200px; height: auto; background: rgb(163, 65, 163);">1 </div>
-
-  <div class="compo second_compo" id="NewID6" style="">2
-    <div class="compo first_compo" id="NewID7" style="width: 200px; height: 200px; background: rgb(97, 19, 97);">1 </div>
+  <div class="compo second_compo" id="NewID12" style="width: 100%; height: auto; margin: 0px; padding: 150px 100px; background: rgb(76, 142, 255);">
+    <p id="NewID18" class="compo" style="font-size: 42px;">Title Text</p>
+    <p id="NewID19" class="compo" style="font-size: 18px;">테스트 텍스트입니다. 여기에 부제목을 적을 수 있습니다.</p>
+  </div>
+  <div class="compo first_compo" id="NewID20" style="width: 100%; height: 2000px; margin: 0px; padding: 10px; color: rgb(135, 66, 135); text-align: center; background: rgb(230, 230, 230);">
+    <p id="NewID22" class="compo" style="width: 100%; text-align: center; height: 20px; color: rgb(41, 41, 41); font-size: 32px; opacity: 1; display: block; padding: 30px; margin: 0px 0px 10px; font-weight: bold; background: none;">CATEGORY</p><input id="NewID23" class="compo" style="width: 50%; height: 32px; text-align: center; color: rgb(148, 148, 148); font-weight: bold; background: rgb(255, 255, 255);"></input>
   </div>
 </body>
 

@@ -320,6 +320,8 @@
     var menuSelect = 0;
     var optionSelect = 0;
     
+    
+    var copyedCompo;
     var cmdDown = false;
     
     $(document).keydown(function(event){
@@ -365,6 +367,19 @@
         if(cmdDown && event.keyCode == '66'){
             event.preventDefault();
             $('#btn_bold').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + C
+        if(cmdDown && event.keyCode == '67'){
+            event.preventDefault();
+            copyedCompo = selectedElement;
+        }
+        
+        // Btn save Click Event Trigget Cmd + V
+        if(cmdDown && event.keyCode == '86'){
+            event.preventDefault();
+//            alert(copyedCompo);
+            selectedElement.append(copyedCompo);
         }
     }).keyup(function(event){
        if(event.keyCode =='91'){
@@ -520,6 +535,24 @@
             }
         });
         
+        $('#add_image').click(function(){
+           for(;;cnt++){
+                var imID='NewID'+cnt;
+
+                if(document.getElementById(imID) == null){
+                  console.log(imID);
+                  var nodeCopy = $('<img/>', {id: 'NewID'+cnt, class: 'compo',
+                                             draggable: 'true', ondragstart: 'return start(event)',
+                                             ondragend: 'return end(event)', src: 'http://placehold.it/300x300'
+                                            });
+                  nodeCopy.css('background', '#ffffff');
+                  console.log(nodeCopy.id);
+                  cnt=cnt+1;
+                  $('#workspace_view').append(nodeCopy);
+                  break;
+               }
+            } 
+        });
         
         // click part
         $("#workspace_view").on("click", ".compo", function (event) {
@@ -571,6 +604,8 @@
             $('#input_margin').val(selectedElement.css('margin'));
             $('#input_margin').val(selectedElement.css('margin'));
             $('#input_float').val(selectedElement.css('float'));
+            $('#input_border').val(selectedElement.css('border'));
+            $('#input_radius').val(selectedElement.css('borderRadius'));
             
             
           // 중복클릭 금지
@@ -611,6 +646,14 @@
         
         $('#input_margin').change(function(){
             $('#'+selectedElement.attr('id')).css('margin', $('#input_margin').val());
+        });
+        
+        $('#input_border').change(function(){
+            $('#'+selectedElement.attr('id')).css('border', $('#input_border').val());
+        });
+        
+        $('#input_radius').change(function(){
+            $('#'+selectedElement.attr('id')).css('borderRadius', $('#input_radius').val());
         });
         
         
@@ -936,6 +979,8 @@
         $('#'+selectedElement.attr('id')).css('padding', $('#input_padding').val());
         $('#'+selectedElement.attr('id')).css('margin', $('#input_margin').val());
         $('#'+selectedElement.attr('id')).css('float', $('#input_float').val());
+        $('#'+selectedElement.attr('id')).css('border', $('#input_border').val());
+        $('#'+selectedElement.attr('id')).css('borderRadius', $('#input_radius').val());
         
 
     }
@@ -1080,7 +1125,7 @@
 
     function Leave(e) {
         event.target.style.border = "";
-        event.target.style.boxShadow = "";
+//        event.target.style.boxShadow = "";
     }
       
     //컴포넌트가 타겟에 올라왔을 때 못올라오게할시 true
@@ -1208,7 +1253,7 @@
                                <a href="#" class="element"><p><i class="xi-check-box"></i></p></a>
                                <a href="#" class="element" id="add_button"><p style="font-size: 18px">Button</p></a>
                                <a href="#" class="element" id="add_input"><p style="font-size: 18px">Input</p></a>
-                               <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
+                               <a href="#" class="element" id="add_image"><p><i class="xi-image"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
                                
@@ -1287,6 +1332,12 @@
 
                                 <h5>Font-size</h5>
                                 <input id="input_fontSize" name="setFontSize" size="3"></input>
+                                
+                                <h5>Border</h5>
+                                <input id="input_border" name="setBorder" size="3"></input>
+
+                                <h5>Border radius</h5>
+                                <input id="input_radius" name="setradius" size="3"></input>
 
                                 <h5>Opacity</h5>
                                 <input id="input_opacity" name="setOpacity" size="3"></input>

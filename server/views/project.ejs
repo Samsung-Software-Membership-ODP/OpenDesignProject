@@ -78,6 +78,7 @@
                 transition : 0.3s;
 /*                float: left;*/
                 display: inline-block;
+                vertical-align: middle;
                 width: 300px;
                 height: 300px;
                 margin: 20px;
@@ -87,7 +88,7 @@
                 
 /*                height: 50px;*/
 /*                width: 70%;*/
-                margin-top: 20px;
+/*                margin-top: 20px;*/
                 opacity : 0.5;
                 box-shadow:0 1px 2px #aaa;
             }
@@ -104,6 +105,14 @@
                 padding-left : 20px;
                 margin-bottom: 15px;
             }
+            .wrapper{
+                display: table;
+                height: 100%;
+            }
+            .contents{
+                display: table-cell;
+                vertical-align: middle;
+            } 
             #sub_nav{
 /*                height:100px;*/
                 padding: 120px;
@@ -174,7 +183,7 @@
                 
                 for(var i = 0; i < titles.length; i++){
                     var card = $('<a>', {class: 'card animsition-link', href:'#'});
-                    card.html('<h4>'+titles[i]+'</h4>');
+                    card.html('<div class="wrapper"><div class="contents"><h4>'+titles[i]+'</h4></div></div>');
                     $('#cardSection').append(
 //                        '<div class="card"><h4>'+titles[i]+'</h4></div>'+'<button>'+'test'+'</button>'
                         card
@@ -214,8 +223,13 @@
         
         <div id="mainframe" >
             <div id="cardSection">
+                
                 <a id="btn_add" class="card animsition-link" href="#">
-                    <h4><i class="xi-plus xi-x"></i></h4></br>새로운 프로젝트를 생성하세요
+                    <div class="wrapper">
+                        <div class="contents">
+                            <h4><i class="xi-plus xi-x"></i></br></br>새로운 프로젝트를 생성하세요</h4>
+                        </div>
+                    </div>
                 </a>
             </div>
         </div>
@@ -237,7 +251,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="btn_save" type="submit" class="btn btn-primary">Save changes</button>
+                    <button id="btn_save" type="submit" class="btn btn-primary">Create Projects</button>
                   </div>
                 </div>
               </div>
