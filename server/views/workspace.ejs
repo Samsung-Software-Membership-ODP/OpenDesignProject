@@ -381,6 +381,21 @@
 //            alert(copyedCompo);
             selectedElement.append(copyedCompo);
         }
+        
+        // Btn save Click Event Trigget Cmd + ]
+        if(cmdDown && event.keyCode == '221'){
+            event.preventDefault();
+            var fontSize = selectedElement.css('fontSize').replace(/[^0-9]/g,"");
+            selectedElement.css('font-size', (Number(fontSize) + 2)+'px');
+        }
+        
+        // Btn save Click Event Trigget Cmd + [
+        if(cmdDown && event.keyCode == '219'){
+            event.preventDefault();
+            var fontSize = selectedElement.css('fontSize').replace(/[^0-9]/g,"");
+            selectedElement.css('font-size', (Number(fontSize) - 2)+'px');
+        }
+        
     }).keyup(function(event){
        if(event.keyCode =='91'){
            cmdDown = false;
