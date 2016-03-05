@@ -421,7 +421,8 @@
         concatFront=ims.slice(0,start+7);
         concatEnd=ims.slice(start+7,ims.length);
         var innerHead = "";
-        for(var i = 0 ; i < comHead.length;i++){
+        for(var i = 0 ; i < comHead.length;i++)
+        {
           innerHead=innerHead.concat(comHead[i]+"\n");
         }
         ims=concatFront+"\n"+innerHead+concatEnd;
@@ -434,7 +435,8 @@
         concatFront=ims.slice(0,start+54);
         concatEnd=ims.slice(start+54,ims.length);
         var innerBody = "";
-        for(var i = 0 ; i < comBody.length; i++){
+        for(var i = 0 ; i < comBody.length; i++)
+        {
           innerBody=innerBody.concat(comBody[i]+"\n");
         }
         ims=concatFront+"\n"+innerBody+concatEnd;
@@ -1161,7 +1163,7 @@
                 <li id="export"><a href="#"><i class="xi-external-share xi-x">&nbsp;</i></br></a></li>
                 
                 <li id="btn_share"><a href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
-                <li id="btn_make"><a href="/make"><i class="xi-magic xi-x">&nbsp;</i></br></a></li>
+                <li id="btn_make"><a href="#"><i class="xi-magic xi-x">&nbsp;</i></br></a></li>
                 <li id="btn_remove" data-toggle="tooltip" title="Cmd + D"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
                 
             </ul>
@@ -1215,6 +1217,7 @@
         <div id="optionPanel">
             <div id="tab">
                 <ul style="padding-left: 0px; padding-top:15px;">
+<!--
                     <li id="btn_add_compo">
                         <a href="#">
                             <div class="left" style="padding-left:20px;">
@@ -1241,6 +1244,7 @@
                         
                         
                     </li>
+-->
                     <li id="btn_add_tags">
                         <a href="#">
                             <div class="left" style="padding-left:20px;">

@@ -15,24 +15,36 @@
 
         <style>
             html{
-                height:100%;
+                max-width:100%;
+/*                height:100%;*/
             }
             body{
+                width:100%;
 /*                height:100%;*/
-                overflow-y: scroll;
+/*                overflow-y: scroll;*/
             }
             *{
                 margin: 0 auto;
                 font-family: 'Titillium Web', sans-serif;
             }
-            
+            iframe{
+                
+/*
+                width:500%; 
+                height: 1000px; 
+*/
+                border-radius: 3px; 
+                border: none;
+                transform-origin: 0 0;
+                transform: scale(0.20); 
+                 
+                margin: 0px;
+            }
            #mainframe{
                 background: #EBEBEC;
                 padding: 50px;
                 height: 90%;
 /*                overflow-y: scroll;*/
-                
-               
             }
             #main_nav{
                 padding: 10px;
@@ -107,7 +119,7 @@
             }
             .wrapper{
                 display: table;
-                height: 100%;
+                height: 300px;
             }
             .contents{
                 display: table-cell;
@@ -183,7 +195,7 @@
                 
                 for(var i = 0; i < titles.length; i++){
                     var card = $('<a>', {class: 'card animsition-link', href:'#'});
-                    card.html('<div class="wrapper"><div class="contents"><iframe src="./workspaces/index.html" style="width:500%; height: 1000px; border-radius: 3px; border: none; transform: scale(0.20); transform-origin: 0 0;"></iframe></br></br><h4>'+titles[i]+'</h4></div></div>');
+                    card.html('<div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/index.html" scrolling="no" width="500%" height="1000px"></iframe></div></br><h4>'+titles[i]+'</h4></div></div>');
                     $('#cardSection').append(
 //                        '<div class="card"><h4>'+titles[i]+'</h4></div>'+'<button>'+'test'+'</button>'
                         card
@@ -211,7 +223,7 @@
                 <li><a id="btn_lib" href="#"><i class="xi-tagged-book xi-x">&nbsp;</i></br></a></li>
                 <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
                 <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
-                <li><a id="btn_logout" href="#"><i class="xi-user-add xi-x">&nbsp;</i></br></a></li>
+                <li><a id="btn_logout" href="/"><i class="xi-user-add xi-x">&nbsp;</i></br></a></li>
             </ul>
             <p style="float:right; color:white"><i class="xi-user">&nbsp;</i> <b><%= user_name %></b> 님 접속을 환영합니다.</p>
             <div style="clear:both;"></div>
