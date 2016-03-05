@@ -320,9 +320,46 @@
     var menuSelect = 0;
     var optionSelect = 0;
     
-    
+    var $tag;
     var copyedCompo;
     var cmdDown = false;
+    
+    
+    function autoSave(){
+        setInterval(autoSave, 60*1000);
+        $('#save').trigger('click');
+        $('#autoSave_msg').text(getTimeStamp()+" 에 자동저장 되었습니다.")
+    }
+    
+    
+    function getTimeStamp() {
+      var d = new Date();
+
+      var s =
+        leadingZeros(d.getFullYear(), 4) + '-' +
+        leadingZeros(d.getMonth() + 1, 2) + '-' +
+        leadingZeros(d.getDate(), 2) + ' ' +
+
+        leadingZeros(d.getHours(), 2) + ':' +
+        leadingZeros(d.getMinutes(), 2) + ':' +
+        leadingZeros(d.getSeconds(), 2);
+
+      return s;
+    }
+
+
+
+    function leadingZeros(n, digits) {
+      var zero = '';
+      n = n.toString();
+
+      if (n.length < digits) {
+        for (i = 0; i < digits - n.length; i++)
+          zero += '0';
+      }
+      return zero + n;
+    }
+    
     
     $(document).keydown(function(event){
         if(event.keyCode == '91'){
@@ -396,6 +433,24 @@
             selectedElement.css('font-size', (Number(fontSize) - 2)+'px');
         }
         
+        // Btn save Click Event Trigget Cmd + ->
+        if(cmdDown && event.keyCode == '39'){
+            event.preventDefault();
+            $('#btn_float_right').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + <-
+        if(cmdDown && event.keyCode == '37'){
+            event.preventDefault();
+            $('#btn_float_left').trigger('click');
+        }
+        
+        // Btn save Click Event Trigget Cmd + <-
+        if(cmdDown && event.keyCode == '40'){
+            event.preventDefault();
+            $('#btn_float_none').trigger('click');
+        }
+        
     }).keyup(function(event){
        if(event.keyCode =='91'){
            cmdDown = false;
@@ -406,7 +461,7 @@
     
 
     $(document).ready(function(){
-        
+        autoSave();
         // tooltip Initialize
          $('[data-toggle="tooltip"]').tooltip(); 
         
@@ -573,6 +628,8 @@
             
             selectedElement = $(this);
             var setID = selectedElement.attr('id');
+            $tag = $(this)[0].tagName;
+        
             
             if(document.getElementById(setID).style.width == ''){
               $('#input_width').val(selectedElement.css('width'));  
@@ -631,10 +688,21 @@
         
         $('#input_width').change(function(){
             $('#'+selectedElement.attr('id')).css('width', $('#input_width').val());
+            if($tag == 'IMG'){
+                
+                var width = selectedElement.css('width').replace(/[^0-9]/g,"");
+                var height = $('#input_height').val().replace(/[^0-9]/g,"");
+                selectedElement.attr('src','http://placehold.it/'+width+'x'+height)
+            }
         });
         
         $('#input_height').change(function(){
             $('#'+selectedElement.attr('id')).css('height', $('#input_height').val());
+            if($tag == 'IMG'){
+                var width = selectedElement.css('width').replace(/[^0-9]/g,"");
+                var height = selectedElement.css('height').replace(/[^0-9]/g,"");
+                selectedElement.attr('src','http://placehold.it/'+width+'x'+height)
+            }
         });
         
         
@@ -782,7 +850,7 @@
         $('#btn_dropshadow_left').click(function(){
            selectedElement.css('box-shadow','-3px 0px 5px rgba(0, 0, 0, 0.7)');
         });
-        $('#btn_dropshadow_none').click(function(){
+        $('#btn_dropshadow_center').click(function(){
            selectedElement.css('box-shadow','0px 0px 5px rgba(0, 0, 0, 0.7)');
         });
         $('#btn_dropshadow_right').click(function(){
@@ -796,6 +864,9 @@
         });
         $('#btn_dropshadow_rightdown').click(function(){
            selectedElement.css('box-shadow','3px 3px 5px rgba(0, 0, 0, 0.7)');
+        });
+        $('#btn_dropshadow_none').click(function(){
+           selectedElement.css('box-shadow','none');
         });
         
         $('#btn_float_left').click(function(){
@@ -1166,7 +1237,8 @@
                 
             </ul>
             <ul style="float:right;">
-                <li id="btn_sidePanel" data-toggle="tooltip" title="Cmd + K"><a href="#"><i class="xi-layout-side-right xi-x">&nbsp;</i></br></a></li>
+                <li id="autoSave_msg" style="color: white; margin-right: 20px;"></li>
+                <li id="btn_sidePanel" data-toggle="tooltip" title="Cmd + K"><a href="#"><i class="xi-layout-side-right xi-x">&nbsp;</i></a></li>
             </ul>
             <div style="clear:both;"></div>
 <!--            <h5 id="user_msg"> 님 접속을 환영합니다.</h5>-->
@@ -1313,7 +1385,7 @@
                                     </div>
                                     <div> 
                                         <a href="#" id="btn_dropshadow_left" class="small_element">←</a>
-                                        <a href="#" id="btn_dropshadow_none" class="small_element">·</a>
+                                        <a href="#" id="btn_dropshadow_center" class="small_element">·</a>
                                         <a href="#" id="btn_dropshadow_right" class="small_element">→</a>                                         
                                     </div>
                                     <div> 
@@ -1321,6 +1393,7 @@
                                         <a href="#" id="btn_dropshadow_down" class="small_element">↓</a>
                                         <a href="#" id="btn_dropshadow_rightdown" class="small_element">↘</a>
                                     </div>
+                                    <a href="#" id="btn_dropshadow_none" class="small_element" style="width:125px">None</a>
                                 </div>
                                 
                                 <h5>Float</h5>
