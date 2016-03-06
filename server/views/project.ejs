@@ -197,7 +197,9 @@
                     var card = $('<a>', {class: 'card animsition-link', href:'#'});
                     card.html('<div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/index.html" scrolling="no" width="500%" height="1000px"></iframe></div></br><h4>'+titles[i]+'</h4></div></div>');
                     $('#cardSection').append(
-//                        '<div class="card"><h4>'+titles[i]+'</h4></div>'+'<button>'+'test'+'</button>'
+                       '<button class="btn_remove">'+'test'+'</button>'
+                     );
+                    $('#cardSection').append(
                         card
                     );
                 }
@@ -206,9 +208,16 @@
                     window.location.href = "/workspace?data="+$(this).text();
                 });
                 
-                $('button').click(function(){
+                 $('.btn_remove').click(function(){
                     var index = $('button').index(this);
-                    alert(index);
+
+                    if(confirm(titles[index]+" 프로젝트를 삭제하시겠습니까?") == true){
+
+                      $.post('/project',{index : index , type: 'remove'});
+                    }
+                    else {
+                      return;
+                    }
                 });
                 
             });

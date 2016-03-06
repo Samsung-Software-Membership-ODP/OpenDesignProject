@@ -249,31 +249,57 @@ app.get('/project', function(req, res){
 });
 
 app.post('/project', function(req, res){
+    var type = req.body.type;
+    var index = req.body.index;
     var project_name = req.body.input_project_name;
-    
-    console.log('Project Name : ' + project_name);
-    
-    User.findOne({id : checkedID}, function(err, doc){
-        
-        console.log("Find id")
-        
-        if(err){ 
+//    console.log(title2+ " " + checkedID + " " + type);
+    if(type == "remove")
+    {
+      console.log("in remove " + index);
+
+      User.findOne({id : checkedID},function(err,doc){
+        if(err){
             throw err;
         }
-        
-        doc.projects.push({title : project_name, val : ''});
+
+        doc.projects[index].remove();
         doc.save();
-        
+
         projects = doc.get('projects');
          for(var i = 0; i < projects.length; i++){
                 titles[i] = projects[i]['title'];
             }
-        console.log(titles);
-        
-        console.log(doc);
-        console.log("Create Project Success!");
+
         res.redirect('/project');
-    });
+      });
+
+    }
+    else
+    {
+        console.log('Project Name : ' + project_name);
+
+        User.findOne({id : checkedID}, function(err, doc){
+
+            console.log("Find id");
+
+            if(err){
+                throw err;
+            }
+
+            doc.projects.push({title : project_name, val : ''});
+            doc.save();
+
+            projects = doc.get('projects');
+             for(var i = 0; i < projects.length; i++){
+                    titles[i] = projects[i]['title'];
+                }
+            // console.log(titles);
+            //
+            // console.log(doc);
+            // console.log("Create Project Success!");
+            res.redirect('/project');
+        });
+    }
 });
 
 
@@ -327,6 +353,7 @@ app.post('/', function(request, response, next){
             checkedName = doc.get('name', String);
             projects = doc.get('projects');
             
+            titles = [];
             console.log(checkedID + " " + checkedPW + " " + checkedName + " 정보를 찾았습니다.");
             console.log(projects);
             console.log(projects.length + "개의 프로젝트를 찾았습니다.")

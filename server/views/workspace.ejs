@@ -320,15 +320,23 @@
     var menuSelect = 0;
     var optionSelect = 0;
     
+    var firName,firVal,firCheck = false;
+    var copyedCompo;
+    var borderName = new Array(), borderVal = new Array();
+    var borderCnt = 0;
+    
+    
     var $tag;
     var copyedCompo;
     var cmdDown = false;
     
     
     function autoSave(){
-        setInterval(autoSave, 60*1000);
+        setInterval(autoSave, 60*5000);
+        setInterval(1000);
+        $('#autoSave_msg').text(getTimeStamp()+" 에 자동 저장되었습니다.");
         $('#save').trigger('click');
-        $('#autoSave_msg').text(getTimeStamp()+" 에 자동저장 되었습니다.")
+        
     }
     
     
@@ -405,18 +413,32 @@
             event.preventDefault();
             $('#btn_bold').trigger('click');
         }
-        
         // Btn save Click Event Trigget Cmd + C
         if(cmdDown && event.keyCode == '67'){
             event.preventDefault();
-            copyedCompo = selectedElement;
+            copyedCompo = selectedElement.attr('id');
+
         }
-        
+
         // Btn save Click Event Trigget Cmd + V
         if(cmdDown && event.keyCode == '86'){
             event.preventDefault();
 //            alert(copyedCompo);
-            selectedElement.append(copyedCompo);
+            var nodeCopy = document.getElementById(copyedCompo).cloneNode(true);
+            for(;;cnt++)
+            {
+                var imID='NewID'+cnt;
+
+                if(document.getElementById(imID) == null)
+                {
+                    console.log(imID);
+                    nodeCopy.id="NewID"+cnt;
+                    console.log(nodeCopy.id);
+                    cnt=cnt+1;
+                    selectedElement.append(nodeCopy);
+                    break;
+                }
+            }
         }
         
         // Btn save Click Event Trigget Cmd + ]
@@ -510,6 +532,8 @@
         $('#msg').hide();
         $('#tags').hide();
         $('#option').hide();
+        $('#label_hint').hide();
+        $('#input_hint').hide();
         
         
         
@@ -668,6 +692,16 @@
             }
             
             $('#input_text').val(text);
+            if($tag == 'INPUT'){
+                $('#label_hint').show();
+                $('#input_hint').show();
+                $('#input_hint').val(selectedElement.attr('placeholder'));    
+            }
+            else{
+                $('#input_hint').hide();
+                $('#label_hint').hide();
+            }
+            
             $('#input_display').val(selectedElement.css('display'));
             $('#input_fontSize').val(selectedElement.css('fontSize'));
             $('#input_opacity').val(selectedElement.css('opacity'));
@@ -678,8 +712,22 @@
             $('#input_border').val(selectedElement.css('border'));
             $('#input_radius').val(selectedElement.css('borderRadius'));
             
-            
-          // 중복클릭 금지
+            console.log(firCheck);
+            if(firCheck == true){
+                document.getElementById(firName).style.border= firVal;
+                firName = selectedElement.attr('id');
+                firVal = selectedElement.css('border');
+            }
+            else{
+                firCheck= true;
+                firName = selectedElement.attr('id');
+                firVal = selectedElement.css('border');
+            }
+            console.log(firName + " " + firVal);
+            // firSelCom.style.border = "";
+            document.getElementById(firName).style.border = "3px dotted blue";
+
+            // 중복클릭 금지
             event.stopPropagation();
           // var childInfo=document.getElementById(child);
           // var parent=childInfo.parentNode;
@@ -708,6 +756,10 @@
         
         $('#input_text').change(function(){ 
             $('#'+selectedElement.attr('id')).html($('#input_text').val()+temp);
+        });
+        
+        $('#input_hint').change(function(){ 
+            $('#'+selectedElement.attr('id')).attr('placeholder', $('#input_hint').val());
         });
         
         $('#input_fontSize').change(function(){
@@ -790,6 +842,7 @@
         $('#save').click(function(){
             save();
             $('#msg').html('<h4><i class="xi-check"></i> 저장되었습니다.</h4>');
+//            $('#autoSave_msg').text(getTimeStamp()+" 에 저장되었습니다.");
             $('#msg').css('background','#119933');
             $('#msg').slideDown("fast").delay(800).fadeOut(400);
 //            alert('saved!');
@@ -1057,6 +1110,7 @@
         $('#'+selectedElement.attr('id')).css('color', $('#input_fontColor').val());
         
         $('#'+selectedElement.attr('id')).html($('#input_text').val()+temp);
+        $('#'+selectedElement.attr('id')).attr('placeholder', $('#input_hint').val());
         
         $('#'+selectedElement.attr('id')).css('font-size', $('#input_fontSize').val());
         $('#'+selectedElement.attr('id')).css('opacity', $('#input_opacity').val());
@@ -1124,8 +1178,8 @@
     }
       
       
-    function drop(e){
-
+   function drop(e){
+      e.preventDefault();
       event.target.style.border = "";
       // e.preventDefault();
       var iddraggable = e.dataTransfer.getData("Data");
@@ -1133,11 +1187,20 @@
 
       // console.log(iddraggable);
       // console.log(nodeCopy);
+
+      // document.getElementById(firName).style.border = "3px dotted blue";
+
+      for(var i = 0;i< borderCnt;i++)
+      {
+        console.log(borderName[i] + " "+borderVal[i]);
+        document.getElementById(borderName[i]).style.border = borderVal[i];
+      }
+      borderCnt = 0;
       console.log(flag);
       // console.log(e.toElement.previousElementSibling);
       // console.log(e.target.previousElementSibling);
       console.log(event.target);
-        
+
       if(flag==1){
         var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
         // nodeCopy.className=iddraggable+" compo";
@@ -1217,6 +1280,26 @@
     function enter(e) {
       e.preventDefault();
 //      e.target.style.backgroundColor = "#1E8BC3";
+      var BFlag=0;
+
+      for(var i = 0 ; i < borderCnt ; i++)
+      {
+        if(event.target.id == borderName[i])
+        {
+          BFlag = 1;
+          break;
+        }
+      }
+      // console.log(event.target.id + " " + event.target.style.border + " " + borderCnt);
+      if(BFlag == 0)
+      {
+          borderName[borderCnt]=event.target.id;
+          borderVal[borderCnt]=event.target.style.border;
+          borderCnt++;
+          console.log("borderName : "+borderName[borderCnt-1]+"\nborderVal : "+borderVal[borderCnt-1]);
+      }
+
+
       event.target.style.border = "3px solid #6799FF";
 //      event.target.style.boxShadow = "0px 0px 20px #6799FF";
       return true;
@@ -1258,7 +1341,7 @@
             <%= val %>
             
         </div>
-        <div class="clear"></div>
+<div class="clear"></div>
 <!--
           <div id="mainframe" ondragover="return over(event)"
           ondrop="return drop(event)"
@@ -1334,15 +1417,9 @@
                                
                                <a href="#" class="element" id="add_textArea"><p><i class="xi-caps"></i></p></a>
                                <a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-list-ul"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-list-ol"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-external-link"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-check-box"></i></p></a>
                                <a href="#" class="element" id="add_button"><p style="font-size: 18px">Button</p></a>
                                <a href="#" class="element" id="add_input"><p style="font-size: 18px">Input</p></a>
                                <a href="#" class="element" id="add_image"><p><i class="xi-image"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
-                               <a href="#" class="element"><p><i class="xi-caps"></i></p></a>
                                
                             </div>
                             <div class="clear"></div>
@@ -1417,6 +1494,10 @@
 
                                 <h5>Text</h5>
                                 <input id="input_text" name="setText" size="3"></input>
+                                
+                                
+                                <h5 id="label_hint">Hint</h5>
+                                <input id="input_hint" name="setHint" size="3"></input>
 
                                 <h5>Font-size</h5>
                                 <input id="input_fontSize" name="setFontSize" size="3"></input>
