@@ -16,6 +16,8 @@
         <style>
             html{
                 max-width:100%;
+                height: auto;
+                overflow-x: hidden;
 /*                height:100%;*/
             }
             body{
@@ -155,6 +157,11 @@
                 background: #353157;
                 border: none;
             }
+            .btn_remove{
+                float:right;
+
+                margin-bottom: -200px;
+            }
         </style>
         <script>
 
@@ -195,9 +202,9 @@
                 
                 for(var i = 0; i < titles.length; i++){
                     var card = $('<a>', {class: 'card animsition-link', href:'#'});
-                    card.html('<div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/index.html" scrolling="no" width="500%" height="1000px"></iframe></div></br><h4>'+titles[i]+'</h4></div></div>');
+                    card.html('<a class="btn_remove" style="float:right"><i class="xi-close"></i></a><div style="clear:both"></div><div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/'+titles[i]+'.html" scrolling="no" width="500%" height="1000px"></iframe></div><h4>'+titles[i]+'</h4></div></div>');
                     $('#cardSection').append(
-                       '<button class="btn_remove">'+'test'+'</button>'
+//                       '<a class="btn_remove" style="float:right"><i class="xi-close"></i></a>'
                      );
                     $('#cardSection').append(
                         card
@@ -230,8 +237,8 @@
             <ul style="float:left;">
 <!--                <li><a id="btn_add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>-->
                 <li><a id="btn_lib" href="#"><i class="xi-tagged-book xi-x">&nbsp;</i></br></a></li>
-                <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li>
-                <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
+                <!-- <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li> -->
+                <!-- <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li> -->
                 <li><a id="btn_logout" href="/"><i class="xi-user-add xi-x">&nbsp;</i></br></a></li>
             </ul>
             <p style="float:right; color:white"><i class="xi-user">&nbsp;</i> <b><%= user_name %></b> 님 접속을 환영합니다.</p>
@@ -248,7 +255,7 @@
                 <a id="btn_add" class="card animsition-link" href="#">
                     <div class="wrapper">
                         <div class="contents">
-                            <h4><i class="xi-plus xi-x"></i></br></br>새로운 프로젝트를 생성하세요</h4>
+                            <h4><i class="xi-plus-square xi-x"></i></br></br>새로운 프로젝트를 생성하세요</h4>
                         </div>
                     </div>
                 </a>

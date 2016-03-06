@@ -53,29 +53,29 @@ console.log("Server Start");
 
 // mongodb Connect
 var db = mongoose.connect('mongodb://'+mongoid+':'+mongopw+'@ds039155.mongolab.com:39155/opd_users', function(err){
-    if(err) {
-        console.err(err);
-        throw err;
-    }
+	if(err) {
+		console.err(err);
+		throw err;
+	}
 });
 
 console.log("MongoDB : Connected");
 
 var Schema = mongoose.Schema;
 var UserSchema = new Schema({
-    id : String,
-    pw : String,
-    name : String,
-    projects : [{
-        title : String,
-        val : String
-    }]
+	id : String,
+	pw : String,
+	name : String,
+	projects : [{
+		title : String,
+		val : String
+	}]
 })
 
 var ComponentSchema = new Schema({
-  title : String,
-  head : String,
-  body : String
+	title : String,
+	head : String,
+	body : String
 });
 
 var ComponentDB = mongoose.model('Components',ComponentSchema);
@@ -113,92 +113,95 @@ var titles = new Array();
 
 
 app.get('/addCompo',function(req,res){
-  res.render('addCompo');
+	res.render('addCompo');
 });
 
 app.post('/addCompo',function(req,res){
-  var title = req.body.input_compo_title;
-  var head = req.body.input_compo_head;
-  var body = req.body.input_compo_body;
+	var title = req.body.input_compo_title;
+	var head = req.body.input_compo_head;
+	var body = req.body.input_compo_body;
 
-  var start,end;
-  var ims,headEnd;
-  var concatFront,concatEnd;
-  var flag=0;
+	console.log(req.body.html);
 
-  ComponentDB.find({}, function(err, docs){
-    flag=0;
-    for(var i=0 ; i<docs.length ; i++)
-    {
-      if(docs[i].title == title)
-      {
-        console.log("overlap name");
-        flag=1; break;
-      }
-    }
-    // 중복 확인
+	var start,end;
+	var ims,headEnd;
+	var concatFront,concatEnd;
+	var flag=0;
+
+	console.log('add Compo post!!');
+	ComponentDB.find({}, function(err, docs){
+		flag=0;
+		for(var i=0 ; i<docs.length ; i++)
+		{
+			if(docs[i].title == title)
+			{
+				console.log("overlap name");
+				flag=1; break;
+			}
+		}
+		// 중복 확인
 
 
-    // 공백 체크
-    var blank_pattern = /[\s]/g;
-    if( blank_pattern.test(title) == true){
-      flag=1;
-      console.log("blank");
-    }
-    // 공백 체크
-    var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
-    if( special_pattern.test(title) == true ){
-        flag=1;
-        console.log("special_pattern");
-    }
-    // 특수문자 체크
-    var number_pattern = /^[A-Za-z]{1}/;
-    if(number_pattern.test(title) == false){
-        flag=1;
-        console.log("First String Number!");
-    }
-    // 첫글자 숫자 체크
-  console.log("flag "+flag);
-  if(flag == 0)
-  {
-      ims=head;
-      headEnd=ims.indexOf("\{");
+		// 공백 체크
+		var blank_pattern = /[\s]/g;
+		if( blank_pattern.test(title) == true){
+			flag=1;
+			console.log("blank");
+		}
+		// 공백 체크
+		var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+		if( special_pattern.test(title) == true ){
+			flag=1;
+			console.log("special_pattern");
+		}
+		// 특수문자 체크
+		var number_pattern = /^[A-Za-z]{1}/;
+		if(number_pattern.test(title) == false){
+			flag=1;
+			console.log("First String Number!");
+		}
+		// 첫글자 숫자 체크
+		console.log("flag "+flag);
+		if(flag == 0){
 
-      concatFront=".";
-      concatEnd=ims.slice(headEnd,ims.length);
-      head=concatFront+title+concatEnd;
+			ims=head;
+			headEnd=ims.indexOf("\{");
 
-      // console.log(head);
-      //change Head
+			concatFront=".";
+			concatEnd=ims.slice(headEnd,ims.length);
+			head=concatFront+title+concatEnd;
 
-      ims=body;
-      start=ims.indexOf("class=\"");
-      concatFront=ims.slice(0,start+7);
-      end=ims.indexOf("\"",start+7);
-      concatEnd=ims.slice(end,ims.length);
+			// console.log(head);
+			//change Head
 
-      body=concatFront+"compo "+title+concatEnd;
+			ims=body;
+			start=ims.indexOf("class=\"");
+			concatFront=ims.slice(0,start+7);
+			end=ims.indexOf("\"",start+7);
+			concatEnd=ims.slice(end,ims.length);
 
-      ims=body;
-      start=ims.indexOf("id=\"");
-      concatFront=ims.slice(0,start+4);
-      end=ims.indexOf("\"",start+4);
-      concatEnd=ims.slice(end,ims.length);
+			body=concatFront+"compo "+title+concatEnd;
 
-      body=concatFront+title+concatEnd;
+			ims=body;
+			start=ims.indexOf("id=\"");
+			concatFront=ims.slice(0,start+4);
+			end=ims.indexOf("\"",start+4);
+			concatEnd=ims.slice(end,ims.length);
 
-      // console.log(body);
-      ComponentDB.create({title:title, head : head , body : body },function(err,data){
-      });
+			body=concatFront+title+concatEnd;
 
-      console.log("Compo Create Complete");
-    }
-    else
-    {
-      console.log("Compo Create Fail");
-    }
-  res.render('addCompo');
-  });
+			// console.log(body);
+			ComponentDB.create({title: title, head: head , body: body },function(err,data){
+			});
+
+			console.log("Compo Create Complete");
+		}
+		else{
+			console.log("Compo Create Fail");
+		}
+
+		res.render('addCompo');
+	});
 });
 
 
@@ -206,175 +209,183 @@ app.post('/addCompo',function(req,res){
 
 
 app.get('/users', function(req, res){
-    User.find({}, function(err, docs){
-       res.json(docs);
-        console.log(docs);
-    });
+	User.find({}, function(err, docs){
+	 res.json(docs);
+	 console.log(docs);
+ });
 });
 
 
 // testing space
 
 app.get('/test2', function(req, res){
-    res.render('mid2');
+	res.render('mid2');
 });
 
 app.post('/test2', function(req,res){
-    console.log('post!') ;
+	console.log('post!') ;
 //    console.log(req.body.data);
-    console.log(beautify_html(req.body.data, { indent_size: 2 }));
-    
-    console.log('폴더를 생성합니다.');
-    mkdir('./public/workspaces', function(err){
-        console.log(err);
-    });
-    
-    var file = './public/workspaces/index.html';
-    
-    fs.open(file, 'w', function(err, fd){
-        if(err) throw err;
-        console.log('file open complete');
-        
-        fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
-           if(err) throw err;
-            console.log("file write complete");
-        });
-    });
+console.log(beautify_html(req.body.data, { indent_size: 2 }));
+
+console.log('폴더를 생성합니다.');
+mkdir('./public/workspaces', function(err){
+	console.log(err);
+});
+
+var file = './public/workspaces/index.html';
+
+fs.open(file, 'w', function(err, fd){
+	if(err) throw err;
+	console.log('file open complete');
+	
+	fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
+	 if(err) throw err;
+	 console.log("file write complete");
+ });
+});
 });
 
 
 // project part
 app.get('/project', function(req, res){
-    res.render('project', {user_name : checkedName, projects : projects, titles : titles});
+	res.render('project', {user_name : checkedName, projects : projects, titles : titles});
 });
 
 app.post('/project', function(req, res){
-    var type = req.body.type;
-    var index = req.body.index;
-    var project_name = req.body.input_project_name;
+	var type = req.body.type;
+	var index = req.body.index;
+	var project_name = req.body.input_project_name;
 //    console.log(title2+ " " + checkedID + " " + type);
-    if(type == "remove")
-    {
-      console.log("in remove " + index);
+	if(type == "remove"){
+		console.log("in remove " + index);
 
-      User.findOne({id : checkedID},function(err,doc){
-        if(err){
-            throw err;
-        }
+		User.findOne({id : checkedID},function(err,doc){
+			if(err){
+				throw err;
+			}
 
-        doc.projects[index].remove();
-        doc.save();
+			doc.projects[index].remove();
+			doc.save();
 
-        projects = doc.get('projects');
-         for(var i = 0; i < projects.length; i++){
-                titles[i] = projects[i]['title'];
-            }
+			projects = doc.get('projects');
+			for(var i = 0; i < projects.length; i++){
+				titles[i] = projects[i]['title'];
+			}
 
-        res.redirect('/project');
-      });
+			res.redirect('/project');
+		});
 
-    }
-    else
-    {
-        console.log('Project Name : ' + project_name);
+	}
+	else{
+		console.log('Project Name : ' + project_name);
+		User.findOne({id : checkedID}, function(err, doc){
+			console.log("Find id");
 
-        User.findOne({id : checkedID}, function(err, doc){
+			if(err){
+				throw err;
+			}
 
-            console.log("Find id");
+			doc.projects.push({title : project_name, val : ''});
+			doc.save();
 
-            if(err){
-                throw err;
-            }
+			projects = doc.get('projects');
+			for(var i = 0; i < projects.length; i++){
+				titles[i] = projects[i]['title'];
+			}
 
-            doc.projects.push({title : project_name, val : ''});
-            doc.save();
+			var file = './public/workspaces/'+project_name+'.html';
 
-            projects = doc.get('projects');
-             for(var i = 0; i < projects.length; i++){
-                    titles[i] = projects[i]['title'];
-                }
-            // console.log(titles);
-            //
-            // console.log(doc);
-            // console.log("Create Project Success!");
-            res.redirect('/project');
-        });
-    }
+			fs.open(file, 'w', function(err, fd){
+				if(err) throw err;
+				console.log('file open complete');
+
+				fs.writeFile(file, "", 'utf-8', function(err){
+				 if(err) throw err;
+				 console.log("file write complete");
+			 });
+			});    
+			// console.log(titles);
+			//
+			// console.log(doc);
+			// console.log("Create Project Success!");
+			res.redirect('/project');
+		});
+	}
 });
 
 
 // join part
 app.post('/signup', function(req, res){
-    var name = req.body.name;
-    var id = req.body.id;
-    var pw = req.body.pw;
-    
-    var user = new User({id : id, pw : pw, name : name});
-    
-    user.save(function(err){
-        if(err){
-            console.err(err);
-            throw err;
-        }
-        console.log("name : " + name);
-        console.log("id : " + id);
-        console.log("pw : " + pw);
-        console.log("으로 저장되었습니다.");
-        res.redirect('/');
-    });
+	var name = req.body.name;
+	var id = req.body.id;
+	var pw = req.body.pw;
+	
+	var user = new User({id : id, pw : pw, name : name});
+	
+	user.save(function(err){
+		if(err){
+			console.err(err);
+			throw err;
+		}
+		console.log("name : " + name);
+		console.log("id : " + id);
+		console.log("pw : " + pw);
+		console.log("으로 저장되었습니다.");
+		res.redirect('/');
+	});
 });
 
 
 //login part
 app.post('/', function(request, response, next){
-    var id = request.body.id;
-    var pw = request.body.pw;
-    
-    console.log("Login request");
-    console.log("ID : " +  id);
-    console.log("PW : " + pw);
-    console.log("위 정보로 부터 로그인 요청이 들어왔습니다.\n\n");
-    
-    
-    User.findOne({id : id}, function(err, doc){
-        console.log("Find id")
-        if(err){ 
-            throw err;
-        }
-        
-        if(doc == null){
-            console.log("해당 ID를 찾지 못했습니다.");
-            response.render('login', {islogin : 'fail'});
-        }
-        else{
-            console.log(doc);
-            checkedID = doc.get('id', String);
-            checkedPW = doc.get('pw', String);
-            checkedName = doc.get('name', String);
-            projects = doc.get('projects');
-            
-            titles = [];
-            console.log(checkedID + " " + checkedPW + " " + checkedName + " 정보를 찾았습니다.");
-            console.log(projects);
-            console.log(projects.length + "개의 프로젝트를 찾았습니다.")
-            
-            
-            for(var i = 0; i < projects.length; i++){
-                titles[i] = projects[i]['title'];
-            }
-            console.log(titles);
-            
-           if(id === checkedID && pw === checkedPW){
-                console.log("Login Success!\n\n");
-                response.redirect('/project');
+	var id = request.body.id;
+	var pw = request.body.pw;
+	
+	console.log("Login request");
+	console.log("ID : " +  id);
+	console.log("PW : " + pw);
+	console.log("위 정보로 부터 로그인 요청이 들어왔습니다.\n\n");
+	
+	
+	User.findOne({id : id}, function(err, doc){
+		console.log("Find id")
+		if(err){ 
+			throw err;
+		}
+		
+		if(doc == null){
+			console.log("해당 ID를 찾지 못했습니다.");
+			response.render('login', {islogin : 'fail'});
+		}
+		else{
+			console.log(doc);
+			checkedID = doc.get('id', String);
+			checkedPW = doc.get('pw', String);
+			checkedName = doc.get('name', String);
+			projects = doc.get('projects');
+			
+			titles = [];
+			console.log(checkedID + " " + checkedPW + " " + checkedName + " 정보를 찾았습니다.");
+			console.log(projects);
+			console.log(projects.length + "개의 프로젝트를 찾았습니다.")
+			
+			
+			for(var i = 0; i < projects.length; i++){
+				titles[i] = projects[i]['title'];
+			}
+			console.log(titles);
+			
+			if(id === checkedID && pw === checkedPW){
+				console.log("Login Success!\n\n");
+				response.redirect('/project');
 //                response.render('project', {user_name : checkedName});
-            }
-            else{
-                console.log("Login Failed\n\n");
-                response.render('login', {islogin : 'fail'});
-            }
-        }
-    });
+			}
+			else{
+				console.log("Login Failed\n\n");
+				response.render('login', {islogin : 'fail'});
+			}
+		}
+	});
 });
 
 
@@ -382,59 +393,58 @@ var project_title;
 
 // workspace part
 app.get('/workspace', function(req, res){
-    
-    var project_val;    
-    project_title = req.param('data');
-    
-    
-    console.log('get!!');
+	
+	var project_val;    
+	project_title = req.param('data');
+	
+	
+	console.log('get!!');
 //    console.log();
-    
-    User.findOne({id : checkedID}, function(err, doc){
-        
-        console.log("Find id")
-        
-        if(err){ 
-            throw err;
-        }
-        
-        projects = doc.get('projects');
-        
-        for(var i = 0; i < projects.length; i++){
-            titles[i] = projects[i]['title'];
-            
-            if(projects[i]['title'] == req.param('data')){
-                project_val = projects[i]['val'];
-                
-                var bodyCode = project_val;
+
+	User.findOne({id : checkedID}, function(err, doc){
+	
+	console.log("Find id")
+	
+	if(err){ 
+		throw err;
+	}
+	
+	projects = doc.get('projects');
+	
+	for(var i = 0; i < projects.length; i++){
+		titles[i] = projects[i]['title'];
+		
+		if(projects[i]['title'] == req.param('data')){
+			project_val = projects[i]['val'];
+			
+			var bodyCode = project_val;
 //                var start = bodyCode.indexOf('\<body\>');
 //                var end = bodyCode.indexOf('\</body\>');
 //                bodyCode = bodyCode.slice(start+8, end);
-                
-                console.log(bodyCode);
-                ComponentDB.find({},function(error,comDoc){
-                  var comTitle = new Array(), comHead = new Array(), comBody = new Array();
-                  for(var j = 0 ; j< comDoc.length ; j++)
-                  {
-                    comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
-                  }
-                res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
-              });
 
-                break;
-            }
-        }
-        
-    });
-    
+		console.log(bodyCode);
+		ComponentDB.find({},function(error,comDoc){
+			var comTitle = new Array(), comHead = new Array(), comBody = new Array();
+			for(var j = 0 ; j< comDoc.length ; j++){
+				comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
+			}
+			res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
+		});
+
+		break;
+		}
+	}
+
+});
+
 //    console.log('test2!!!!\n\n\n\n\n');
 //    console.log(project_val);
 //    
 //    res.render('workspace', {val : project_val});
-    
-    
-    
-    
+
+
+
+
 //    
 //    console.log('폴더를 생성합니다.');
 //    mkdir('./public/workspaces', function(err){
@@ -456,83 +466,80 @@ app.get('/workspace', function(req, res){
 
 app.post('/workspace', function(req, res){
 //    console.log(beautify_html(req.body.data, { indent_size: 2 }));
-    
+
 //    var project_title = req.param('data');
-    var project_val = beautify_html(req.body.data, { indent_size: 2 });
-    var type = req.body.type;
-    
-    if(type == 'export'){
-        console.log('export Start');
-        console.log('폴더를 생성합니다.');
-        mkdir('./public/workspaces', function(err){
-            console.log(err);
-        });
+	var project_val = beautify_html(req.body.data, { indent_size: 2 });
+	var type = req.body.type;
 
-        var file = './public/workspaces/index.html';
+	if(type == 'export'){
+		console.log('export Start');
+		console.log('폴더를 생성합니다.');
+		mkdir('./public/workspaces', function(err){
+		console.log(err);
+	});
 
-        fs.open(file, 'w', function(err, fd){
-            if(err) throw err;
-            console.log('file open complete');
+	var file = './public/workspaces/'+project_title+'.html';
 
-            fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
-               if(err) throw err;
-                console.log("file write complete");
-            });
-        });    
-    }
-    else if(type == 'save'){
-        console.log('save Start');
-        User.findOne({id : checkedID}, function(err, doc){
-        
-        console.log("Find id")
-        
-        if(err){ 
-            throw err;
-        }
-        
+	fs.open(file, 'w', function(err, fd){
+		if(err) throw err;
+		console.log('file open complete');
+
+		fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
+		 if(err) throw err;
+		 console.log("file write complete");
+	 });
+	});    
+}
+else if(type == 'save'){
+	console.log('save Start');
+	User.findOne({id : checkedID}, function(err, doc){
+		
+		console.log("Find id")
+		
+		if(err){ 
+			throw err;
+		}
+		
 //        doc.projects.push({title : project_title, val : project_val});
 //        doc.save();
-        
-        projects = doc.get('projects');
-        
-        for(var i = 0; i < projects.length; i++){
-            
-            
-            if(projects[i]['title'] == project_title){
-                console.log(projects[i]['title']);
-                projects[i]['val'] = project_val;
-                console.log(projects[i]['val']);
-                doc.save();
-                break;
-            }
-        }
-        
-    });
-    }
-    
-    
-    
-    
-    
-    
-    
+
+		projects = doc.get('projects');
+
+		for(var i = 0; i < projects.length; i++){
+			if(projects[i]['title'] == project_title){
+				console.log(projects[i]['title']);
+				projects[i]['val'] = project_val;
+				console.log(projects[i]['val']);
+				doc.save();
+				break;
+			}
+		}
+	});
+}
+
+
+
+
+
+
+
 });
 
 
 app.get('/test', function(req, res){
-    res.render('test', {user_id : checkedID});
+	res.render('test', {user_id : checkedID});
 });
 
 
 app.get('/make', function(req, res){
-   res.render('make');
+ res.render('make');
 });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
 // error handlers
@@ -540,23 +547,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
+	app.use(function(err, req, res, next) {
+		res.status(err.status || 500);
+		res.render('error', {
+			message: err.message,
+			error: err
+		});
+	});
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+	res.status(err.status || 500);
+	res.render('error', {
+		message: err.message,
+		error: {}
+	});
 });
 
 

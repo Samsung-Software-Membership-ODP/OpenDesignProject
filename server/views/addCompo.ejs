@@ -1,21 +1,1080 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>title</title>
-    <script>
-    function overWrite()
-    {
+<head>
+	<meta charset="utf-8">
+	<title>Project View</title>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >  
+	
 
-    }
-    </script>
-  </head>
-  <body>
-    <form method="post">
-      <input name="input_compo_title" type="text" class="form-control" placeholder="Prjoect title">
-      <input name="input_compo_head" type="text" class="form-control" placeholder="Prjoect head" size ="1200px">
-      <input name="input_compo_body" type="text" class="form-control" placeholder="Prjoect body" size ="1200px">
-      <button id="save" type="submit">Upload Component</button>
-    </form>
-  </body>
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
+	<!-- -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
+	
+	
+	<!-- Color Picker -->
+	<link rel="stylesheet" media="screen" type="text/css" href="ColorPicker/css/colorpicker.css" />  
+	<script src="ColorPicker/colorpicker.js"></script>
+
+	
+	<style>
+	*{
+		margin: 0 auto;
+		font-family: 'Titillium Web', sans-serif;
+	}
+	html, body {
+		height: 100%;
+		max-height: 100%;
+	}
+	body{
+		background: #1d1f21; 
+		min-height: 1000px;
+
+	}
+	.left{
+		float:left;
+	}
+	.right{
+		float:right;
+	}
+	.clear{
+		clear:both;
+	}
+	.element{
+		text-align: center;
+		color: #888888;
+		font-size:32px;
+		transition: 0.3s;
+		display: inline-block;
+		vertical-align: middle;
+		width: 100px;
+		height: 100px;
+		line-height:100px;
+		box-shadow : 0px 1px 1px rgba(0,0,0,.7);
+		margin:5px;
+		border-radius: 3px;
+	}
+	.element:hover{
+		color: white;
+		background: #232323;
+	}
+
+
+	.small_element{
+		text-align: center;
+		color: #888888;
+		font-size: 18px;
+		transition: 0.3s;
+		display: inline-block;
+		vertical-align: middle;
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
+		box-shadow : 0px 1px 1px rgba(0,0,0,.7);
+		margin:5px;
+		border-radius: 3px;
+	}
+	.small_element:hover{
+		text-decoration: none;
+		color: white;
+		background: #232323;
+	}
+
+
+	#mainframe{
+		/*        background: #2c2c2c;*/
+		height: 1000px;
+		padding: 50px;
+	}
+
+	#main_nav{
+		position: fixed;
+		width:100%;
+		padding: 10px;
+		background: #003C6C;
+		background: #2c2c2c;
+		background: linear-gradient(135deg, rgba(53,49,87,1) 0%,rgba(71,28,60,1) 100%);
+		z-index: 10;
+		box-shadow: 0px 1px 3px rgba(0,0,0,.7);
+
+	}
+	#main_nav > ul{
+		list-style: none;
+	}
+	#main_nav > ul > li{
+		font-size: 14px;
+		float: left;
+		margin-right: 10px;
+	}
+	#main_nav > ul > li > a{
+		transition: 0.3s;
+		text-decoration: none;
+		color: #888888;
+	}
+	#main_nav > ul > li > a:hover{
+		transition: 0.3s;
+		text-decoration: none;
+		color: #f3f3f3;
+	}
+	#user_msg{
+		float: right;
+		margin-right: 20px;
+		color: #f3f3f3;
+		line-height: 42px;
+	}
+	.nav_title > h2{
+		color: #f3f3f3;
+		text-align: center;
+	}
+	.card{
+		background: #ffffff;
+		padding: 20px;
+		border-radius: 3px;
+		height: 50px;
+		width: 70%;
+		margin-top: 20px;
+	}
+	.card > h2{
+		line-height: 50px;
+	}
+	.logo{
+		color: #f3f3f3;
+		padding-left : 20px;
+		margin-bottom: 15px;
+	}
+	.logo > a{
+		color: #f3f3f3;
+		text-decoration: none;
+	}
+
+	#footer{
+		background: #5D5D5D;
+		padding-left: 100px;
+		
+	}
+	#footer > h3{
+		margin: 0px;
+		padding: 10px;
+		color: #B7B7B7;
+	}
+
+	#optionPanel{
+		top:90px;
+		right: 0px; 
+		position: fixed;
+		width: 20%;
+		background: #2c2c2c;
+		z-index : 8;
+		/*                opacity: 0.8;*/
+		
+		overflow-y: scroll;
+		max-height: 91%;
+		color: #f3f3f3;
+		/*        padding-top:90px;*/
+	}
+	#option{
+		/*         height: 500px;*/
+		background: #363636;
+		overflow-y: scroll;
+	}
+	#optionClassName{
+		background: #1a1a1a;
+		padding: 20px;
+	}
+	#optionContent{
+		padding: 20px;
+	}
+
+	#optionContent > input{
+		
+		border: none;
+		padding: 5px;
+		background: #242424;
+		box-shadow: none;
+		color : #b3b3b3;
+		width: 100%;
+	}
+	#optionContent > input:focus{
+		border: 2px solid #003C6C;
+		outline: none;
+		box-shadow: none;
+	}
+	#optionContent > #btn_save_component{
+		transition: 0.3s;
+		border: 1px solid #f3f3f3;
+		border-radius: 3px;
+		color: #f3f3f3;
+		padding: 5px;
+		width: 100%;
+		display: block;
+		text-align: center;
+	}
+	#optionContent > #btn_save_component:hover{
+		background: #f3f3f3;
+		transition: 0.3s;
+		text-decoration: none;
+		color: #444444;
+
+	}
+	#tags{
+		background: #363636;
+		/*height:300px;*/
+		overflow-y: scroll;
+	}
+	#tab > ul > li{
+		/*         float: left;*/
+		list-style: none;
+		padding-top: 7px;
+		padding-bottom: 7px;
+	}
+	#tab > ul > li > a{
+		transition: 0.3s;
+		color: #aaa;
+		text-decoration:none;
+	}
+	#tab > ul > li > a:hover{
+		transition: 0.3s;
+		color: white;
+	}
+	#msg{
+		width: 100%;
+		position: fixed;
+		bottom: 0px;
+		opacity: 0.8;
+		padding: 10px;
+		padding-left: 30px;
+		color: #f3f3f3;
+		background: #444444;
+	}
+	#add_tags_view{
+		position: fixed;
+		width:100%;
+		top: 90px;
+		/*         padding-top:90px;*/
+		height: 50px;
+		background:#444444;
+	}
+	#align_group{
+		text-align: center;
+	}
+	#align_group > a{
+
+		line-height: 32px;
+		transition: 0.3s;
+		font-size: 18px;
+		color: #b3b3b3;
+		margin: 10px;
+	}
+	#align_group > a:hover{
+		color: white;
+
+	}
+	#shadow_group{
+		text-align: center;
+	}
+	#float_group{
+		text-align: center;
+	}
+
+	#workspace_view{
+		min-height: 100%;
+		height: auto;
+		background-color: #f3f3f3;
+		/*        float: left;*/
+		width: 98%; 
+		margin: 10px;
+	}
+
+	#component_view {
+		background: #363636;
+		white-space: nowrap;
+		overflow-y: hidden;
+		overflow-x: scroll;
+	}
+	#component_view > .compo{
+		width:500px;
+		display:inline;
+		/*            float:left;*/
+	}
+	#set{
+		width : 98%;
+		background-color: inherit;
+	}
+	</style>
+
+
+	<script>
+
+
+	var flag=0;
+	var cnt=1;
+	var selectedElement;
+	var child;
+	var childInfo;
+	var comCode;
+	var temp;
+	// 0 = hide
+	var menuSelect = 0;
+	var optionSelect = 0;
+	
+	var firName,firVal,firCheck = false;
+	var copyedCompo;
+	var borderName = new Array(), borderVal = new Array();
+	var borderCnt = 0;
+	
+	
+	var $tag;
+	var copyedCompo;
+	var cmdDown = false;
+
+
+	function overWrite(){
+
+	}
+
+
+
+
+	function getTimeStamp() {
+		var d = new Date();
+
+		var s =
+		leadingZeros(d.getFullYear(), 4) + '-' +
+		leadingZeros(d.getMonth() + 1, 2) + '-' +
+		leadingZeros(d.getDate(), 2) + ' ' +
+
+		leadingZeros(d.getHours(), 2) + ':' +
+		leadingZeros(d.getMinutes(), 2) + ':' +
+		leadingZeros(d.getSeconds(), 2);
+
+		return s;
+	}
+
+
+
+	function leadingZeros(n, digits) {
+		var zero = '';
+		n = n.toString();
+
+		if (n.length < digits) {
+			for (i = 0; i < digits - n.length; i++)
+				zero += '0';
+		}
+		return zero + n;
+	}
+
+	$(document).keydown(function(event){
+		if(event.keyCode == '91'){
+			cmdDown = true;
+		}
+
+		// Btn SidePanel Click Event Trigger Cmd + K
+		if(cmdDown && event.keyCode == '75'){
+			$('#btn_sidePanel').trigger('click');
+		}
+		
+		// Btn save Click Event Trigger Cmd + S
+		if(cmdDown && event.keyCode == '83'){
+			// Chrome Cmd + S Key Event Ignore
+			event.preventDefault();
+			$('#save').trigger('click');
+		}
+		
+		// Btn save Click Event Trigger Cmd + 1
+		if(cmdDown && event.keyCode == '49'){
+			event.preventDefault();
+			$('#btn_add_compo').trigger('click');
+		}
+		
+		// Btn save Click Event Trigger Cmd + 2
+		if(cmdDown && event.keyCode == '50'){
+			event.preventDefault();
+			$('#btn_add_tags').trigger('click');
+		}
+		// Btn save Click Event Trigger Cmd + 3
+		if(cmdDown && event.keyCode == '51'){
+			event.preventDefault();
+			$('#btn_option').trigger('click');
+		}
+		
+		// Btn save Click Event Trigger Cmd + D
+		if(cmdDown && event.keyCode == '68'){
+			event.preventDefault();
+			$('#btn_remove').trigger('click');
+		}
+		
+		// Btn save Click Event Trigger Cmd + B
+		if(cmdDown && event.keyCode == '66'){
+			event.preventDefault();
+			$('#btn_bold').trigger('click');
+		}
+		// Btn save Click Event Trigger Cmd + C
+		if(cmdDown && event.keyCode == '67'){
+			event.preventDefault();
+			copyedCompo = selectedElement.attr('id');
+
+		}
+
+		// Btn save Click Event Trigger Cmd + V
+		if(cmdDown && event.keyCode == '86'){
+			event.preventDefault();
+//            alert(copyedCompo);
+		var nodeCopy = document.getElementById(copyedCompo).cloneNode(true);
+		for(;;cnt++){
+			var imID='NewID'+cnt;
+
+			if(document.getElementById(imID) == null){
+				console.log(imID);
+				nodeCopy.id="NewID"+cnt;
+				console.log(nodeCopy.id);
+				cnt=cnt+1;
+				selectedElement.append(nodeCopy);
+				break;
+			}
+		}
+	}
+
+		// Btn save Click Event Trigger Cmd + ]
+		if(cmdDown && event.keyCode == '221'){
+			event.preventDefault();
+			var fontSize = selectedElement.css('fontSize').replace(/[^0-9]/g,"");
+			selectedElement.css('font-size', (Number(fontSize) + 2)+'px');
+		}
+		
+		// Btn save Click Event Trigger Cmd + [
+		if(cmdDown && event.keyCode == '219'){
+			event.preventDefault();
+			var fontSize = selectedElement.css('fontSize').replace(/[^0-9]/g,"");
+			selectedElement.css('font-size', (Number(fontSize) - 2)+'px');
+		}
+		
+		// Btn save Click Event Trigger Cmd + ->
+		if(cmdDown && event.keyCode == '39'){
+			event.preventDefault();
+			$('#btn_float_right').trigger('click');
+		}
+		
+		// Btn save Click Event Trigger Cmd + <-
+		if(cmdDown && event.keyCode == '37'){
+			event.preventDefault();
+			$('#btn_float_left').trigger('click');
+		}
+		
+		// Btn save Click Event Trigger Cmd + <-
+		if(cmdDown && event.keyCode == '40'){
+			event.preventDefault();
+			$('#btn_float_none').trigger('click');
+		}
+		
+	}).keyup(function(event){
+		if(event.keyCode =='91'){
+			cmdDown = false;
+		}
+	});
+
+
+
+
+
+
+
+
+
+
+	$(document).ready(function(){
+
+		// hide part
+		$('#component_view').hide();
+		$('#optionPanel').hide();
+		$('#msg').hide();
+		$('#tags').hide();
+		$('#option').hide();
+		$('#label_hint').hide();
+		$('#input_hint').hide();
+
+
+		// ColorPicker
+		$('#input_bgColor').ColorPicker({
+			onSubmit: function(hsb, hex, rgb, el, parent) {
+				$(el).val('#'+hex);
+				$(el).ColorPickerHide();
+				$('#'+selectedElement.attr('id')).css('background', $('#input_bgColor').val());
+
+			},
+			onBeforeShow: function () {
+				$(this).ColorPickerSetColor(this.value);
+			}
+		})
+		.on('keyup', function(){
+			$(this).ColorPickerSetColor(this.value);
+		});
+		
+		$('#input_fontColor').ColorPicker({
+			onSubmit: function(hsb, hex, rgb, el, parent) {
+				$(el).val('#'+hex);
+				$(el).ColorPickerHide();
+				$('#'+selectedElement.attr('id')).css('color', $('#input_fontColor').val());
+			},
+			onBeforeShow: function () {
+				$(this).ColorPickerSetColor(this.value);
+			}
+		})
+		.on('keyup', function(){
+			$(this).ColorPickerSetColor(this.value);
+		});
+
+
+		$('#add_textArea').click(function(){
+			for(;;cnt++){
+				var imID='NewID'+cnt;
+
+				if(document.getElementById(imID) == null){
+					console.log(imID);
+					var nodeCopy = $('<p/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
+						draggable: 'true', ondragstart: 'return start(event)',
+						ondragend: 'return end(event)'
+					});
+				  console.log(nodeCopy.id);
+				  cnt=cnt+1;
+				  $('#workspace_view').append(nodeCopy);
+				  break;
+				}
+			}
+		});
+
+		$('#add_button').click(function(){
+			for(;;cnt++){
+				var imID='NewID'+cnt;
+
+				if(document.getElementById(imID) == null){
+					console.log(imID);
+					var nodeCopy = $('<button/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
+						draggable: 'true', ondragstart: 'return start(event)',
+						ondragend: 'return end(event)'
+					});
+					nodeCopy.css('background', '#ffffff');
+					console.log(nodeCopy.id);
+					cnt=cnt+1;
+					$('#workspace_view').append(nodeCopy);
+					break;
+				}
+			}
+		});
+
+		$('#add_input').click(function(){
+			for(;;cnt++){
+				var imID='NewID'+cnt;
+
+				if(document.getElementById(imID) == null){
+					console.log(imID);
+					var nodeCopy = $('<input/>', {id: 'NewID'+cnt, text: 'test', class: 'compo',
+						draggable: 'true', ondragstart: 'return start(event)',
+						ondragend: 'return end(event)'
+					});
+					nodeCopy.css('background', '#ffffff');
+					console.log(nodeCopy.id);
+					cnt=cnt+1;
+					$('#workspace_view').append(nodeCopy);
+					break;
+				}
+			}
+		});
+
+		$('#add_image').click(function(){
+			for(;;cnt++){
+				var imID='NewID'+cnt;
+
+				if(document.getElementById(imID) == null){
+					console.log(imID);
+					var nodeCopy = $('<img/>', {id: 'NewID'+cnt, class: 'compo',
+						draggable: 'true', ondragstart: 'return start(event)',
+						ondragend: 'return end(event)', src: 'http://placehold.it/300x300'
+					});
+					nodeCopy.css('background', '#ffffff');
+					console.log(nodeCopy.id);
+					cnt=cnt+1;
+					$('#workspace_view').append(nodeCopy);
+					break;
+				}
+			} 
+		});
+
+
+		// click part
+		$("#workspace_view").on("click", ".compo", function (event) {
+			
+			selectedElement = $(this);
+			var setID = selectedElement.attr('id');
+			$tag = $(this)[0].tagName;
+
+			
+			if(document.getElementById(setID).style.width == ''){
+				$('#input_width').val(selectedElement.css('width'));  
+			}
+			else{
+				$('#input_width').val(document.getElementById(setID).style.width);    
+			}
+			
+			
+			if(document.getElementById(setID).style.height == ''){
+				$('#input_height').val(selectedElement.css('height'));  
+			}
+			else{
+				$('#input_height').val(document.getElementById(setID).style.height);
+			}
+			
+			if(selectedElement.css('backgroundColor') != 'rgba(0, 0, 0, 0)'){
+				$('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));    
+			}
+			
+			
+//            $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
+			$('#input_fontColor').val(hexc(selectedElement.css('color')));
+
+			temp = document.getElementById(setID).innerHTML;
+
+			var start = temp.indexOf("<");
+			var text
+			if(start==-1){
+				text = temp;
+				temp = "";
+			}
+			else{
+				text = temp.slice(0, start);
+				temp = temp.slice(start,temp.length);
+			}
+
+			$('#input_text').val(text);
+			if($tag == 'INPUT'){
+				$('#label_hint').show();
+				$('#input_hint').show();
+				$('#input_hint').val(selectedElement.attr('placeholder'));    
+			}
+			else{
+				$('#input_hint').hide();
+				$('#label_hint').hide();
+			}
+
+			$('#input_display').val(selectedElement.css('display'));
+			$('#input_fontSize').val(selectedElement.css('fontSize'));
+			$('#input_opacity').val(selectedElement.css('opacity'));
+			$('#input_padding').val(selectedElement.css('padding'));
+			$('#input_margin').val(selectedElement.css('margin'));
+			$('#input_margin').val(selectedElement.css('margin'));
+			$('#input_float').val(selectedElement.css('float'));
+			$('#input_border').val(selectedElement.css('border'));
+			$('#input_radius').val(selectedElement.css('borderRadius'));
+
+			console.log(firCheck);
+			if(firCheck == true){
+				document.getElementById(firName).style.border= firVal;
+				firName = selectedElement.attr('id');
+				firVal = selectedElement.css('border');
+			}
+			else{
+				firCheck= true;
+				firName = selectedElement.attr('id');
+				firVal = selectedElement.css('border');
+			}
+			console.log(firName + " " + firVal);
+			// firSelCom.style.border = "";
+			document.getElementById(firName).style.border = "3px dotted blue";
+
+			// 중복클릭 금지
+			event.stopPropagation();
+		  // var childInfo=document.getElementById(child);
+		  // var parent=childInfo.parentNode;
+		  // console.log(parent);
+		});
+
+
+		$('#input_width').change(function(){
+			$('#'+selectedElement.attr('id')).css('width', $('#input_width').val());
+			if($tag == 'IMG'){
+
+				var width = selectedElement.css('width').replace(/[^0-9]/g,"");
+				var height = $('#input_height').val().replace(/[^0-9]/g,"");
+				selectedElement.attr('src','http://placehold.it/'+width+'x'+height)
+			}
+		});
+
+		$('#input_height').change(function(){
+			$('#'+selectedElement.attr('id')).css('height', $('#input_height').val());
+			if($tag == 'IMG'){
+				var width = selectedElement.css('width').replace(/[^0-9]/g,"");
+				var height = selectedElement.css('height').replace(/[^0-9]/g,"");
+				selectedElement.attr('src','http://placehold.it/'+width+'x'+height)
+			}
+		});
+
+
+		$('#input_text').change(function(){ 
+			$('#'+selectedElement.attr('id')).html($('#input_text').val()+temp);
+		});
+
+		$('#input_hint').change(function(){ 
+			$('#'+selectedElement.attr('id')).attr('placeholder', $('#input_hint').val());
+		});
+
+		$('#input_fontSize').change(function(){
+			$('#'+selectedElement.attr('id')).css('fontSize', $('#input_fontSize').val());
+		});
+
+		$('#input_opacity').change(function(){
+			$('#'+selectedElement.attr('id')).css('opacity', $('#input_opacity').val());
+		});
+
+		$('#input_display').change(function(){
+			$('#'+selectedElement.attr('id')).css('display', $('#input_display').val());
+		});
+
+		$('#input_padding').change(function(){
+			$('#'+selectedElement.attr('id')).css('padding', $('#input_padding').val());
+		});
+
+		$('#input_margin').change(function(){
+			$('#'+selectedElement.attr('id')).css('margin', $('#input_margin').val());
+		});
+
+		$('#input_border').change(function(){
+			$('#'+selectedElement.attr('id')).css('border', $('#input_border').val());
+		});
+
+		$('#input_radius').change(function(){
+			$('#'+selectedElement.attr('id')).css('borderRadius', $('#input_radius').val());
+		});
+
+
+		$('#btn_add_compo').click(function(){
+			$('#component_view').slideToggle('slow');
+		});
+
+		$('#btn_add_tags').click(function(){
+			$('#tags').slideToggle('slow');
+		});
+
+		$('#btn_option').click(function(){
+			$('#option').slideToggle('slow');
+		});
+
+		var tmp_width = document.getElementById('workspace_view').style.width;
+
+		$('#btn_sidePanel').click(function(){
+		//            var tmp_width;
+
+			if(optionSelect == 0) {
+				$('#optionPanel').animate({width:'toggle'},350);
+			}
+			if(document.getElementById('workspace_view').style.width != '78%'){
+			//              tmp_width = document.getElementById('workspace_view').style.width;
+			$('#workspace_view').css('width','78%');    
+			}
+			else{
+				$('#workspace_view').css('width',tmp_width);
+			}
+
+		});
+
+		$('#btn_remove').click(function(){
+			remove();
+		});
+
+		$('.draggable1').click(function(){
+			selectedElement = $(this);
+
+		});
+
+		$('.draggable2').click(function(){
+			selectedElement = $(this);
+		});
+
+		$('#btn_save_component').click(function(){
+			setInfo(); 
+		});
+
+		$('#save').click(function(){
+			// save();
+			$.post('/addCompo', {html: document.documentElement.innerHTML});
+			$('#msg').html('<h4><i class="xi-check"></i> 저장되었습니다.</h4>');
+			$('#autoSave_msg').text(getTimeStamp()+" 에 저장되었습니다.");
+			$('#msg').css('background','#119933');
+			$('#msg').slideDown("fast").delay(800).fadeOut(400);
+		//            alert('saved!');
+		})
+		$('#export').click(function(){
+			change();
+		//            save();
+		//            $.post('/workspace', {data : comCode});
+		$('#msg').html('<h4><i class="xi-check"></i> 추출되었습니다.</h4>');
+		$('#msg').css('background','#119933');
+		$('#msg').slideDown("fast").delay(800).fadeOut(400);
+		//            alert('saved!');
+		})
+		$('#btn_align_left').click(function(){
+			selectedElement.css('text-align','left');
+		});
+
+		$('#btn_align_center').click(function(){
+			selectedElement.css('text-align','center');
+		});
+
+		$('#btn_align_right').click(function(){
+			selectedElement.css('text-align','right');
+		});
+
+		$('#btn_align_justify').click(function(){
+			selectedElement.css('text-align','justify');
+		});
+		$('#btn_bold').click(function(){
+
+			if(selectedElement.css('font-weight') != 'bold'){
+				selectedElement.css('font-weight','bold');
+			}
+			else{
+				selectedElement.css('font-weight','normal');
+			}
+		});
+		$('#btn_italic').click(function(){
+
+			if(selectedElement.css('font-style') != 'italic'){
+				selectedElement.css('font-style','italic');
+			}
+			else{
+				selectedElement.css('font-style','normal');
+			}
+		});
+
+		$('#btn_dropshadow_leftup').click(function(){
+			selectedElement.css('box-shadow','-3px -3px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_up').click(function(){
+			selectedElement.css('box-shadow','0px -3px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_rightup').click(function(){
+			selectedElement.css('box-shadow','3px -3px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_left').click(function(){
+			selectedElement.css('box-shadow','-3px 0px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_center').click(function(){
+			selectedElement.css('box-shadow','0px 0px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_right').click(function(){
+			selectedElement.css('box-shadow','3px 0px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_leftdown').click(function(){
+			selectedElement.css('box-shadow','-3px 3px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_down').click(function(){
+			selectedElement.css('box-shadow','0px 3px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_rightdown').click(function(){
+			selectedElement.css('box-shadow','3px 3px 5px rgba(0, 0, 0, 0.7)');
+		});
+		$('#btn_dropshadow_none').click(function(){
+			selectedElement.css('box-shadow','none');
+		});
+		$('#btn_float_left').click(function(){
+			selectedElement.css('float','left');
+		});
+		$('#btn_float_none').click(function(){
+			selectedElement.css('float','none');
+		});
+		$('#btn_float_right').click(function(){
+			selectedElement.css('float','right');
+		});
+
+	});
+	</script>
+</head>
+<body>
+
+	<div id="main_nav">
+		<h4 class="logo"><a href="/project">Open Design Project</a></h4>
+		<ul style="float:left;">
+			<li id="save" data-toggle="tooltip" title="Cmd + S"><a href="#"><i class="xi-diskette xi-x">&nbsp;</i></br></a></li>
+			<li id="btn_remove" data-toggle="tooltip" title="Cmd + D"><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li>
+
+		</ul>
+		<ul style="float:right;">
+			<li id="autoSave_msg" style="color: white; margin-right: 20px;"></li>
+			<li id="btn_sidePanel" data-toggle="tooltip" title="Cmd + K"><a href="#"><i class="xi-layout-side-right xi-x">&nbsp;</i></a></li>
+		</ul>
+		<div style="clear:both;"></div>
+
+	</div>
+
+	<div style="padding-top:100px;">
+	</div>
+	
+
+	<div id="workspace_view"
+	ondragover="return over(event)"
+	ondrop="return drop(event)"
+	ondragenter="return enter(event)"
+	ondragleave="return Leave(event)" style="float:left; width:100%">
+
+
+
+</div>
+<div class="clear"></div>
+
+<div id="optionPanel">
+	<div id="tab">
+		<ul style="padding-left: 0px; padding-top:15px;">
+		<li id="btn_add_tags">
+			<a href="#">
+				<div class="left" style="padding-left:20px;">
+					<i class="xi-code xi-x" >&nbsp;</i><h4 style="display:inline">tags</h4></br>
+				</div>
+				<div class="right" style="padding-right:10px;">
+					<i class="xi-right-circle xi-x" >&nbsp;</i>
+				</div>
+				<div class=clear></div>
+			</a>
+		</li>
+
+		<li>
+			<div id="tags">
+				<div id="optionClassName">
+					<h4>Component Name</h4>
+				</div>
+				<div id="optionContent" style="text-align:center">
+
+					<a href="#" class="element" id="add_textArea"><p><i class="xi-caps"></i></p></a>
+					<a href="#" class="element"><p><i class="xi-layout-full"></i></p></a>
+					<a href="#" class="element" id="add_button"><p style="font-size: 18px">Button</p></a>
+					<a href="#" class="element" id="add_input"><p style="font-size: 18px">Input</p></a>
+					<a href="#" class="element" id="add_image"><p><i class="xi-image"></i></p></a>
+
+				</div>
+				<div class="clear"></div>
+			</div>
+		</li>
+
+		<li id="btn_option">
+			<a href="#">
+				<div class="left" style="padding-left:20px;">
+					<i class="xi-cog xi-x" >&nbsp;</i><h4 style="display:inline">option</h4></br>
+				</div>
+				<div class="right" style="padding-right:10px;">
+					<i class="xi-right-circle xi-x" >&nbsp;</i>
+				</div>
+				<div class=clear></div>
+			</a>
+		</li>
+		<li>
+			<div id="option">
+				<div id="optionClassName">
+					<h4>Component Name</h4>
+					<input id="input_title" name="input_compo_title" size="3" style="width:100%"></input>
+				</div>
+				<div id="optionContent">
+					<h5>Text Setting</h5>
+					<div id="align_group">
+						<a href="#" class="small_element" id="btn_align_left"><i class="xi-align-left"></i></a>
+						<a href="#" class="small_element" id="btn_align_center"><i class="xi-align-center"></i></a>
+						<a href="#" class="small_element" id="btn_align_right"><i class="xi-align-right"></i></a>
+						<a href="#" class="small_element" id="btn_align_justify"><i class="xi-align-justify"></i></a>
+						<a href="#" class="small_element" id="btn_bold"><i class="xi-bold"></i></a>
+						<a href="#" class="small_element" id="btn_italic"><i class="xi-italic"></i></a>
+					</div>
+
+					<h5>Shadow</h5>
+					<div id="shadow_group">
+						<div> 
+							<a href="#" id="btn_dropshadow_leftup" class="small_element">↖</a>
+							<a href="#" id="btn_dropshadow_up" class="small_element">↑</a>
+							<a href="#" id="btn_dropshadow_rightup" class="small_element">↗</a>                                         
+						</div>
+						<div> 
+							<a href="#" id="btn_dropshadow_left" class="small_element">←</a>
+							<a href="#" id="btn_dropshadow_center" class="small_element">·</a>
+							<a href="#" id="btn_dropshadow_right" class="small_element">→</a>                                         
+						</div>
+						<div> 
+							<a href="#" id="btn_dropshadow_leftdown" class="small_element">↙</a>
+							<a href="#" id="btn_dropshadow_down" class="small_element">↓</a>
+							<a href="#" id="btn_dropshadow_rightdown" class="small_element">↘</a>
+						</div>
+						<a href="#" id="btn_dropshadow_none" class="small_element" style="width:125px">None</a>
+					</div>
+
+					<h5>Float</h5>
+					<div id="float_group">
+						<a href="#" id="btn_float_left" class="small_element"><i class="xi-angle-double-left"></i></a>
+						<a href="#" id="btn_float_none" class="small_element"><i class="xi-minus"></i></a>
+						<a href="#" id="btn_float_right" class="small_element"><i class="xi-angle-double-right"></i></a>
+
+					</div>
+
+					
+
+					<h5>Width</h5>
+					<input id="input_width" name="setWidth" size="3"></input>
+					<h5>Height</h5>
+					<input id="input_height"name="setHeight" size="3"></input>
+
+					<h5>Background-color</h5>
+					<input id="input_bgColor"name="setBgColor" size="3"></input>
+
+					<h5>Font-color</h5>
+					<input id="input_fontColor"name="setFontColor" size="3"></input>
+
+					<h5>Text</h5>
+					<input id="input_text" name="setText" size="3"></input>
+
+
+					<h5 id="label_hint">Hint</h5>
+					<input id="input_hint" name="setHint" size="3"></input>
+
+					<h5>Font-size</h5>
+					<input id="input_fontSize" name="setFontSize" size="3"></input>
+
+					<h5>Border</h5>
+					<input id="input_border" name="setBorder" size="3"></input>
+
+					<h5>Border radius</h5>
+					<input id="input_radius" name="setradius" size="3"></input>
+
+					<h5>Opacity</h5>
+					<input id="input_opacity" name="setOpacity" size="3"></input>
+
+					<h5>Display</h5>
+					<input id="input_display" name="setDisplay" size="3"></input>
+
+					<h5>Padding</h5>
+					<input id="input_padding" name="setPadding" size="3"></input>
+
+					<h5>Margin</h5>
+					<input id="input_margin" name="setMargin" size="3"></input>
+
+
+
+					<h1>s</h1>
+					<a href="#" id="btn_save_component">Change</a>
+				</div>
+			</div>
+		</li>
+
+	</ul>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+
+</div>
+<div id="msg">
+	<h4>test text</h4>
+</div>
+<form method="post">
+	<input name="input_compo_title" type="text" class="form-control" placeholder="Prjoect title">
+	<input name="input_compo_head" type="text" class="form-control" placeholder="Prjoect head" size ="1200px">
+	<input name="input_compo_body" type="text" class="form-control" placeholder="Prjoect body" size ="1200px">
+	<button id="save" type="submit">Upload Component</button>
+</form>
+</body>
 </html>
