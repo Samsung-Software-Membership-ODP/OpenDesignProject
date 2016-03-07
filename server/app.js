@@ -115,6 +115,7 @@ var checkedPW;
 var checkedName;
 var projectCount;
 var projects;
+var loginedDoc;
 var titles = new Array();
 
 
@@ -409,78 +410,44 @@ app.get('/workspace', function(req, res){
 	
 	var project_val;    
 	project_title = req.param('data');
-	
-	
 	console.log('get!!');
-//    console.log();
-
 	User.findOne({id : checkedID}, function(err, doc){
-	
-	console.log("Find id")
-	
-	if(err){ 
-		throw err;
-	}
-	
-	projects = doc.get('projects');
-	
-	for(var i = 0; i < projects.length; i++){
-		titles[i] = projects[i]['title'];
 		
-		if(projects[i]['title'] == req.param('data')){
-			project_val = projects[i]['val'];
-			
-			var bodyCode = project_val;
-//                var start = bodyCode.indexOf('\<body\>');
-//                var end = bodyCode.indexOf('\</body\>');
-//                bodyCode = bodyCode.slice(start+8, end);
-
-		console.log(bodyCode);
-		ComponentDB.find({},function(error,comDoc){
-			var comTitle = new Array(), comHead = new Array(), comBody = new Array();
-			for(var j = 0 ; j< comDoc.length ; j++){
-				comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
-			}
-			res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
-		});
-
-		break;
+		console.log("Find id")
+		if(err){ 
+			throw err;
 		}
-	}
+		
+		projects = doc.get('projects');
+		
+		for(var i = 0; i < projects.length; i++){
+			titles[i] = projects[i]['title'];
+			
+			if(projects[i]['title'] == req.param('data')){
+				project_val = projects[i]['val'];
+				
+				var bodyCode = project_val;
+	//                var start = bodyCode.indexOf('\<body\>');
+	//                var end = bodyCode.indexOf('\</body\>');
+	//                bodyCode = bodyCode.slice(start+8, end);
 
-});
+			console.log(bodyCode);
+			ComponentDB.find({},function(error,comDoc){
+				var comTitle = new Array(), comHead = new Array(), comBody = new Array();
+				for(var j = 0 ; j< comDoc.length ; j++){
+					comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
+				}
+				res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
+			});
 
-//    console.log('test2!!!!\n\n\n\n\n');
-//    console.log(project_val);
-//    
-//    res.render('workspace', {val : project_val});
-
-
-
-
-//    
-//    console.log('폴더를 생성합니다.');
-//    mkdir('./public/workspaces', function(err){
-//        console.log(err);
-//    });
-//    
-//    var file = './public/workspaces/index.html';
-//    
-//    fs.open(file, 'w', function(err, fd){
-//        if(err) throw err;
-//        console.log('file open complete');
-//        
-//        fs.writeFile(file, '<h1>Test!</h1>\n'+text, 'utf-8', function(err){
-//           if(err) throw err;
-//            console.log("file write complete");
-//        });
-//    });
+			break;
+			}
+		}
+	});
 });
 
 app.post('/workspace', function(req, res){
-//    console.log(beautify_html(req.body.data, { indent_size: 2 }));
 
-//    var project_title = req.param('data');
 	var project_val = beautify_html(req.body.data, { indent_size: 2 });
 	var type = req.body.type;
 
@@ -504,16 +471,15 @@ app.post('/workspace', function(req, res){
 		});    
 
 		var file2 = './public/workspaces/'+project_title+'/style.css';
+    fs.open(file2, 'w', function(err, fd){
+        if(err) throw err;
+        console.log('file2 open complete');
 
-	    fs.open(file2, 'w', function(err, fd){
-	        if(err) throw err;
-	        console.log('file2 open complete');
-
-	        fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
-	           if(err) throw err;
-	            console.log("Css file2 write complete");
-	        });
-		  });
+        fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
+           if(err) throw err;
+            console.log("Css file2 write complete");
+        });
+	  });
 	}
 	else if(type == 'save'){
 		console.log('save Start');

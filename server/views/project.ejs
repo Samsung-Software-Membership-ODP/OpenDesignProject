@@ -200,16 +200,21 @@
                     transition: function(url){ window.location.href = url; }
                   });
                 
-                for(var i = 0; i < titles.length; i++){
-                    var card = $('<a>', {class: 'card animsition-link', href:'#'});
-                    card.html('<a class="btn_remove" style="float:right"><i class="xi-close"></i></a><div style="clear:both"></div><div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/'+titles[i]+'/index.html" scrolling="no" width="500%" height="1000px"></iframe></div><h4>'+titles[i]+'</h4></div></div>');
-                    $('#cardSection').append(
-//                       '<a class="btn_remove" style="float:right"><i class="xi-close"></i></a>'
-                     );
-                    $('#cardSection').append(
-                        card
-                    );
+                // alert(titles.length);
+                // alert(titles=='');
+                if(titles != ''){
+                    for(var i = 0; i < titles.length; i++){
+                        var card = $('<a>', {class: 'card animsition-link', href:'#'});
+                        card.html('<a class="btn_remove" style="float:right"><i class="xi-close"></i></a><div style="clear:both"></div><div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/'+titles[i]+'/index.html" scrolling="no" width="500%" height="1000px"></iframe></div><h4>'+titles[i]+'</h4></div></div>');
+                        $('#cardSection').append(
+    //                       '<a class="btn_remove" style="float:right"><i class="xi-close"></i></a>'
+                         );
+                        $('#cardSection').append(
+                            card
+                        );
+                    }    
                 }
+                
                 
                 $('.card').click(function(){
                     window.location.href = "/workspace?data="+$(this).text();
@@ -220,7 +225,11 @@
 
                     if(confirm(titles[index]+" 프로젝트를 삭제하시겠습니까?") == true){
 
-                      $.post('/project',{index : index , type: 'remove'});
+                      $.post('/project',{index : index , type: 'remove'}, function(res){
+                        window.location.reload();  
+                      });
+                      
+
                     }
                     else {
                       return;
