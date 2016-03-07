@@ -150,7 +150,7 @@
 	}
 
 	#footer{
-		background: #5D5D5D;
+		background: #4e5665;
 		padding-left: 100px;
 		
 	}
@@ -175,7 +175,7 @@
 		/*        padding-top:90px;*/
 	}
 	#option{
-		         height: auto;
+				 height: auto;
 		background: #363636;
 		overflow-y: scroll;
 	}
@@ -648,45 +648,45 @@
 		});
 		
 		$('#workspace_view').click(function(){
-          if(firCheck == true){
-              if(document.getElementById(firName) != null){
-		            document.getElementById(firName).style.border= firVal;
-		            firName = selectedElement.attr('id');
-		            firVal = selectedElement.css('border');
-	          }
-          }
+		  if(firCheck == true){
+			  if(document.getElementById(firName) != null){
+					document.getElementById(firName).style.border= firVal;
+					firName = selectedElement.attr('id');
+					firVal = selectedElement.css('border');
+			  }
+		  }
 
-          $('#input_text').val("");
-          $('#input_display').val("");
-          $('#input_fontSize').val("");
-          $('#input_opacity').val("");
-          $('#input_padding').val("");
-          $('#input_margin').val("");
-          $('#input_float').val("");
-          $('#input_border').val("");
-          $('#input_radius').val("");
-          $('#input_width').val("");
-          $('#input_height').val("");
-          $('#input_bgColor').val("");
-          $('#input_fontColor').val("");
-          $("#input_text").attr("disabled",true).attr("readonly",false);
-          $("#input_display").attr("disabled",true).attr("readonly",false);
-          $("#input_fontSize").attr("disabled",true).attr("readonly",false);
-          $("#input_opacity").attr("disabled",true).attr("readonly",false);
-          $("#input_padding").attr("disabled",true).attr("readonly",false);
-          $("#input_margin").attr("disabled",true).attr("readonly",false);
-          $("#input_float").attr("disabled",true).attr("readonly",false);
-          $("#input_border").attr("disabled",true).attr("readonly",false);
-          $("#input_radius").attr("disabled",true).attr("readonly",false);
-          $('#input_width').attr("disabled",true).attr("readonly",false);
-          $('#input_height').attr("disabled",true).attr("readonly",false);
-          $('#input_bgColor').attr("disabled",true).attr("readonly",false);
-          $('#input_fontColor').attr("disabled",true).attr("readonly",false);
+		  $('#input_text').val("");
+		  $('#input_display').val("");
+		  $('#input_fontSize').val("");
+		  $('#input_opacity').val("");
+		  $('#input_padding').val("");
+		  $('#input_margin').val("");
+		  $('#input_float').val("");
+		  $('#input_border').val("");
+		  $('#input_radius').val("");
+		  $('#input_width').val("");
+		  $('#input_height').val("");
+		  $('#input_bgColor').val("");
+		  $('#input_fontColor').val("");
+		  $("#input_text").attr("disabled",true).attr("readonly",false);
+		  $("#input_display").attr("disabled",true).attr("readonly",false);
+		  $("#input_fontSize").attr("disabled",true).attr("readonly",false);
+		  $("#input_opacity").attr("disabled",true).attr("readonly",false);
+		  $("#input_padding").attr("disabled",true).attr("readonly",false);
+		  $("#input_margin").attr("disabled",true).attr("readonly",false);
+		  $("#input_float").attr("disabled",true).attr("readonly",false);
+		  $("#input_border").attr("disabled",true).attr("readonly",false);
+		  $("#input_radius").attr("disabled",true).attr("readonly",false);
+		  $('#input_width').attr("disabled",true).attr("readonly",false);
+		  $('#input_height').attr("disabled",true).attr("readonly",false);
+		  $('#input_bgColor').attr("disabled",true).attr("readonly",false);
+		  $('#input_fontColor').attr("disabled",true).attr("readonly",false);
 
-          selectedElement= null;
-          workFlag = true;
+		  selectedElement= null;
+		  workFlag = true;
 
-        });
+		});
 
 
 		// click part
@@ -694,21 +694,21 @@
 			
 
 			if(workFlag == true){
-              $("#input_text").attr("disabled",false).attr("readonly",false);
-              $("#input_display").attr("disabled",false).attr("readonly",false);
-              $("#input_fontSize").attr("disabled",false).attr("readonly",false);
-              $("#input_opacity").attr("disabled",false).attr("readonly",false);
-              $("#input_padding").attr("disabled",false).attr("readonly",false);
-              $("#input_margin").attr("disabled",false).attr("readonly",false);
-              $("#input_float").attr("disabled",false).attr("readonly",false);
-              $("#input_border").attr("disabled",false).attr("readonly",false);
-              $("#input_radius").attr("disabled",false).attr("readonly",false);
-              $('#input_width').attr("disabled",false).attr("readonly",false);
-              $('#input_height').attr("disabled",false).attr("readonly",false);
-              $('#input_bgColor').attr("disabled",false).attr("readonly",false);
-              $('#input_fontColor').attr("disabled",false).attr("readonly",false);
-              workFlag = false;
-            }
+			  $("#input_text").attr("disabled",false).attr("readonly",false);
+			  $("#input_display").attr("disabled",false).attr("readonly",false);
+			  $("#input_fontSize").attr("disabled",false).attr("readonly",false);
+			  $("#input_opacity").attr("disabled",false).attr("readonly",false);
+			  $("#input_padding").attr("disabled",false).attr("readonly",false);
+			  $("#input_margin").attr("disabled",false).attr("readonly",false);
+			  $("#input_float").attr("disabled",false).attr("readonly",false);
+			  $("#input_border").attr("disabled",false).attr("readonly",false);
+			  $("#input_radius").attr("disabled",false).attr("readonly",false);
+			  $('#input_width').attr("disabled",false).attr("readonly",false);
+			  $('#input_height').attr("disabled",false).attr("readonly",false);
+			  $('#input_bgColor').attr("disabled",false).attr("readonly",false);
+			  $('#input_fontColor').attr("disabled",false).attr("readonly",false);
+			  workFlag = false;
+			}
 
 
 
@@ -1107,7 +1107,7 @@
 		   var concatFront,concatEnd;
 	   while(1){
 
-	   	colend=inlineCode.indexOf(":",checkpoint);
+		colend=inlineCode.indexOf(":",checkpoint);
 		
 		if(colend == -1) break;     // exit
 		inline=inlineCode.slice(checkpoint,colend);
@@ -1144,17 +1144,17 @@
 
 		  if(inline == css)
 		  {
-		  	concatFront=cssCode.slice(0,bef);
-		  	console.log(concatFront);
-		  	concatEnd=cssCode.slice(cssend,cssCode.length);
-		  	console.log(concatEnd);
-		  	var newCode = "";
-		  	newCode=newCode.concat(concatFront);
-		  	newCode=newCode.concat(inlineVal);
-		  	newCode=newCode.concat(concatEnd);
-		  	cssCode=newCode;
-		  	console.log(cssCode);
-		  	break;
+			concatFront=cssCode.slice(0,bef);
+			console.log(concatFront);
+			concatEnd=cssCode.slice(cssend,cssCode.length);
+			console.log(concatEnd);
+			var newCode = "";
+			newCode=newCode.concat(concatFront);
+			newCode=newCode.concat(inlineVal);
+			newCode=newCode.concat(concatEnd);
+			cssCode=newCode;
+			console.log(cssCode);
+			break;
 		  }
 		}
 	  } // css 속에 inline 삽입 완료
@@ -1197,100 +1197,100 @@
 	
 	function change(){
 		var code = document.documentElement.innerHTML;
-        var start,end,removeCode;
-        start = code.indexOf("\<head\>");
-        end = code.indexOf("\</head\>");
-        // alert(start+" "+end);
+		var start,end,removeCode;
+		start = code.indexOf("\<head\>");
+		end = code.indexOf("\</head\>");
+		// alert(start+" "+end);
 
 
-        var headCode = code.slice(start,end+8);
-        while(1)  // script remove
-        {
-          start = headCode.search("<script");
-          end = headCode.search("<\/script>");
-          // console.log(start+ " " + end);
-          removeCode=headCode.slice(start,end+9);
-          headCode = headCode.replace(removeCode,"");
-          if(start == -1 || end == -1) break;
-        }
-        while(1)  // link remove
-        {
-          start = headCode.search("<link");
-          end = headCode.indexOf("\">",start);
-          // console.log(start+ " " + end);
-          removeCode=headCode.slice(start,end+2);
-          headCode = headCode.replace(removeCode,"");
-          if(start == -1 || end == -1) break;
-        }
-        console.log("\n"+headCode+"\n");
+		var headCode = code.slice(start,end+8);
+		while(1)  // script remove
+		{
+		  start = headCode.search("<script");
+		  end = headCode.search("<\/script>");
+		  // console.log(start+ " " + end);
+		  removeCode=headCode.slice(start,end+9);
+		  headCode = headCode.replace(removeCode,"");
+		  if(start == -1 || end == -1) break;
+		}
+		while(1)  // link remove
+		{
+		  start = headCode.search("<link");
+		  end = headCode.indexOf("\">",start);
+		  // console.log(start+ " " + end);
+		  removeCode=headCode.slice(start,end+2);
+		  headCode = headCode.replace(removeCode,"");
+		  if(start == -1 || end == -1) break;
+		}
+		console.log("\n"+headCode+"\n");
 
-        start = headCode.indexOf("*\{");
-        end = headCode.lastIndexOf("<\/style>");
-        removeCode=headCode.slice(start,end);
-        headCode = headCode.replace(removeCode,"");
+		start = headCode.indexOf("*\{");
+		end = headCode.lastIndexOf("<\/style>");
+		removeCode=headCode.slice(start,end);
+		headCode = headCode.replace(removeCode,"");
 
 
-        start = headCode.lastIndexOf("<style>");
+		start = headCode.lastIndexOf("<style>");
 
-        var start2,end2,cName,mid;
-        var removeLen;
-        while(1)
-        {
-          start2 = headCode.indexOf(".",start);
-          end2 = headCode.indexOf("\{",start);
-          start = end2+2;
-          if(start2 == -1 || end2 == -1) break;
+		var start2,end2,cName,mid;
+		var removeLen;
+		while(1)
+		{
+		  start2 = headCode.indexOf(".",start);
+		  end2 = headCode.indexOf("\{",start);
+		  start = end2+2;
+		  if(start2 == -1 || end2 == -1) break;
 
-          cName = headCode.slice(start2+1,end2);
-          console.log(workspace_view.getElementsByClassName(cName));
-          if(workspace_view.getElementsByClassName(cName).length == 0)
-          {
-            mid = headCode.indexOf("\}",start);
-            removeCode=headCode.slice(start2,mid+1);
-            removeLen= removeCode.length;
-            start= start2;
-            headCode = headCode.replace(removeCode,"");
-            console.log(" check\n"+removeCode);
-          }
-        }
-        start = headCode.indexOf("<style>");
-        end = headCode.lastIndexOf("<\/style>");
-        var cssCode2=headCode.slice(start,end+8);
-        cssCode3=headCode.slice(start+7,end);
-        console.log(cssCode2);
-        headCode = headCode.replace(cssCode2,"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
+		  cName = headCode.slice(start2+1,end2);
+		  console.log(workspace_view.getElementsByClassName(cName));
+		  if(workspace_view.getElementsByClassName(cName).length == 0)
+		  {
+			mid = headCode.indexOf("\}",start);
+			removeCode=headCode.slice(start2,mid+1);
+			removeLen= removeCode.length;
+			start= start2;
+			headCode = headCode.replace(removeCode,"");
+			console.log(" check\n"+removeCode);
+		  }
+		}
+		start = headCode.indexOf("<style>");
+		end = headCode.lastIndexOf("<\/style>");
+		var cssCode2=headCode.slice(start,end+8);
+		cssCode3=headCode.slice(start+7,end);
+		console.log(cssCode2);
+		headCode = headCode.replace(cssCode2,"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
 
-        // workspace_view div
-        var bodyCode = document.getElementById("workspace_view").innerHTML;
-        //      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
-        bodyCode=bodyCode.replace(/draggable="true"/gi,"");
-        bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
-        bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
-        bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
-        bodyCode=bodyCode.replace(/draggable="true"/gi,"");
-        bodyCode.trim();
-        // console.log(bodyCode);
-        // body
-        comCode = "<html>\n";
-        comCode = comCode.concat(headCode);
-        comCode = comCode.concat("\n<body>\n");
-        comCode = comCode.concat(bodyCode);
-        comCode = comCode.concat("\n</body>\n");
-        comCode = comCode.concat("</html>");
-        console.log("comCode\n"+headCode);
-        cssCode3 = cssCode3.replace(/\{/gi,"\{\n");
-        cssCode3 = cssCode3.replace(/\;/gi,"\;\n");
-        cssCode3 = cssCode3.replace(/\}/gi,"\}\n");
-        $.post('/workspace',{data : comCode, type: 'export' , cssData : cssCode3});
+		// workspace_view div
+		var bodyCode = document.getElementById("workspace_view").innerHTML;
+		//      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
+		bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+		bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
+		bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
+		bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
+		bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+		bodyCode.trim();
+		// console.log(bodyCode);
+		// body
+		comCode = "<html>\n";
+		comCode = comCode.concat(headCode);
+		comCode = comCode.concat("\n<body>\n");
+		comCode = comCode.concat(bodyCode);
+		comCode = comCode.concat("\n</body>\n");
+		comCode = comCode.concat("</html>");
+		console.log("comCode\n"+headCode);
+		cssCode3 = cssCode3.replace(/\{/gi,"\{\n");
+		cssCode3 = cssCode3.replace(/\;/gi,"\;\n");
+		cssCode3 = cssCode3.replace(/\}/gi,"\}\n");
+		$.post('/workspace',{data : comCode, type: 'export' , cssData : cssCode3});
 	}
 
 
 	function save(){
 		if(firCheck == true){
-          if(document.getElementById(firName) != null)
-          document.getElementById(firName).style.border= firVal;
-        }
-        
+		  if(document.getElementById(firName) != null)
+		  document.getElementById(firName).style.border= firVal;
+		}
+		
 		var bodyCode = document.getElementById("workspace_view").innerHTML;
 		$.post('/workspace',{data : bodyCode, type: 'save'});
 		console.log(bodyCode);
@@ -1323,7 +1323,7 @@
 		console.log(event.target);
 
 	  if(flag==1){
-	  	var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
+		var nodeCopy = document.getElementById(iddraggable).cloneNode(true);
 		// nodeCopy.className=iddraggable+" compo";
 
 
@@ -1361,10 +1361,10 @@
 		var chkp = document.getElementById(chk);
 	  //  console.log(chkp.parentNode);
 	  if(chkp.parentNode.id=="component_view"){
-	  	flag=1;
+		flag=1;
 	  }
 	  else {
-	  	flag=0;
+		flag=0;
 	  }
 
 	  //  console.log(e.target.getAttribute('id'));
@@ -1410,10 +1410,10 @@
 		}
 	  // console.log(event.target.id + " " + event.target.style.border + " " + borderCnt);
 	  if(BFlag == 0){
-	  	borderName[borderCnt]=event.target.id;
-	  	borderVal[borderCnt]=event.target.style.border;
-	  	borderCnt++;
-	  	console.log("borderName : "+borderName[borderCnt-1]+"\nborderVal : "+borderVal[borderCnt-1]);
+		borderName[borderCnt]=event.target.id;
+		borderVal[borderCnt]=event.target.style.border;
+		borderCnt++;
+		console.log("borderName : "+borderName[borderCnt-1]+"\nborderVal : "+borderVal[borderCnt-1]);
 	  }
 	  event.target.style.border = "3px solid #6799FF";
 //      event.target.style.boxShadow = "0px 0px 20px #6799FF";

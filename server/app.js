@@ -254,78 +254,6 @@ fs.open(file, 'w', function(err, fd){
 });
 
 
-// project part
-app.get('/project', function(req, res){
-	res.render('project', {user_name : checkedName, projects : projects, titles : titles});
-});
-
-app.post('/project', function(req, res){
-	var type = req.body.type;
-	var index = req.body.index;
-	var project_name = req.body.input_project_name;
-//    console.log(title2+ " " + checkedID + " " + type);
-	if(type == "remove"){
-		console.log("in remove " + index);
-
-		User.findOne({id : checkedID},function(err,doc){
-			if(err){
-				throw err;
-			}
-
-			doc.projects[index].remove();
-			doc.save();
-
-			projects = doc.get('projects');
-			for(var i = 0; i < projects.length; i++){
-				titles[i] = projects[i]['title'];
-			}
-
-			res.redirect('/project');
-		});
-
-	}
-	else{
-		console.log('Project Name : ' + project_name);
-		User.findOne({id : checkedID}, function(err, doc){
-			console.log("Find id");
-
-			if(err){
-				throw err;
-			}
-
-			doc.projects.push({title : project_name, val : ''});
-			doc.save();
-
-			projects = doc.get('projects');
-			for(var i = 0; i < projects.length; i++){
-				titles[i] = projects[i]['title'];
-			}
-
-
-			mkdir('./public/workspaces/'+project_name, function(err){
-				console.log(err);
-			});
-
-			console.log('make dir!');
-			var file = './public/workspaces/'+project_name+'/index.html';
-
-			fs.open(file, 'w', function(err, fd){
-				if(err) throw err;
-				console.log('file open complete');
-
-				fs.writeFile(file, "", 'utf-8', function(err){
-				 if(err) throw err;
-				 console.log("file write complete");
-			 });
-			});    
-			// console.log(titles);
-			//
-			// console.log(doc);
-			// console.log("Create Project Success!");
-			res.redirect('/project');
-		});
-	}
-});
 
 
 // join part
@@ -403,6 +331,83 @@ app.post('/', function(request, response, next){
 });
 
 
+
+// project part
+app.get('/project', function(req, res){
+	res.render('project', {user_name : checkedName, projects : projects, titles : titles});
+});
+
+app.post('/project', function(req, res){
+	var type = req.body.type;
+	var index = req.body.index;
+	var project_name = req.body.input_project_name;
+//    console.log(title2+ " " + checkedID + " " + type);
+	if(type == "remove"){
+		console.log("in remove " + index);
+
+		User.findOne({id : checkedID},function(err,doc){
+			if(err){
+				throw err;
+			}
+
+			doc.projects[index].remove();
+			doc.save();
+
+			projects = doc.get('projects');
+			for(var i = 0; i < projects.length; i++){
+				titles[i] = projects[i]['title'];
+			}
+
+			res.redirect('/project');
+		});
+
+	}
+	else{
+		console.log('Project Name : ' + project_name);
+		User.findOne({id : checkedID}, function(err, doc){
+			console.log("Find id");
+
+			if(err){
+				throw err;
+			}
+
+			doc.projects.push({title : project_name, val : ''});
+			doc.save();
+
+			projects = doc.get('projects');
+			for(var i = 0; i < projects.length; i++){
+				titles[i] = projects[i]['title'];
+			}
+
+
+			mkdir('./public/workspaces/'+project_name, function(err){
+				console.log(err);
+			});
+
+			console.log('make dir!');
+			var file = './public/workspaces/'+project_name+'/index.html';
+
+			fs.open(file, 'w', function(err, fd){
+				if(err) throw err;
+				console.log('file open complete');
+
+				fs.writeFile(file, "", 'utf-8', function(err){
+				 if(err) throw err;
+				 console.log("file write complete");
+			 });
+			});    
+			// console.log(titles);
+			//
+			// console.log(doc);
+			// console.log("Create Project Success!");
+			res.redirect('/project');
+		});
+	}
+});
+
+
+
+
 var project_title;
 
 // workspace part
@@ -431,16 +436,16 @@ app.get('/workspace', function(req, res){
 	//                var end = bodyCode.indexOf('\</body\>');
 	//                bodyCode = bodyCode.slice(start+8, end);
 
-			console.log(bodyCode);
-			ComponentDB.find({},function(error,comDoc){
-				var comTitle = new Array(), comHead = new Array(), comBody = new Array();
-				for(var j = 0 ; j< comDoc.length ; j++){
-					comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
-				}
-				res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
-			});
+				console.log(bodyCode);
+				ComponentDB.find({},function(error,comDoc){
+					var comTitle = new Array(), comHead = new Array(), comBody = new Array();
+					for(var j = 0 ; j< comDoc.length ; j++){
+						comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
+					}
+					res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
+				});
 
-			break;
+				break;
 			}
 		}
 	});
@@ -471,15 +476,15 @@ app.post('/workspace', function(req, res){
 		});    
 
 		var file2 = './public/workspaces/'+project_title+'/style.css';
-    fs.open(file2, 'w', function(err, fd){
-        if(err) throw err;
-        console.log('file2 open complete');
+		fs.open(file2, 'w', function(err, fd){
+				if(err) throw err;
+				console.log('file2 open complete');
 
-        fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
-           if(err) throw err;
-            console.log("Css file2 write complete");
-        });
-	  });
+				fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
+					 if(err) throw err;
+						console.log("Css file2 write complete");
+				});
+		});
 	}
 	else if(type == 'save'){
 		console.log('save Start');
@@ -531,15 +536,15 @@ app.post('/workspace', function(req, res){
 
 		var file2 = './public/workspaces/share/'+project_title+'/style.css';
 
-    fs.open(file2, 'w', function(err, fd){
-        if(err) throw err;
-        console.log('file2 open complete');
+		fs.open(file2, 'w', function(err, fd){
+				if(err) throw err;
+				console.log('file2 open complete');
 
-        fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
-           if(err) throw err;
-            console.log("Css file2 write complete");
-        });
-	  });
+				fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
+					 if(err) throw err;
+						console.log("Css file2 write complete");
+				});
+		});
 
 	}
 
@@ -564,20 +569,61 @@ app.get('/templet', function(req, res){
 
 			for(var i = 0; i < doc.length; i++){
 				titles[i] = doc[i].title;
-				console.log(titles[i]+'??');
 			}
 
-			// for(var j = 0 ; j< comDoc.length ; j++){
-			// 	comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
-			// }
-			// res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
 			console.log(titles);
 			res.render('templet', {user_name : checkedName, projects : projects, titles : titles});
 	});
-
-	
-	
 })
+
+app.post('/templet', function(req, res){
+	var project_name = req.body.input_project_name;
+
+	var html;
+	var css;
+
+	TempletDB.findOne({title : project_name}, function(err, doc){
+			console.log("Find Templet");
+
+			if(err){
+				throw err;
+			}
+
+			html = doc.get('html', String);
+			css = doc.get('css', String);
+
+			doc.projects.push({title : project_name, val : ''});
+			doc.save();
+
+			projects = doc.get('projects');
+			for(var i = 0; i < projects.length; i++){
+				titles[i] = projects[i]['title'];
+			}
+
+
+			mkdir('./public/workspaces/'+project_name, function(err){
+				console.log(err);
+			});
+
+			console.log('make dir!');
+			var file = './public/workspaces/'+project_name+'/index.html';
+
+			fs.open(file, 'w', function(err, fd){
+				if(err) throw err;
+				console.log('file open complete');
+
+				fs.writeFile(file, "", 'utf-8', function(err){
+				 if(err) throw err;
+				 console.log("file write complete");
+			 });
+			});    
+			// console.log(titles);
+			//
+			// console.log(doc);
+			// console.log("Create Project Success!");
+			res.redirect('/project');
+		});
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
