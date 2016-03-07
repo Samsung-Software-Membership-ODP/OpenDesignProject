@@ -166,16 +166,7 @@
         <script>
 
             var titles = "<%= titles %>".split(',');
-
-            
-            $(function(){
-                $('#btn_add').click(function(){
-                    $('#myModal').modal();
-                });
-            });
-            
-            
-            
+    
             $(document).ready(function(){
                 $('#mainframe').animsition({
                     inClass: 'fade-in',
@@ -202,7 +193,7 @@
                 
                 for(var i = 0; i < titles.length; i++){
                     var card = $('<a>', {class: 'card animsition-link', href:'#'});
-                    card.html('<a class="btn_remove" style="float:right"><i class="xi-close"></i></a><div style="clear:both"></div><div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/'+titles[i]+'/index.html" scrolling="no" width="500%" height="1000px"></iframe></div><h4>'+titles[i]+'</h4></div></div>');
+                    card.html('<div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/'+titles[i]+'/index.html" scrolling="no" width="500%" height="1000px"></iframe></div><h4>'+titles[i]+'</h4></div></div>');
                     $('#cardSection').append(
 //                       '<a class="btn_remove" style="float:right"><i class="xi-close"></i></a>'
                      );
@@ -212,7 +203,7 @@
                 }
                 
                 $('.card').click(function(){
-                    window.location.href = "/workspace?data="+$(this).text();
+                    $('#myModal').modal();
                 });
                 
                  $('.btn_remove').click(function(){
@@ -246,19 +237,12 @@
         </div>
         <div id="sub_nav">
             
-            <h2>여러분만의 홈페이지를 디자인하세요</h2>
+            <h2>생성할 템플릿을 선택해주세요</h2>
         </div>
         
         <div id="mainframe" >
             <div id="cardSection">
                 
-                <a id="btn_add" class="card animsition-link" href="#">
-                    <div class="wrapper">
-                        <div class="contents">
-                            <h4><i class="xi-plus-square xi-x"></i></br></br>새로운 프로젝트를 생성하세요</h4>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
         <div id="footer">

@@ -216,7 +216,7 @@
                 });
                 
                  $('.btn_remove').click(function(){
-                    var index = $('button').index(this);
+                    var index = $('.btn_remove').index(this);
 
                     if(confirm(titles[index]+" 프로젝트를 삭제하시겠습니까?") == true){
 
@@ -236,7 +236,7 @@
             <h4 class="logo">Open Design Project</h4>
             <ul style="float:left;">
 <!--                <li><a id="btn_add" href="#"><i class="xi-plus xi-x">&nbsp;</i></br></a></li>-->
-                <li><a id="btn_lib" href="#"><i class="xi-tagged-book xi-x">&nbsp;</i></br></a></li>
+                <li><a id="btn_lib" href="/templet"><i class="xi-tagged-book xi-x">&nbsp;</i></br></a></li>
                 <!-- <li><a id="btn_share" href="#"><i class="xi-share-alt xi-x">&nbsp;</i></br></a></li> -->
                 <!-- <li><a href="#"><i class="xi-trash xi-x">&nbsp;</i></br></a></li> -->
                 <li><a id="btn_logout" href="/"><i class="xi-user-add xi-x">&nbsp;</i></br></a></li>
@@ -245,7 +245,6 @@
             <div style="clear:both;"></div>
         </div>
         <div id="sub_nav">
-            
             <h2>여러분만의 홈페이지를 디자인하세요</h2>
         </div>
         

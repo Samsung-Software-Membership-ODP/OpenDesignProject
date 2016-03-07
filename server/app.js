@@ -78,9 +78,16 @@ var ComponentSchema = new Schema({
 	body : String
 });
 
-var ComponentDB = mongoose.model('Components',ComponentSchema);
-var User = mongoose.model('users', UserSchema);
+var TempletSchema = new Schema({
+	title : String,
+	css : String,
+	html : String
+});
 
+
+var User = mongoose.model('users', UserSchema);
+var ComponentDB = mongoose.model('Components',ComponentSchema);
+var TempletDB = mongoose.model('Templet', TempletSchema);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -484,19 +491,79 @@ app.post('/workspace', function(req, res){
 			console.log(err);
 		});
 
-	var file = './public/workspaces/'+project_title+'/index.html';
+		var file = './public/workspaces/'+project_title+'/index.html';
 
-	fs.open(file, 'w', function(err, fd){
-		if(err) throw err;
-		console.log('file open complete');
+		fs.open(file, 'w', function(err, fd){
+			if(err) throw err;
+			console.log('file open complete');
 
-		fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
-		 if(err) throw err;
-		 console.log("file write complete");
-	 });
-	});    
+			fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
+			 if(err) throw err;
+			 console.log("file write complete");
+		 });
+		});    
 
-	var file2 = './public/workspaces/'+project_title+'/style.css';
+		var file2 = './public/workspaces/'+project_title+'/style.css';
+
+	    fs.open(file2, 'w', function(err, fd){
+	        if(err) throw err;
+	        console.log('file2 open complete');
+
+	        fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
+	           if(err) throw err;
+	            console.log("Css file2 write complete");
+	        });
+		  });
+	}
+	else if(type == 'save'){
+		console.log('save Start');
+		User.findOne({id : checkedID}, function(err, doc){
+			console.log("Find id")
+		
+			if(err){ 
+				throw err;
+			}
+		
+//        doc.projects.push({title : project_title, val : project_val});
+//        doc.save();
+
+			projects = doc.get('projects');
+
+			for(var i = 0; i < projects.length; i++){
+				if(projects[i]['title'] == project_title){
+					console.log(projects[i]['title']);
+					projects[i]['val'] = project_val;
+					console.log(projects[i]['val']);
+					doc.save();
+					break;
+				}
+			}
+		});
+	}
+	else if(type == 'share'){
+		console.log('폴더를 생성합니다.');
+		mkdir('./public/workspaces/share/'+project_title, function(err){
+			console.log(err);
+		});
+
+
+		TempletDB.create({title: project_title, css: req.body.cssData , html: req.body.data },function(err,data){
+			console.log(err);
+		});
+
+		var file = './public/workspaces/share/'+project_title+'/index.html';
+
+		fs.open(file, 'w', function(err, fd){
+			if(err) throw err;
+			console.log('file open complete');
+
+			fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
+			 if(err) throw err;
+			 console.log("file write complete");
+		 });
+		});    
+
+		var file2 = './public/workspaces/share/'+project_title+'/style.css';
 
     fs.open(file2, 'w', function(err, fd){
         if(err) throw err;
@@ -506,41 +573,9 @@ app.post('/workspace', function(req, res){
            if(err) throw err;
             console.log("Css file2 write complete");
         });
-  });
+	  });
 
-}
-else if(type == 'save'){
-	console.log('save Start');
-	User.findOne({id : checkedID}, function(err, doc){
-		
-		console.log("Find id")
-		
-		if(err){ 
-			throw err;
-		}
-		
-//        doc.projects.push({title : project_title, val : project_val});
-//        doc.save();
-
-		projects = doc.get('projects');
-
-		for(var i = 0; i < projects.length; i++){
-			if(projects[i]['title'] == project_title){
-				console.log(projects[i]['title']);
-				projects[i]['val'] = project_val;
-				console.log(projects[i]['val']);
-				doc.save();
-				break;
-			}
-		}
-	});
-}
-
-
-
-
-
-
+	}
 
 });
 
@@ -553,6 +588,30 @@ app.get('/test', function(req, res){
 app.get('/make', function(req, res){
  res.render('make');
 });
+
+
+app.get('/templet', function(req, res){
+	var titles = new Array();
+	TempletDB.find({},function(error,doc){
+			// var comTitle = new Array(), comHead = new Array(), comBody = new Array();
+			
+
+			for(var i = 0; i < doc.length; i++){
+				titles[i] = doc[i].title;
+				console.log(titles[i]+'??');
+			}
+
+			// for(var j = 0 ; j< comDoc.length ; j++){
+			// 	comTitle[j]=comDoc[j].title; comHead[j]=comDoc[j].head; comBody[j]=comDoc[j].body;
+			// }
+			// res.render('workspace', {val : bodyCode, comTitle : comTitle, comHead : comHead, comBody : comBody});
+			console.log(titles);
+			res.render('templet', {user_name : checkedName, projects : projects, titles : titles});
+	});
+
+	
+	
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

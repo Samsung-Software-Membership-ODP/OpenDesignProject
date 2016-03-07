@@ -326,11 +326,12 @@
 	var borderName = new Array(), borderVal = new Array();
 	var borderCnt = 0;
 	
+	var workFlag = false;
 	
 	var $tag;
 	var copyedCompo;
 	var cmdDown = false;
-	
+	var cssCode3;
 	
 //    function autoSave(){
 //        setInterval(autoSave, 60*5000);
@@ -646,9 +647,71 @@
 			} 
 		});
 		
+		$('#workspace_view').click(function(){
+          if(firCheck == true){
+              if(document.getElementById(firName) != null){
+		            document.getElementById(firName).style.border= firVal;
+		            firName = selectedElement.attr('id');
+		            firVal = selectedElement.css('border');
+	          }
+          }
+
+          $('#input_text').val("");
+          $('#input_display').val("");
+          $('#input_fontSize').val("");
+          $('#input_opacity').val("");
+          $('#input_padding').val("");
+          $('#input_margin').val("");
+          $('#input_float').val("");
+          $('#input_border').val("");
+          $('#input_radius').val("");
+          $('#input_width').val("");
+          $('#input_height').val("");
+          $('#input_bgColor').val("");
+          $('#input_fontColor').val("");
+          $("#input_text").attr("disabled",true).attr("readonly",false);
+          $("#input_display").attr("disabled",true).attr("readonly",false);
+          $("#input_fontSize").attr("disabled",true).attr("readonly",false);
+          $("#input_opacity").attr("disabled",true).attr("readonly",false);
+          $("#input_padding").attr("disabled",true).attr("readonly",false);
+          $("#input_margin").attr("disabled",true).attr("readonly",false);
+          $("#input_float").attr("disabled",true).attr("readonly",false);
+          $("#input_border").attr("disabled",true).attr("readonly",false);
+          $("#input_radius").attr("disabled",true).attr("readonly",false);
+          $('#input_width').attr("disabled",true).attr("readonly",false);
+          $('#input_height').attr("disabled",true).attr("readonly",false);
+          $('#input_bgColor').attr("disabled",true).attr("readonly",false);
+          $('#input_fontColor').attr("disabled",true).attr("readonly",false);
+
+          selectedElement= null;
+          workFlag = true;
+
+        });
+
+
 		// click part
 		$("#workspace_view").on("click", ".compo", function (event) {
 			
+
+			if(workFlag == true){
+              $("#input_text").attr("disabled",false).attr("readonly",false);
+              $("#input_display").attr("disabled",false).attr("readonly",false);
+              $("#input_fontSize").attr("disabled",false).attr("readonly",false);
+              $("#input_opacity").attr("disabled",false).attr("readonly",false);
+              $("#input_padding").attr("disabled",false).attr("readonly",false);
+              $("#input_margin").attr("disabled",false).attr("readonly",false);
+              $("#input_float").attr("disabled",false).attr("readonly",false);
+              $("#input_border").attr("disabled",false).attr("readonly",false);
+              $("#input_radius").attr("disabled",false).attr("readonly",false);
+              $('#input_width').attr("disabled",false).attr("readonly",false);
+              $('#input_height').attr("disabled",false).attr("readonly",false);
+              $('#input_bgColor').attr("disabled",false).attr("readonly",false);
+              $('#input_fontColor').attr("disabled",false).attr("readonly",false);
+              workFlag = false;
+            }
+
+
+
 			selectedElement = $(this);
 			var setID = selectedElement.attr('id');
 			$tag = $(this)[0].tagName;
@@ -854,6 +917,13 @@
 			$('#msg').css('background','#119933');
 			$('#msg').slideDown("fast").delay(800).fadeOut(400);
 		//            alert('saved!');
+		})
+		$('#btn_share').click(function(){
+			alert('share');
+			save();
+			change();
+			$.post('/workspace',{data : comCode, type: 'share' , cssData : cssCode3});
+
 		})
 		$('#btn_align_left').click(function(){
 			selectedElement.css('text-align','left');
@@ -1119,7 +1189,8 @@
 		$('#'+selectedElement.attr('id')).css('float', $('#input_float').val());
 		$('#'+selectedElement.attr('id')).css('border', $('#input_border').val());
 		$('#'+selectedElement.attr('id')).css('borderRadius', $('#input_radius').val());
-		
+
+		firVal = $('#input_border').val();
 
 	}
 
@@ -1185,7 +1256,7 @@
         start = headCode.indexOf("<style>");
         end = headCode.lastIndexOf("<\/style>");
         var cssCode2=headCode.slice(start,end+8);
-        var cssCode3=headCode.slice(start+7,end);
+        cssCode3=headCode.slice(start+7,end);
         console.log(cssCode2);
         headCode = headCode.replace(cssCode2,"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
 
@@ -1215,6 +1286,11 @@
 
 
 	function save(){
+		if(firCheck == true){
+          if(document.getElementById(firName) != null)
+          document.getElementById(firName).style.border= firVal;
+        }
+        
 		var bodyCode = document.getElementById("workspace_view").innerHTML;
 		$.post('/workspace',{data : bodyCode, type: 'save'});
 		console.log(bodyCode);
