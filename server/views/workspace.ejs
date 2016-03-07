@@ -1126,45 +1126,91 @@
 	
 	function change(){
 		var code = document.documentElement.innerHTML;
-		var start,end,removeCode;
-		start = code.indexOf("\<head\>");
-		end = code.indexOf("\</head\>");
-		// alert(start+" "+end);
+        var start,end,removeCode;
+        start = code.indexOf("\<head\>");
+        end = code.indexOf("\</head\>");
+        // alert(start+" "+end);
 
 
-		var headCode = code.slice(start,end+8);
-		while(1)  // script remove
-		{
-			start = headCode.search("<script");
-			end = headCode.search("<\/script>");
-			console.log(start+ " " + end);
-			removeCode=headCode.slice(start,end+9);
-			headCode = headCode.replace(removeCode,"");
-			if(start == -1 || end == -1) break;
-		}
-		// console.log(headCode);
-		// head
+        var headCode = code.slice(start,end+8);
+        while(1)  // script remove
+        {
+          start = headCode.search("<script");
+          end = headCode.search("<\/script>");
+          // console.log(start+ " " + end);
+          removeCode=headCode.slice(start,end+9);
+          headCode = headCode.replace(removeCode,"");
+          if(start == -1 || end == -1) break;
+        }
+        while(1)  // link remove
+        {
+          start = headCode.search("<link");
+          end = headCode.indexOf("\">",start);
+          // console.log(start+ " " + end);
+          removeCode=headCode.slice(start,end+2);
+          headCode = headCode.replace(removeCode,"");
+          if(start == -1 || end == -1) break;
+        }
+        console.log("\n"+headCode+"\n");
 
-		// workspace_view div
-		var bodyCode = document.getElementById("workspace_view").innerHTML;
-		//      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
-		bodyCode=bodyCode.replace(/draggable="true"/gi,"");
-		bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
-		bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
-		bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
-		bodyCode=bodyCode.replace(/draggable="true"/gi,"");
-		bodyCode.trim();
-		console.log(bodyCode);
-		// body
+        start = headCode.indexOf("*\{");
+        end = headCode.lastIndexOf("<\/style>");
+        removeCode=headCode.slice(start,end);
+        headCode = headCode.replace(removeCode,"");
 
-		comCode = "<html>\n";
-		comCode = comCode.concat(headCode);
-		comCode = comCode.concat("\n<body>\n");
-		comCode = comCode.concat(bodyCode);
-		comCode = comCode.concat("\n</body>\n");
-		comCode = comCode.concat("</html>");
-		console.log(comCode);
-		$.post('/workspace',{data : comCode, type: 'export'});
+
+        start = headCode.lastIndexOf("<style>");
+
+        var start2,end2,cName,mid;
+        var removeLen;
+        while(1)
+        {
+          start2 = headCode.indexOf(".",start);
+          end2 = headCode.indexOf("\{",start);
+          start = end2+2;
+          if(start2 == -1 || end2 == -1) break;
+
+          cName = headCode.slice(start2+1,end2);
+          console.log(workspace_view.getElementsByClassName(cName));
+          if(workspace_view.getElementsByClassName(cName).length == 0)
+          {
+            mid = headCode.indexOf("\}",start);
+            removeCode=headCode.slice(start2,mid+1);
+            removeLen= removeCode.length;
+            start= start2;
+            headCode = headCode.replace(removeCode,"");
+            console.log(" check\n"+removeCode);
+          }
+        }
+        start = headCode.indexOf("<style>");
+        end = headCode.lastIndexOf("<\/style>");
+        var cssCode2=headCode.slice(start,end+8);
+        var cssCode3=headCode.slice(start+7,end);
+        console.log(cssCode2);
+        headCode = headCode.replace(cssCode2,"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
+
+        // workspace_view div
+        var bodyCode = document.getElementById("workspace_view").innerHTML;
+        //      bodyCode=bodyCode.replace(/ondragover="return over\(event\)" ondrop="return drop\(event\)" ondragenter="return enter\(event\)" ondragleave="return Leave\(event\)" style=""/gi,"");
+        bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+        bodyCode=bodyCode.replace(/ondragstart="return start\(event\)"/gi,"");
+        bodyCode=bodyCode.replace(/ondragend="return end\(event\)"/gi,"");
+        bodyCode=bodyCode.replace(/ondragleave="return Leave\(event\)"/gi,"");
+        bodyCode=bodyCode.replace(/draggable="true"/gi,"");
+        bodyCode.trim();
+        // console.log(bodyCode);
+        // body
+        comCode = "<html>\n";
+        comCode = comCode.concat(headCode);
+        comCode = comCode.concat("\n<body>\n");
+        comCode = comCode.concat(bodyCode);
+        comCode = comCode.concat("\n</body>\n");
+        comCode = comCode.concat("</html>");
+        console.log("comCode\n"+headCode);
+        cssCode3 = cssCode3.replace(/\{/gi,"\{\n");
+        cssCode3 = cssCode3.replace(/\;/gi,"\;\n");
+        cssCode3 = cssCode3.replace(/\}/gi,"\}\n");
+        $.post('/workspace',{data : comCode, type: 'export' , cssData : cssCode3});
 	}
 
 
@@ -1173,6 +1219,7 @@
 		$.post('/workspace',{data : bodyCode, type: 'save'});
 		console.log(bodyCode);
 		change();
+
 //        window.location.href="data:text/plain;charset=UTF-8,"+comCode;
 	}
 

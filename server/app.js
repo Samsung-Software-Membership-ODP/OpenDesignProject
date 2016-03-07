@@ -293,7 +293,13 @@ app.post('/project', function(req, res){
 				titles[i] = projects[i]['title'];
 			}
 
-			var file = './public/workspaces/'+project_name+'.html';
+
+			mkdir('./public/workspaces/'+project_name, function(err){
+				console.log(err);
+			});
+
+			console.log('make dir!');
+			var file = './public/workspaces/'+project_name+'/index.html';
 
 			fs.open(file, 'w', function(err, fd){
 				if(err) throw err;
@@ -475,10 +481,10 @@ app.post('/workspace', function(req, res){
 		console.log('export Start');
 		console.log('폴더를 생성합니다.');
 		mkdir('./public/workspaces', function(err){
-		console.log(err);
-	});
+			console.log(err);
+		});
 
-	var file = './public/workspaces/'+project_title+'.html';
+	var file = './public/workspaces/'+project_title+'/index.html';
 
 	fs.open(file, 'w', function(err, fd){
 		if(err) throw err;
@@ -489,6 +495,19 @@ app.post('/workspace', function(req, res){
 		 console.log("file write complete");
 	 });
 	});    
+
+	var file2 = './public/workspaces/'+project_title+'/style.css';
+
+    fs.open(file2, 'w', function(err, fd){
+        if(err) throw err;
+        console.log('file2 open complete');
+
+        fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
+           if(err) throw err;
+            console.log("Css file2 write complete");
+        });
+  });
+
 }
 else if(type == 'save'){
 	console.log('save Start');
