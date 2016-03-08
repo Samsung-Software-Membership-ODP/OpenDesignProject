@@ -8,6 +8,7 @@
 
 	<!-- jquery -->
 	<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
+	<!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/1.0.4/xeicon.min.css">
 	<!-- -->
@@ -18,6 +19,10 @@
 	<!-- Color Picker -->
 	<link rel="stylesheet" media="screen" type="text/css" href="ColorPicker/css/colorpicker.css" />  
 	<script src="ColorPicker/colorpicker.js"></script>
+
+
+	<link rel="stylesheet" href="../dist/css/animsition.min.css">
+    <script src="../dist/js/animsition.min.js"></script>
 
 	<style>
 	*{
@@ -30,7 +35,8 @@
 		max-height: 100%;
 	}
 	body{
-		background: #1d1f21; 
+		/*background: #1d1f21; */
+		background: #c3cad6;
 		min-height: 1000px;
 
 	}
@@ -150,6 +156,7 @@
 		line-height: 50px;
 	}
 	.logo{
+		font-family: 'Titillium Web', sans-serif;
 		color: #f3f3f3;
 		padding-left : 20px;
 		margin-bottom: 15px;
@@ -160,10 +167,13 @@
 	}
 
 	#footer{
-		background: #4e5665;
-		padding-left: 100px;
-		
-	}
+		font-family: 'Titillium Web', sans-serif;
+        color: #B7B7B7;
+        background: #4e5665;
+        padding: 50px;
+        /*height: 50px;*/
+        padding-left: 100px;
+    }
 	#footer > h3{
 		margin: 0px;
 		padding: 10px;
@@ -182,6 +192,8 @@
 		overflow-y: scroll;
 		max-height: 91%;
 		color: #f3f3f3;
+		border-radius: 5px;
+		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.7);
 		/*        padding-top:90px;*/
 	}
 	#option{
@@ -294,12 +306,14 @@
 	}
 
 	#workspace_view{
+		/*display: block;*/
 		min-height: 100%;
 		height: auto;
 		background-color: #f3f3f3;
 		/*        float: left;*/
-		width: 98%; 
+		/*width: 10%; */
 		margin: 10px;
+		box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.7);
 	}
 
 	#component_view {
@@ -498,6 +512,16 @@
 	
 
 	$(document).ready(function(){
+
+
+
+
+
+
+
+
+
+
 //        autoSave();
 		// tooltip Initialize
 		$('[data-toggle="tooltip"]').tooltip(); 
@@ -892,9 +916,10 @@
 			}
 			if(document.getElementById('workspace_view').style.width != '78%'){
 			//              tmp_width = document.getElementById('workspace_view').style.width;
-			$('#workspace_view').css('width','78%');    
+				$('#workspace_view').animate({width: '78%'},100);    
 			}
 			else{
+				// $('#workspace_view').animate({width: tmp_width},100);
 				$('#workspace_view').css('width',tmp_width);
 			}
 
@@ -945,11 +970,15 @@
 			// alert(bodyCode);
 			// $.post('/workspace',{data : comCode, type: 'export' , cssData : cssCode3});
 			
-			save();
+			// save();
 			change();
 			// alert(comCode);
 			$.post('/workspace',{data : bodyCode, type: 'share', bodyCode: comCode, css: cssCode3});
 			console.log(bodyCode);
+
+			$('#msg').html('<h4><i class="xi-check"></i> 공유되었습니다.</h4>');
+			$('#msg').css('background','#119933');
+			$('#msg').slideDown("fast").delay(800).fadeOut(400);
 			
 			
 
@@ -1451,7 +1480,7 @@
 
 </script>
 </head>
-<body>
+<body >
 	<div id="main_nav">
 		<h4 class="logo"><a href="/project">Open Design Project</a></h4>
 		<ul style="float:left;">
@@ -1480,7 +1509,7 @@
 	ondragover="return over(event)"
 	ondrop="return drop(event)"
 	ondragenter="return enter(event)"
-	ondragleave="return Leave(event)" style="float:left; width:100%">
+	ondragleave="return Leave(event)">
 
 		<%= val %>
 
@@ -1664,16 +1693,13 @@
 						<h5>Margin</h5>
 						<input id="input_margin" name="setMargin" size="3"></input>
 
-
-
-						<h1>s</h1>
-						<a href="#" id="btn_save_component">Change</a>
+						<a href="#" id="btn_save_component" style="margin-top:20px;">Change</a>
 					</div>
 				</div>
 			</li>
 
 		</ul>
-		<div class="clear"></div>
+		<div class="clear" style="border-radius: 3px;"></div>
 	</div>
 	<div class="clear"></div>
 

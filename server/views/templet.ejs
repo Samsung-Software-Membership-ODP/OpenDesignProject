@@ -35,6 +35,8 @@
                 width:500%; 
                 height: 1000px; 
 */
+                max-width: 300px;
+                max-height: 300px;
                 border-radius: 3px; 
                 border: none;
                 transform-origin: 0 0;
@@ -55,7 +57,8 @@
                 z-index: 10;
                 box-shadow: 0px 1px 3px rgba(0,0,0,.7);
 /*                background: #003C6C;*/
-                background : linear-gradient(135deg, rgba(53,49,87,1) 0%,rgba(71,28,60,1) 100%);
+                /*background : linear-gradient(135deg, rgba(53,49,87,1) 0%,rgba(71,28,60,1) 100%);*/
+                background: linear-gradient(-135deg,#00E3AD 0,#5252C9 52%,#002350 100%);
                 opacity: 0.9;
             }
             #main_nav > ul{
@@ -86,6 +89,7 @@
             }
             #cardSection{
                 /*min-height: 300px;*/
+                padding: 100px;
                 margin: 0 auto;
                 text-align: center;
             }
@@ -137,7 +141,7 @@
 /*                vertical-align: middle;*/
 /*                height: 40px;*/
                 background: white;
-                background-image: url(/img/writing.jpg);
+                background-image: url(/img/writing3.jpg);
                 background-size: cover;
                 background-position: 0px -350px;
                 background-attachment: fixed;
@@ -234,8 +238,8 @@
                     event.preventDefault();
                     var project_name = $('#input_project_name').val();
 
-                    alert(project_name);
-                    alert(titles[index]);
+                    // alert(project_name);
+                    // alert(titles[index]);
                     $.post('/templet', {input_project_name: project_name, selected: titles[index]})
                     .done(function(data){
                         location.href='/project';

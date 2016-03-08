@@ -1,0 +1,20 @@
+.second_compo {
+  width: 75px;
+  height: 70px;
+  padding: 10px;
+  margin: 5px;
+  background-color: gray;
+  color: white;
+}
+
+.third_compo {
+  width: 75px;
+  height: 70px;
+  padding: 5px;
+  margin: 5px;
+  background-color: black;
+  color: white;
+}
+
+
+}
