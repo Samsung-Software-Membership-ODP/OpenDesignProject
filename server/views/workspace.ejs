@@ -23,6 +23,7 @@
 	*{
 		margin: 0 auto;
 		font-family: 'Titillium Web', sans-serif;
+
 	}
 	html, body {
 		height: 100%;
@@ -31,6 +32,9 @@
 	body{
 		background: #1d1f21; 
 		min-height: 1000px;
+
+	}
+	a{
 
 	}
 	.left{
@@ -58,7 +62,9 @@
 	}
 	.element:hover{
 		color: white;
-		background: #232323;
+		/*background: #232323;*/
+		background: #54595c;
+		text-decoration: none;
 	}
 
 
@@ -79,7 +85,9 @@
 	.small_element:hover{
 		text-decoration: none;
 		color: white;
-		background: #232323;
+		/*background: #232323;*/
+		background: #54595c;
+
 	}
 
 
@@ -93,9 +101,11 @@
 		position: fixed;
 		width:100%;
 		padding: 10px;
-		background: #003C6C;
-		background: #2c2c2c;
-		background: linear-gradient(135deg, rgba(53,49,87,1) 0%,rgba(71,28,60,1) 100%);
+		/*background: #003C6C;*/
+		/*background: #2c2c2c;*/
+		/*background: linear-gradient(135deg, rgba(53,49,87,1) 0%,rgba(71,28,60,1) 100%);*/
+		background: linear-gradient(-135deg,#00E3AD 0,#5252C9 52%,#002350 100%);
+		opacity: 0.9;
 		z-index: 10;
 		box-shadow: 0px 1px 3px rgba(0,0,0,.7);
 
@@ -165,7 +175,7 @@
 		right: 0px; 
 		position: fixed;
 		width: 20%;
-		background: #2c2c2c;
+		background: #464c5c;
 		z-index : 8;
 		/*                opacity: 0.8;*/
 		
@@ -176,7 +186,8 @@
 	}
 	#option{
 				 height: auto;
-		background: #363636;
+		/*background: #363636;*/
+		background: #3c454e;
 		overflow-y: scroll;
 	}
 	#optionClassName{
@@ -191,7 +202,10 @@
 		
 		border: none;
 		padding: 5px;
-		background: #242424;
+		/*background: #242424;*/
+		background: #54595c;
+		/*border: 1px solid white;*/
+		border-radius: 3px;
 		box-shadow: none;
 		color : #b3b3b3;
 		width: 100%;
@@ -219,7 +233,8 @@
 
 	}
 	#tags{
-		background: #363636;
+		/*background: #363636;*/
+		background: #3c454e;
 		/*height:450px;*/
 		overflow-y: scroll;
 	}
@@ -308,7 +323,7 @@
 	<script>
 
 	var comTitle= "<%= comTitle%>".split(',');
-	var comHead= "<%= comHead%>".split(',');
+	var comHead= "<%= comHead%>".split('\},');
 	var comBody = "<%= comBody%>";
 	var flag=0;
 	var cnt=1;
@@ -499,7 +514,7 @@
 		concatEnd=ims.slice(start+7,ims.length);
 		var innerHead = "";
 		for(var i = 0 ; i < comHead.length;i++){
-			innerHead=innerHead.concat(comHead[i]+"\n");
+			innerHead=innerHead.concat(comHead[i]+"\}\n");
 		}
 		ims=concatFront+"\n"+innerHead+concatEnd;
 		document.documentElement.innerHTML=ims;
