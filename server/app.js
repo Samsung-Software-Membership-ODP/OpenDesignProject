@@ -126,18 +126,20 @@ app.get('/addCompo',function(req,res){
 });
 
 app.post('/addCompo',function(req,res){
-	var title = req.body.input_compo_title;
-	var head = req.body.input_compo_head;
-	var body = req.body.input_compo_body;
-
-	console.log(req.body.html);
+	var title = req.body.title;
+	var head = req.body.head;
+	var body = req.body.body;
 
 	var start,end;
 	var ims,headEnd;
 	var concatFront,concatEnd;
 	var flag=0;
 
-	console.log('add Compo post!!');
+	if(head === null || body === null || title === null){
+		console.log("Not Found Info\n");
+		flag=1;
+	}
+	if(flag==0){
 	ComponentDB.find({}, function(err, docs){
 		flag=0;
 		for(var i=0 ; i<docs.length ; i++)
@@ -199,7 +201,7 @@ app.post('/addCompo',function(req,res){
 
 			body=concatFront+title+concatEnd;
 
-			// console.log(body);
+			console.log(body);
 			ComponentDB.create({title: title, head: head , body: body },function(err,data){
 			});
 
@@ -208,9 +210,9 @@ app.post('/addCompo',function(req,res){
 		else{
 			console.log("Compo Create Fail");
 		}
-
 		res.render('addCompo');
 	});
+	}
 });
 
 

@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<title>Project View</title>
 	<!-- bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >  
-	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" >
+
 
 	<!-- jquery -->
 	<script src="https://code.jquery.com/jquery-2.2.1.js"></script>
@@ -14,13 +14,13 @@
 	<!-- -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200' rel='stylesheet' type='text/css'>
-	
-	
+
+
 	<!-- Color Picker -->
-	<link rel="stylesheet" media="screen" type="text/css" href="ColorPicker/css/colorpicker.css" />  
+	<link rel="stylesheet" media="screen" type="text/css" href="ColorPicker/css/colorpicker.css" />
 	<script src="ColorPicker/colorpicker.js"></script>
 
-	
+
 	<style>
 	*{
 		margin: 0 auto;
@@ -31,7 +31,7 @@
 		max-height: 100%;
 	}
 	body{
-		background: #1d1f21; 
+		background: #1d1f21;
 		min-height: 1000px;
 
 	}
@@ -154,7 +154,7 @@
 	#footer{
 		background: #5D5D5D;
 		padding-left: 100px;
-		
+
 	}
 	#footer > h3{
 		margin: 0px;
@@ -164,13 +164,13 @@
 
 	#optionPanel{
 		top:90px;
-		right: 0px; 
+		right: 0px;
 		position: fixed;
 		width: 20%;
 		background: #2c2c2c;
 		z-index : 8;
 		/*                opacity: 0.8;*/
-		
+
 		overflow-y: scroll;
 		max-height: 91%;
 		color: #f3f3f3;
@@ -190,7 +190,7 @@
 	}
 
 	#optionContent > input{
-		
+
 		border: none;
 		padding: 5px;
 		background: #242424;
@@ -285,7 +285,7 @@
 		height: auto;
 		background-color: #f3f3f3;
 		/*        float: left;*/
-		width: 98%; 
+		width: 98%;
 		margin: 10px;
 	}
 
@@ -320,52 +320,20 @@
 	// 0 = hide
 	var menuSelect = 0;
 	var optionSelect = 0;
-	
+
 	var firName,firVal,firCheck = false;
 	var copyedCompo;
 	var borderName = new Array(), borderVal = new Array();
 	var borderCnt = 0;
-	
-	
+
+	var body,head="",title;
+
 	var $tag;
 	var copyedCompo;
 	var cmdDown = false;
 
 
-	function overWrite(){
 
-	}
-
-
-
-
-	function getTimeStamp() {
-		var d = new Date();
-
-		var s =
-		leadingZeros(d.getFullYear(), 4) + '-' +
-		leadingZeros(d.getMonth() + 1, 2) + '-' +
-		leadingZeros(d.getDate(), 2) + ' ' +
-
-		leadingZeros(d.getHours(), 2) + ':' +
-		leadingZeros(d.getMinutes(), 2) + ':' +
-		leadingZeros(d.getSeconds(), 2);
-
-		return s;
-	}
-
-
-
-	function leadingZeros(n, digits) {
-		var zero = '';
-		n = n.toString();
-
-		if (n.length < digits) {
-			for (i = 0; i < digits - n.length; i++)
-				zero += '0';
-		}
-		return zero + n;
-	}
 
 	$(document).keydown(function(event){
 		if(event.keyCode == '91'){
@@ -376,20 +344,20 @@
 		if(cmdDown && event.keyCode == '75'){
 			$('#btn_sidePanel').trigger('click');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + S
 		if(cmdDown && event.keyCode == '83'){
 			// Chrome Cmd + S Key Event Ignore
 			event.preventDefault();
 			$('#save').trigger('click');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + 1
 		if(cmdDown && event.keyCode == '49'){
 			event.preventDefault();
 			$('#btn_add_compo').trigger('click');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + 2
 		if(cmdDown && event.keyCode == '50'){
 			event.preventDefault();
@@ -400,13 +368,13 @@
 			event.preventDefault();
 			$('#btn_option').trigger('click');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + D
 		if(cmdDown && event.keyCode == '68'){
 			event.preventDefault();
 			$('#btn_remove').trigger('click');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + B
 		if(cmdDown && event.keyCode == '66'){
 			event.preventDefault();
@@ -444,32 +412,32 @@
 			var fontSize = selectedElement.css('fontSize').replace(/[^0-9]/g,"");
 			selectedElement.css('font-size', (Number(fontSize) + 2)+'px');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + [
 		if(cmdDown && event.keyCode == '219'){
 			event.preventDefault();
 			var fontSize = selectedElement.css('fontSize').replace(/[^0-9]/g,"");
 			selectedElement.css('font-size', (Number(fontSize) - 2)+'px');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + ->
 		if(cmdDown && event.keyCode == '39'){
 			event.preventDefault();
 			$('#btn_float_right').trigger('click');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + <-
 		if(cmdDown && event.keyCode == '37'){
 			event.preventDefault();
 			$('#btn_float_left').trigger('click');
 		}
-		
+
 		// Btn save Click Event Trigger Cmd + <-
 		if(cmdDown && event.keyCode == '40'){
 			event.preventDefault();
 			$('#btn_float_none').trigger('click');
 		}
-		
+
 	}).keyup(function(event){
 		if(event.keyCode =='91'){
 			cmdDown = false;
@@ -512,7 +480,7 @@
 		.on('keyup', function(){
 			$(this).ColorPickerSetColor(this.value);
 		});
-		
+
 		$('#input_fontColor').ColorPicker({
 			onSubmit: function(hsb, hex, rgb, el, parent) {
 				$(el).val('#'+hex);
@@ -600,38 +568,38 @@
 					$('#workspace_view').append(nodeCopy);
 					break;
 				}
-			} 
+			}
 		});
 
 
 		// click part
 		$("#workspace_view").on("click", ".compo", function (event) {
-			
+
 			selectedElement = $(this);
 			var setID = selectedElement.attr('id');
 			$tag = $(this)[0].tagName;
 
-			
+
 			if(document.getElementById(setID).style.width == ''){
-				$('#input_width').val(selectedElement.css('width'));  
+				$('#input_width').val(selectedElement.css('width'));
 			}
 			else{
-				$('#input_width').val(document.getElementById(setID).style.width);    
+				$('#input_width').val(document.getElementById(setID).style.width);
 			}
-			
-			
+
+
 			if(document.getElementById(setID).style.height == ''){
-				$('#input_height').val(selectedElement.css('height'));  
+				$('#input_height').val(selectedElement.css('height'));
 			}
 			else{
 				$('#input_height').val(document.getElementById(setID).style.height);
 			}
-			
+
 			if(selectedElement.css('backgroundColor') != 'rgba(0, 0, 0, 0)'){
-				$('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));    
+				$('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
 			}
-			
-			
+
+
 //            $('#input_bgColor').val(hexc(selectedElement.css('backgroundColor')));
 			$('#input_fontColor').val(hexc(selectedElement.css('color')));
 
@@ -652,7 +620,7 @@
 			if($tag == 'INPUT'){
 				$('#label_hint').show();
 				$('#input_hint').show();
-				$('#input_hint').val(selectedElement.attr('placeholder'));    
+				$('#input_hint').val(selectedElement.attr('placeholder'));
 			}
 			else{
 				$('#input_hint').hide();
@@ -671,7 +639,8 @@
 
 			console.log(firCheck);
 			if(firCheck == true){
-				document.getElementById(firName).style.border= firVal;
+				if(document.getElementById(firName) != null)
+					document.getElementById(firName).style.border= firVal;
 				firName = selectedElement.attr('id');
 				firVal = selectedElement.css('border');
 			}
@@ -682,7 +651,7 @@
 			}
 			console.log(firName + " " + firVal);
 			// firSelCom.style.border = "";
-			document.getElementById(firName).style.border = "3px dotted blue";
+
 
 			// 중복클릭 금지
 			event.stopPropagation();
@@ -712,11 +681,11 @@
 		});
 
 
-		$('#input_text').change(function(){ 
+		$('#input_text').change(function(){
 			$('#'+selectedElement.attr('id')).html($('#input_text').val()+temp);
 		});
 
-		$('#input_hint').change(function(){ 
+		$('#input_hint').change(function(){
 			$('#'+selectedElement.attr('id')).attr('placeholder', $('#input_hint').val());
 		});
 
@@ -771,7 +740,7 @@
 			}
 			if(document.getElementById('workspace_view').style.width != '78%'){
 			//              tmp_width = document.getElementById('workspace_view').style.width;
-			$('#workspace_view').css('width','78%');    
+			$('#workspace_view').css('width','78%');
 			}
 			else{
 				$('#workspace_view').css('width',tmp_width);
@@ -793,26 +762,19 @@
 		});
 
 		$('#btn_save_component').click(function(){
-			setInfo(); 
+			setInfo();
 		});
 
 		$('#save').click(function(){
-			// save();
-			$.post('/addCompo', {html: document.documentElement.innerHTML});
-			$('#msg').html('<h4><i class="xi-check"></i> 저장되었습니다.</h4>');
-			$('#autoSave_msg').text(getTimeStamp()+" 에 저장되었습니다.");
-			$('#msg').css('background','#119933');
-			$('#msg').slideDown("fast").delay(800).fadeOut(400);
-		//            alert('saved!');
-		})
-		$('#export').click(function(){
-			change();
-		//            save();
-		//            $.post('/workspace', {data : comCode});
-		$('#msg').html('<h4><i class="xi-check"></i> 추출되었습니다.</h4>');
-		$('#msg').css('background','#119933');
-		$('#msg').slideDown("fast").delay(800).fadeOut(400);
-		//            alert('saved!');
+			//save();
+			title = document.getElementById('input_title').value;
+			console.log(title);
+			console.log(selID=selectedElement.attr('id'));
+			createBody();
+			console.log(body);
+			createHead();
+			console.log(head);
+			$.post('/addCompo', {title : title , head : head , body : body});
 		})
 		$('#btn_align_left').click(function(){
 			selectedElement.css('text-align','left');
@@ -888,6 +850,51 @@
 			selectedElement.css('float','right');
 		});
 
+		function createBody()
+		{
+			var code = document.body.innerHTML;
+			var selID=selectedElement.attr('id');
+
+			id = code.indexOf(selID);
+
+			ims = code.slice(0,id);
+
+			start = ims.lastIndexOf("<");
+
+			ims = code.indexOf(">",id);
+
+			end = code.indexOf(">",ims+1);
+
+			body = code.slice(start,end+1);
+		}
+
+		function createHead()
+		{
+			var code = body;
+			var start, end;
+			var ims;
+			start=code.indexOf("style=");
+			end=code.indexOf("\"",start+7);
+
+			head = head.concat("."+title+"\{"+code.slice(start+7,end)+"\}");
+			ims = body.slice(start,end+1);
+			body = body.replace(ims,"");
+		}
+		function remove(){
+			child = selectedElement.attr('id');
+			$('#' + child).remove();
+		}
+		function hexc(colorval) {
+			var color = '';
+			var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+			delete(parts[0]);
+			for (var i = 1; i <= 3; ++i) {
+				parts[i] = parseInt(parts[i]).toString(16);
+				if (parts[i].length == 1) parts[i] = '0' + parts[i];
+			}
+			color = '#' + parts.join('');
+			return color;
+		}
 	});
 	</script>
 </head>
@@ -901,7 +908,7 @@
 
 		</ul>
 		<ul style="float:right;">
-			<li id="autoSave_msg" style="color: white; margin-right: 20px;"></li>
+
 			<li id="btn_sidePanel" data-toggle="tooltip" title="Cmd + K"><a href="#"><i class="xi-layout-side-right xi-x">&nbsp;</i></a></li>
 		</ul>
 		<div style="clear:both;"></div>
@@ -910,13 +917,10 @@
 
 	<div style="padding-top:100px;">
 	</div>
-	
+
 
 	<div id="workspace_view"
-	ondragover="return over(event)"
-	ondrop="return drop(event)"
-	ondragenter="return enter(event)"
-	ondragleave="return Leave(event)" style="float:left; width:100%">
+	style="float:left; width:100%">
 
 
 
@@ -971,7 +975,7 @@
 			<div id="option">
 				<div id="optionClassName">
 					<h4>Component Name</h4>
-					<input id="input_title" name="input_compo_title" size="3" style="width:100%"></input>
+					<input id="input_title" name="input_compo_title" size="3" style="width:100%; color:#000000"></input>
 				</div>
 				<div id="optionContent">
 					<h5>Text Setting</h5>
@@ -986,17 +990,17 @@
 
 					<h5>Shadow</h5>
 					<div id="shadow_group">
-						<div> 
+						<div>
 							<a href="#" id="btn_dropshadow_leftup" class="small_element">↖</a>
 							<a href="#" id="btn_dropshadow_up" class="small_element">↑</a>
-							<a href="#" id="btn_dropshadow_rightup" class="small_element">↗</a>                                         
+							<a href="#" id="btn_dropshadow_rightup" class="small_element">↗</a>
 						</div>
-						<div> 
+						<div>
 							<a href="#" id="btn_dropshadow_left" class="small_element">←</a>
 							<a href="#" id="btn_dropshadow_center" class="small_element">·</a>
-							<a href="#" id="btn_dropshadow_right" class="small_element">→</a>                                         
+							<a href="#" id="btn_dropshadow_right" class="small_element">→</a>
 						</div>
-						<div> 
+						<div>
 							<a href="#" id="btn_dropshadow_leftdown" class="small_element">↙</a>
 							<a href="#" id="btn_dropshadow_down" class="small_element">↓</a>
 							<a href="#" id="btn_dropshadow_rightdown" class="small_element">↘</a>
@@ -1012,7 +1016,7 @@
 
 					</div>
 
-					
+
 
 					<h5>Width</h5>
 					<input id="input_width" name="setWidth" size="3"></input>
@@ -1070,11 +1074,5 @@
 <div id="msg">
 	<h4>test text</h4>
 </div>
-<form method="post">
-	<input name="input_compo_title" type="text" class="form-control" placeholder="Prjoect title">
-	<input name="input_compo_head" type="text" class="form-control" placeholder="Prjoect head" size ="1200px">
-	<input name="input_compo_body" type="text" class="form-control" placeholder="Prjoect body" size ="1200px">
-	<button id="save" type="submit">Upload Component</button>
-</form>
 </body>
 </html>
