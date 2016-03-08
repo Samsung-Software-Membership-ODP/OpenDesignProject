@@ -344,7 +344,7 @@ app.get('/project', function(req, res){
 			if(err){
 				throw err;
 			}
-
+			titles = [];
 			projects = doc.get('projects');
 			for(var i = 0; i < projects.length; i++){
 				titles[i] = projects[i]['title'];
@@ -370,6 +370,7 @@ app.post('/project', function(req, res){
 			doc.projects[index].remove();
 			doc.save();
 
+			titles = [];
 			projects = doc.get('projects');
 			for(var i = 0; i < projects.length; i++){
 				titles[i] = projects[i]['title'];

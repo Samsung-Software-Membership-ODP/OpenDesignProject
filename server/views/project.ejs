@@ -170,15 +170,6 @@
         <script>
 
             var titles = "<%= titles %>".split(',');
-
-            
-            $(function(){
-                $('#btn_add').click(function(){
-                    $('#myModal').modal();
-                });
-            });
-            
-            
             
             $(document).ready(function(){
                 $('#mainframe').animsition({
@@ -206,31 +197,59 @@
                 
                 // alert(titles.length);
                 // alert(titles=='');
+
+                
                 if(titles != ''){
+                    $('#cardSection').append(
+                        '<a id="btn_add" class="card animsition-link" href="#">\
+                            <div class="wrapper">\
+                                <div class="contents">\
+                                    <h4><i class="xi-plus-square xi-x"></i></br></br>새로운 프로젝트를 생성하세요</h4>\
+                                </div>\
+                            </div>\
+                        </a>'
+                    );
                     for(var i = 0; i < titles.length; i++){
                         var card = $('<a>', {class: 'card animsition-link', href:'#'});
                         card.html('<a class="btn_remove" style="float:right"><i class="xi-close"></i></a><div style="clear:both"></div><div class="wrapper"><div class="contents"><div style="height:200px"><iframe src="./workspaces/'+titles[i]+'/index.html" scrolling="no" width="500%" height="1000px"></iframe></div><h4>'+titles[i]+'</h4></div></div>');
                         $('#cardSection').append(
     //                       '<a class="btn_remove" style="float:right"><i class="xi-close"></i></a>'
-                         );
+                        );
                         $('#cardSection').append(
                             card
                         );
                     }    
+                }
+                else{
+                    $('#cardSection').append(
+    //                       '<a class="btn_remove" style="float:right"><i class="xi-close"></i></a>'
+                            '</br><i class="xi-smiley-face xi-5x"></i></br></br><h2 style="color:#444444">만들어진 프로젝트가 없네요, 한번 프로젝트를 만들어 보세요</h2></br></br>'
+                     );
+                    $('#cardSection').append(
+                        '<a id="btn_add" class="card animsition-link" href="#">\
+                            <div class="wrapper">\
+                                <div class="contents">\
+                                    <h4><i class="xi-plus-square xi-x"></i></br></br>새로운 프로젝트를 생성하세요</h4>\
+                                </div>\
+                            </div>\
+                        </a>'
+                    );
                 }
                 
                 
                 $('.card').click(function(){
                     window.location.href = "/workspace?data="+$(this).text();
                 });
-                
+                $('#btn_add').click(function(){
+                    $('#myModal').modal();
+                });
                  $('.btn_remove').click(function(){
                     var index = $('.btn_remove').index(this);
 
                     if(confirm(titles[index]+" 프로젝트를 삭제하시겠습니까?") == true){
 
                       $.post('/project',{index : index , type: 'remove'}).done(function(data){
-                        alert(data);
+                        // alert(data);
                         location.href='/project';
 
                       });
@@ -266,13 +285,13 @@
         <div id="mainframe" >
             <div id="cardSection">
                 
-                <a id="btn_add" class="card animsition-link" href="#">
+                <!-- <a id="btn_add" class="card animsition-link" href="#">
                     <div class="wrapper">
                         <div class="contents">
                             <h4><i class="xi-plus-square xi-x"></i></br></br>새로운 프로젝트를 생성하세요</h4>
                         </div>
                     </div>
-                </a>
+                </a> -->
             </div>
         </div>
         <div id="footer">
