@@ -598,83 +598,100 @@ app.post('/templet', function(req, res){
 	var html;
 	var css;
 
-	TempletDB.findOne({title : selected}, function(err, templet_doc){
-			console.log("Find Templet");
-			console.log(templet_doc);
-			if(err){
-				throw err;
-			}
+	// TempletDB.findOne({title : selected}, function(err, templet_doc){
+	// 		console.log("Find Templet");
+	// 		console.log(templet_doc);
+	// 		if(err){
+	// 			throw err;
+	// 		}
 
-			val = templet_doc.get('val', String);
-			html = templet_doc.get('html', String);
-			css = templet_doc.get('css', String);
+	// 		val = templet_doc.get('val', String);
+	// 		html = templet_doc.get('html', String);
+	// 		css = templet_doc.get('css', String);
 		
-		});
+	// 	});
 			
 	User.findOne({id : checkedID}, function(err, doc){
-		
+
+		var promise = new Promise(function(resolve, reject){
+			TempletDB.findOne({title : selected}, function(err2, templet_doc){
+				console.log("Find Templet");
+				console.log(templet_doc);
+				if(err2){
+					throw err2;
+				}
+
+				val = templet_doc.get('val', String);
+				html = templet_doc.get('html', String);
+				css = templet_doc.get('css', String);
+
+				console.log("Find id")
+					if(err){ 
+						throw err;
+					}
+				console.log('val!!!');
+				console.log(val);
+				projects = doc.get('projects');
+				doc.projects.push({title : project_name, val : val});
+				doc.save();
+
+				projects = doc.get('projects');
+				for(var i = 0; i < projects.length; i++){
+					titles[i] = projects[i]['title'];
+				}
 
 
+				mkdir('./public/workspaces/'+project_name, function(err){
+					console.log(err);
+				});
 
-		console.log("Find id")
-			if(err){ 
-				throw err;
-			}
-			console.log('val!!!');
-			console.log(val);
-			projects = doc.get('projects');
-			doc.projects.push({title : project_name, val : val});
-			doc.save();
+				console.log('make dir!');
+				console.log(project_name);
+				// var file = './public/workspaces/'+project_name+'/index.html';
 
-			projects = doc.get('projects');
-			for(var i = 0; i < projects.length; i++){
-				titles[i] = projects[i]['title'];
-			}
+				// fs.open(file, 'w', function(err, fd){
+				// 	if(err) throw err;
+				// 	console.log('file open complete');
 
-
-			mkdir('./public/workspaces/'+project_name, function(err){
-				console.log(err);
-			});
-
-			console.log('make dir!');
-			console.log(project_name);
-			// var file = './public/workspaces/'+project_name+'/index.html';
-
-			// fs.open(file, 'w', function(err, fd){
-			// 	if(err) throw err;
-			// 	console.log('file open complete');
-
-			// 	fs.writeFile(file, "", 'utf-8', function(err){
-			// 		if(err) throw err;
-			// 		console.log("file write complete");
-			//  });
-			// });   
-			
-
-
-			var indexFile2 = './public/workspaces/'+project_name+'/index.html';
-
-			fs.open(indexFile2, 'w', function(err, fd){
-				if(err) throw err;
+				// 	fs.writeFile(file, "", 'utf-8', function(err){
+				// 		if(err) throw err;
+				// 		console.log("file write complete");
+				//  });
+				// });   
 				
-				fs.writeFile(indexFile2, beautify_html(html, { indent_size: 2 }), 'utf-8', function(err){
-				 if(err) throw err;
-			 });
-			});
-
-			var cssfile = './public/workspaces/'+project_name+'/style.css';
-
-			fs.open(cssfile, 'w', function(err, fd){
-				if(err) throw err;
-
-				fs.writeFile(cssfile, beautify_css(css, { indent_size: 2 }), 'utf-8', function(err){
-				 if(err) throw err;
-			 });
-			});
 
 
+				var indexFile2 = './public/workspaces/'+project_name+'/index.html';
 
-			res.redirect('/project');
+				fs.open(indexFile2, 'w', function(err, fd){
+					if(err) throw err;
+					
+					fs.writeFile(indexFile2, beautify_html(html, { indent_size: 2 }), 'utf-8', function(err){
+					 if(err) throw err;
+				 });
+				});
+
+				var cssfile = './public/workspaces/'+project_name+'/style.css';
+
+				fs.open(cssfile, 'w', function(err, fd){
+					if(err) throw err;
+
+					fs.writeFile(cssfile, beautify_css(css, { indent_size: 2 }), 'utf-8', function(err){
+					 if(err) throw err;
+				 });
+				});
+
+
+
+				res.redirect('/project');
+				
+				});	
+			})
+
+
+		
+		// setTimeout(function(){}, 1000);
+
 		});
 });
 
