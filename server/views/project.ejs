@@ -229,8 +229,10 @@
 
                     if(confirm(titles[index]+" 프로젝트를 삭제하시겠습니까?") == true){
 
-                      $.post('/project',{index : index , type: 'remove'}, function(res){
-                        window.location.reload();  
+                      $.post('/project',{index : index , type: 'remove'}).done(function(data){
+                        alert(data);
+                        location.href='/project';
+
                       });
                       
 

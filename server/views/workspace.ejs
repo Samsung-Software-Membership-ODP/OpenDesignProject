@@ -776,7 +776,8 @@
 
 			console.log(firCheck);
 			if(firCheck == true){
-				document.getElementById(firName).style.border= firVal;
+				if(document.getElementById(firName) != null)
+					document.getElementById(firName).style.border= firVal;
 				firName = selectedElement.attr('id');
 				firVal = selectedElement.css('border');
 			}
@@ -919,10 +920,23 @@
 		//            alert('saved!');
 		})
 		$('#btn_share').click(function(){
-			alert('share');
+
+			if(firCheck == true){
+			  if(document.getElementById(firName) != null)
+			  document.getElementById(firName).style.border= firVal;
+			}
+			
+			var bodyCode = document.getElementById("workspace_view").innerHTML;
+			// alert(bodyCode);
+			// $.post('/workspace',{data : comCode, type: 'export' , cssData : cssCode3});
+			
 			save();
 			change();
-			$.post('/workspace',{data : comCode, type: 'share' , cssData : cssCode3});
+			// alert(comCode);
+			$.post('/workspace',{data : bodyCode, type: 'share', bodyCode: comCode, css: cssCode3});
+			console.log(bodyCode);
+			
+			
 
 		})
 		$('#btn_align_left').click(function(){

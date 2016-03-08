@@ -166,7 +166,8 @@
         <script>
 
             var titles = "<%= titles %>".split(',');
-    
+            var index;
+
             $(document).ready(function(){
                 $('#mainframe').animsition({
                     inClass: 'fade-in',
@@ -203,11 +204,12 @@
                 }
                 
                 $('.card').click(function(){
+                    index = $('.card').index(this);
                     $('#myModal').modal();
                 });
                 
                  $('.btn_remove').click(function(){
-                    var index = $('button').index(this);
+                    
 
                     if(confirm(titles[index]+" 프로젝트를 삭제하시겠습니까?") == true){
 
@@ -217,6 +219,17 @@
                       return;
                     }
                 });
+                $('form').submit(function(event){
+                    event.preventDefault();
+                    var project_name = $('#input_project_name').val();
+
+                    alert(project_name);
+                    alert(titles[index]);
+                    $.post('/templet', {input_project_name: project_name, selected: titles[index]})
+                    .done(function(data){
+                        location.href='/project';
+                    });
+                })
                 
             });
         </script>
@@ -259,11 +272,11 @@
                     <h4 class="modal-title" id="myModalLabel">Project 추가</h4>
                   </div>
                   <div class="modal-body">
-                    <input name="input_project_name" type="text" class="form-control" placeholder="Prjoect Name">
+                    <input id="input_project_name" type="text" class="form-control" placeholder="Prjoect Name">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="btn_save" type="submit" class="btn btn-primary">Create Projects</button>
+                    <button id="btn_save" class="btn btn-primary">Create Projects</button>
                   </div>
                 </div>
               </div>

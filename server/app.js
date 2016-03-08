@@ -80,8 +80,9 @@ var ComponentSchema = new Schema({
 
 var TempletSchema = new Schema({
 	title : String,
-	css : String,
-	html : String
+	val : String,
+	html : String,
+	css : String
 });
 
 
@@ -334,7 +335,21 @@ app.post('/', function(request, response, next){
 
 // project part
 app.get('/project', function(req, res){
-	res.render('project', {user_name : checkedName, projects : projects, titles : titles});
+
+	User.findOne({id : checkedID}, function(err, doc){
+			console.log("Find id");
+
+			if(err){
+				throw err;
+			}
+
+			projects = doc.get('projects');
+			for(var i = 0; i < projects.length; i++){
+				titles[i] = projects[i]['title'];
+			}
+			res.render('project', {user_name : checkedName, projects : projects, titles : titles});
+	});
+	
 });
 
 app.post('/project', function(req, res){
@@ -518,33 +533,31 @@ app.post('/workspace', function(req, res){
 		});
 
 
-		TempletDB.create({title: project_title, css: req.body.cssData , html: req.body.data },function(err,data){
+		TempletDB.create({title: project_title, val: req.body.data, html: req.body.bodyCode, css: req.body.css },function(err,data){
 			console.log(err);
 		});
 
-		var file = './public/workspaces/share/'+project_title+'/index.html';
+		var indexFile = './public/workspaces/share/'+project_title+'/index.html';
+
+		fs.open(indexFile, 'w', function(err, fd){
+			if(err) throw err;
+			
+			fs.writeFile(indexFile, beautify_html(req.body.bodyCode, { indent_size: 2 }), 'utf-8', function(err){
+			 if(err) throw err;
+		 });
+		});
+
+		var file = './public/workspaces/share/'+project_title+'/style.css';
 
 		fs.open(file, 'w', function(err, fd){
 			if(err) throw err;
-			console.log('file open complete');
 
-			fs.writeFile(file, beautify_html(req.body.data, { indent_size: 2 }), 'utf-8', function(err){
+			fs.writeFile(file, beautify_css(req.body.css, { indent_size: 2 }), 'utf-8', function(err){
 			 if(err) throw err;
-			 console.log("file write complete");
 		 });
-		});    
-
-		var file2 = './public/workspaces/share/'+project_title+'/style.css';
-
-		fs.open(file2, 'w', function(err, fd){
-				if(err) throw err;
-				console.log('file2 open complete');
-
-				fs.writeFile(file2, beautify_css(req.body.cssData, { indent_size: 2 }), 'utf-8', function(err){
-					 if(err) throw err;
-						console.log("Css file2 write complete");
-				});
 		});
+		
+		
 
 	}
 
@@ -578,21 +591,37 @@ app.get('/templet', function(req, res){
 
 app.post('/templet', function(req, res){
 	var project_name = req.body.input_project_name;
-
+	var selected = req.body.selected;
+	var val;
 	var html;
 	var css;
 
-	TempletDB.findOne({title : project_name}, function(err, doc){
+	TempletDB.findOne({title : selected}, function(err, templet_doc){
 			console.log("Find Templet");
-
+			console.log(templet_doc);
 			if(err){
 				throw err;
 			}
 
-			html = doc.get('html', String);
-			css = doc.get('css', String);
+			val = templet_doc.get('val', String);
+			html = templet_doc.get('html', String);
+			css = templet_doc.get('css', String);
+		
+		});
+			
+	User.findOne({id : checkedID}, function(err, doc){
+		
 
-			doc.projects.push({title : project_name, val : ''});
+
+
+		console.log("Find id")
+			if(err){ 
+				throw err;
+			}
+			console.log('val!!!');
+			console.log(val);
+			projects = doc.get('projects');
+			doc.projects.push({title : project_name, val : val});
 			doc.save();
 
 			projects = doc.get('projects');
@@ -606,21 +635,43 @@ app.post('/templet', function(req, res){
 			});
 
 			console.log('make dir!');
-			var file = './public/workspaces/'+project_name+'/index.html';
+			console.log(project_name);
+			// var file = './public/workspaces/'+project_name+'/index.html';
 
-			fs.open(file, 'w', function(err, fd){
+			// fs.open(file, 'w', function(err, fd){
+			// 	if(err) throw err;
+			// 	console.log('file open complete');
+
+			// 	fs.writeFile(file, "", 'utf-8', function(err){
+			// 		if(err) throw err;
+			// 		console.log("file write complete");
+			//  });
+			// });   
+			
+
+
+			var indexFile2 = './public/workspaces/'+project_name+'/index.html';
+
+			fs.open(indexFile2, 'w', function(err, fd){
 				if(err) throw err;
-				console.log('file open complete');
-
-				fs.writeFile(file, "", 'utf-8', function(err){
+				
+				fs.writeFile(indexFile2, beautify_html(html, { indent_size: 2 }), 'utf-8', function(err){
 				 if(err) throw err;
-				 console.log("file write complete");
 			 });
-			});    
-			// console.log(titles);
-			//
-			// console.log(doc);
-			// console.log("Create Project Success!");
+			});
+
+			var cssfile = './public/workspaces/'+project_name+'/style.css';
+
+			fs.open(cssfile, 'w', function(err, fd){
+				if(err) throw err;
+
+				fs.writeFile(cssfile, beautify_css(css, { indent_size: 2 }), 'utf-8', function(err){
+				 if(err) throw err;
+			 });
+			});
+
+
+
 			res.redirect('/project');
 		});
 });
