@@ -477,7 +477,7 @@ app.post('/workspace', function(req, res){
 	if(type == 'export'){
 		console.log('export Start');
 		console.log('폴더를 생성합니다.');
-		mkdir('./public/workspaces', function(err){
+		mkdir('./public/workspaces/'+project_title, function(err){
 			console.log(err);
 		});
 
@@ -644,7 +644,7 @@ app.post('/templet', function(req, res){
 
 				mkdir('./public/workspaces/'+project_name, function(err){
 					console.log(err);
-					
+
 						var indexFile2 = './public/workspaces/'+project_name+'/index.html';
 
 					fs.open(indexFile2, 'w', function(err, fd){

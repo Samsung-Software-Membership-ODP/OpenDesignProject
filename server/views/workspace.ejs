@@ -111,6 +111,8 @@
 		/*background: #2c2c2c;*/
 		/*background: linear-gradient(135deg, rgba(53,49,87,1) 0%,rgba(71,28,60,1) 100%);*/
 		background: linear-gradient(-135deg,#00E3AD 0,#5252C9 52%,#002350 100%);
+		/*background-image: url(/img/pattern3.jpg);*/
+        /*background-size: cover;*/
 		opacity: 0.9;
 		z-index: 10;
 		box-shadow: 0px 1px 3px rgba(0,0,0,.7);
@@ -460,6 +462,19 @@
 					break;
 				}
 			}
+
+			var ims = document.getElementById(nodeCopy.id).children;
+
+			for(var i = 0 ; i < ims.length ; i++){
+	            for(;;cnt++){
+	               var imID='NewID'+cnt;
+	               if(document.getElementById(imID) == null){
+	                  ims[i].id="NewID"+cnt;
+	                  cnt=cnt+1;      
+	                  break;
+	               }
+	            }
+	        }
 		}
 
 		// Btn save Click Event Trigget Cmd + ]
@@ -614,7 +629,10 @@
 	  //            nodeCopy.id="NewID"+cnt;
 				  console.log(nodeCopy.id);
 				  cnt=cnt+1;
-				  $('#workspace_view').append(nodeCopy);
+				  if(selectedElement != null)
+	                  selectedElement.append(nodeCopy);
+	               else
+	                 $('#workspace_view').append(nodeCopy);
 				  break;
 				}
 			}
@@ -632,7 +650,10 @@
 					});
 				  console.log(nodeCopy.id);
 				  cnt=cnt+1;
-				  $('#workspace_view').append(nodeCopy);
+				  if(selectedElement != null)
+	                  selectedElement.append(nodeCopy);
+	               else
+	                 $('#workspace_view').append(nodeCopy);
 				  break;
 				}
 			}
@@ -651,7 +672,10 @@
 					nodeCopy.css('background', '#ffffff');
 					console.log(nodeCopy.id);
 					cnt=cnt+1;
-					$('#workspace_view').append(nodeCopy);
+					if(selectedElement != null)
+	                  selectedElement.append(nodeCopy);
+	               	else
+	                 $('#workspace_view').append(nodeCopy);
 					break;
 				}
 			}
@@ -671,7 +695,10 @@
 					nodeCopy.css('background', '#ffffff');
 					console.log(nodeCopy.id);
 					cnt=cnt+1;
-					$('#workspace_view').append(nodeCopy);
+					if(selectedElement != null)
+	                  selectedElement.append(nodeCopy);
+	               	else
+	                 $('#workspace_view').append(nodeCopy);
 					break;
 				}
 			}
@@ -690,7 +717,10 @@
 					nodeCopy.css('background', '#ffffff');
 					console.log(nodeCopy.id);
 					cnt=cnt+1;
-					$('#workspace_view').append(nodeCopy);
+					if(selectedElement != null)
+	                  selectedElement.append(nodeCopy);
+	               	else
+	                 $('#workspace_view').append(nodeCopy);
 					break;
 				}
 			} 
@@ -732,7 +762,7 @@
 		  $('#input_bgColor').attr("disabled",true).attr("readonly",false);
 		  $('#input_fontColor').attr("disabled",true).attr("readonly",false);
 
-		  selectedElement= null;
+		  
 		  workFlag = true;
 
 		});
@@ -1083,15 +1113,11 @@
 	}
 
 	function remove(){
-	  // console.log(child);
-	  // var childInfo=document.getElementById(child);
-	  child = selectedElement.attr('id');
-	  $('#' + child).remove();
-	  // childInfo=document.getElementById(child);
-	  // var parent=childInfo.parentNode;
-	  // console.log(parent);
-	  // parent.removeChild(childInfo);
-	}
+      if(selectedElement.attr('id')!= "workspace_view"){
+        child = selectedElement.attr('id');
+        $('#' + child).remove();
+      }
+   }
 
 	function newCssClass(){
 	  //
@@ -1264,6 +1290,10 @@
 
 	
 	function change(){
+		if(firCheck == true){
+		  if(document.getElementById(firName) != null)
+		  document.getElementById(firName).style.border= firVal;
+		}
 		var code = document.documentElement.innerHTML;
 		var start,end,removeCode;
 		start = code.indexOf("\<head\>");
@@ -1327,6 +1357,15 @@
 		cssCode3=headCode.slice(start+7,end);
 		console.log(cssCode2);
 		headCode = headCode.replace(cssCode2,"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">");
+		headCode = headCode.replace("<head>","<head>\n<meta charset=\"utf-8\">\n");
+
+		while(1){
+	        start2 = headCode.indexOf("<!--");
+	        end2 = headCode.indexOf("-->");
+	        if(start2 == -1 || end2 == -1) break;
+	        removeCode = headCode.slice(start2,end2+3);
+	        headCode = headCode.replace(removeCode,"");
+	    }
 
 		// workspace_view div
 		var bodyCode = document.getElementById("workspace_view").innerHTML;
@@ -1349,6 +1388,11 @@
 		cssCode3 = cssCode3.replace(/\{/gi,"\{\n");
 		cssCode3 = cssCode3.replace(/\;/gi,"\;\n");
 		cssCode3 = cssCode3.replace(/\}/gi,"\}\n");
+		while(1){
+	        start2 = comCode.indexOf("\n");
+	        if(start2 == -1) break;
+	        comCode = comCode.replace("\n","");
+	    }
 		$.post('/workspace',{data : comCode, type: 'export' , cssData : cssCode3});
 	}
 
