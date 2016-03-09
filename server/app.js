@@ -644,6 +644,26 @@ app.post('/templet', function(req, res){
 
 				mkdir('./public/workspaces/'+project_name, function(err){
 					console.log(err);
+					
+						var indexFile2 = './public/workspaces/'+project_name+'/index.html';
+
+					fs.open(indexFile2, 'w', function(err, fd){
+						if(err) throw err;
+						
+						fs.writeFile(indexFile2, beautify_html(html, { indent_size: 2 }), 'utf-8', function(err){
+						 if(err) throw err;
+					 });
+					});
+
+					var cssfile = './public/workspaces/'+project_name+'/style.css';
+
+					fs.open(cssfile, 'w', function(err, fd){
+						if(err) throw err;
+
+						fs.writeFile(cssfile, beautify_css(css, { indent_size: 2 }), 'utf-8', function(err){
+						 if(err) throw err;
+					 });
+					});
 				});
 
 				console.log('make dir!');
@@ -662,25 +682,25 @@ app.post('/templet', function(req, res){
 				
 
 
-				var indexFile2 = './public/workspaces/'+project_name+'/index.html';
+				// var indexFile2 = './public/workspaces/'+project_name+'/index.html';
 
-				fs.open(indexFile2, 'w', function(err, fd){
-					if(err) throw err;
+				// fs.open(indexFile2, 'w', function(err, fd){
+				// 	if(err) throw err;
 					
-					fs.writeFile(indexFile2, beautify_html(html, { indent_size: 2 }), 'utf-8', function(err){
-					 if(err) throw err;
-				 });
-				});
+				// 	fs.writeFile(indexFile2, beautify_html(html, { indent_size: 2 }), 'utf-8', function(err){
+				// 	 if(err) throw err;
+				//  });
+				// });
 
-				var cssfile = './public/workspaces/'+project_name+'/style.css';
+				// var cssfile = './public/workspaces/'+project_name+'/style.css';
 
-				fs.open(cssfile, 'w', function(err, fd){
-					if(err) throw err;
+				// fs.open(cssfile, 'w', function(err, fd){
+				// 	if(err) throw err;
 
-					fs.writeFile(cssfile, beautify_css(css, { indent_size: 2 }), 'utf-8', function(err){
-					 if(err) throw err;
-				 });
-				});
+				// 	fs.writeFile(cssfile, beautify_css(css, { indent_size: 2 }), 'utf-8', function(err){
+				// 	 if(err) throw err;
+				//  });
+				// });
 
 
 
